@@ -1,0 +1,22 @@
+[Unit]
+Description=Gunicorn daemon for AMIN.EZ Portfolio (aminez.ir)
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/portfolio/backend
+EnvironmentFile=/var/www/portfolio/backend/.env
+ExecStart=/var/www/portfolio/venv/bin/gunicorn \
+    --workers 3 \
+    --bind 127.0.0.1:8000 \
+    --timeout 120 \
+    --access-logfile /var/log/gunicorn/aminez-access.log \
+    --error-logfile /var/log/gunicorn/aminez-error.log \
+    portfolio_backend.wsgi:application
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

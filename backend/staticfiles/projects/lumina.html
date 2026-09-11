@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina — کیس‌استادی پروژه فول‌استک کتابخانه آنلاین | پورتفولیو امین اسماعیل زاده</title>
+  <meta name="description" content="کیس‌استادی ادیتوریال و مهندسی پروژه Lumina — پلتفرم آنلاین کشف، مدیریت و مطالعه کتاب‌ها با معماری فول‌استک Django REST Framework و فرانت‌اند مدرن." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000000'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='22' fill='%23FFFFFF'%3E.EZ%3C/text%3E%3C/svg%3E" />
+
+  <!-- Google Fonts: Vazirmatn (Persian Primary) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <script type="module" crossorigin src="/assets/main-TL1CoWCn.js"></script>
+  <script type="module" crossorigin src="/assets/lumina-animations-DtcBoC-V.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-V0dQEGgZ.css">
+  <link rel="stylesheet" crossorigin href="/assets/lumina-animations-CTNZZJ9J.css">
+</head>
+<body class="lumina-page">
+
+  <!-- Transition Overlay Layer -->
+  <div class="transition-overlay"></div>
+
+  <!-- ========================================================================
+       STICKY LIQUID GLASS NAVIGATION (نوار بالای شیشه‌ای)
+       ======================================================================== -->
+  <header class="lumina-nav-header" id="luminaNav">
+    <div class="lumina-nav-bar">
+      
+      <!-- Brand & Back Button -->
+      <div class="lumina-nav-brand-group">
+        <a href="/" class="lumina-btn-back" data-return-home title="بازگشت به پروژه‌ها">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 19 12 12 5"></polyline></svg>
+          <span>بازگشت به پروژه‌ها</span>
+        </a>
+
+        <a href="#hero" class="lumina-nav-brand">
+          <span class="lumina-nav-badge">L</span>
+          <span class="lumina-nav-title">LUMINA</span>
+        </a>
+      </div>
+
+      <!-- Center Scrollspy Links -->
+      <nav class="lumina-nav-links" aria-label="بخش‌های پروژه">
+        <a href="#overview" class="lumina-nav-link">معرفی</a>
+        <a href="#features" class="lumina-nav-link">امکانات</a>
+        <a href="#tech" class="lumina-nav-link">فناوری‌ها</a>
+        <a href="#architecture" class="lumina-nav-link">معماری</a>
+        <a href="#results" class="lumina-nav-link">نتیجه</a>
+        <a href="#links" class="lumina-nav-link">لینک‌ها</a>
+      </nav>
+
+      <!-- Right Action CTA -->
+      <div class="lumina-nav-actions">
+        <a href="https://luumina.vercel.app" target="_blank" rel="noopener noreferrer" class="lumina-btn-live">
+          <span>مشاهده نسخه آنلاین</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="project-case-content">
+
+    <!-- ========================================================================
+         01. HERO
+         ======================================================================== -->
+    <section id="hero" class="lumina-hero-section">
+      <div class="editorial-container">
+
+        <!-- Small Metadata Row -->
+        <div class="lumina-hero-meta-row">
+          <div class="lumina-hero-badge">CASE STUDY // FULL-STACK</div>
+          <div class="lumina-hero-meta-items">
+            <div class="lumina-hero-meta-item">
+              <span>نوع:</span>
+              <strong>Full-Stack Web Application</strong>
+            </div>
+            <div class="lumina-hero-meta-item">
+              <span>سال:</span>
+              <strong>۲۰۲۶</strong>
+            </div>
+            <div class="lumina-hero-meta-item">
+              <span>ماهیت:</span>
+              <strong>Personal Project</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Split Grid: Right Col (Text) & Left Col (Responsive Monitor Display) -->
+        <div class="lumina-hero-split-grid">
+
+          <!-- Right Column: Typography Headline Area -->
+          <div class="lumina-hero-text-col">
+            <div class="lumina-hero-eyebrow">پلتفرم کتابخانه آنلاین</div>
+            <h1 class="lumina-hero-h1">LUMINA</h1>
+            <h2 class="lumina-hero-lead">
+              یک کتابخانه آنلاین مدرن برای کشف، مدیریت و مطالعه کتاب‌ها
+            </h2>
+            <p class="lumina-hero-desc">
+              Lumina یک پلتفرم کتابخانه آنلاین فول‌استک است که با هدف ارائه تجربه‌ای نوین در کشف کتاب‌ها، کاوش نویسندگان و دسته‌بندی‌ها، و مدیریت منسجم کتابخانه شخصی کاربران توسعه یافته است. این سیستم پیوندی هماهنگ میان یک رابط کاربری ادیتوریال فوق‌العاده سریع و یک معماری پایدار مبتنی بر Django REST Framework ایجاد می‌کند.
+            </p>
+
+            <!-- Primary & Secondary CTAs -->
+            <div class="lumina-hero-cta-group">
+              <a href="https://luumina.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-editorial-primary">
+                <span>مشاهده نسخه آنلاین</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+              <a href="https://github.com/Amin-Ezz/OnlineLibrary" target="_blank" rel="noopener noreferrer" class="btn-editorial-secondary">
+                <span>مشاهده در GitHub</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </a>
+            </div>
+
+            <!-- Micro-Badges -->
+            <div class="hero-floating-badges">
+              <div class="hero-micro-badge">
+                <span class="badge-dot"></span>
+                <span>Full-Stack Application</span>
+              </div>
+              <div class="hero-micro-badge">
+                <span class="badge-dot"></span>
+                <span>Django + DRF Backend</span>
+              </div>
+              <div class="hero-micro-badge">
+                <span class="badge-dot"></span>
+                <span>Modern Editorial UI</span>
+              </div>
+              <div class="hero-micro-badge">
+                <span class="badge-dot"></span>
+                <span>Responsive Architecture</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left Column: Hero Project Image (عکس صفحه Lumina بدون فریم مانیتور) -->
+          <div class="lumina-hero-img-col">
+            <div class="lumina-hero-img-wrap">
+              <img
+                src="/images/lumina-hero.png"
+                alt="صفحه اصلی پلتفرم کتابخانه آنلاین Lumina"
+                class="lumina-hero-img"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Section Transition Divider -->
+        <div class="hero-transition-rule">
+          <span>01 // LUMINA OVERVIEW</span>
+          <span>SCROLL TO EXPLORE ↓</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         02. OVERVIEW
+         ======================================================================== -->
+    <section id="overview" class="editorial-section">
+      <div class="editorial-container">
+        
+        <div class="section-header-block">
+          <span class="section-num-tag">02. OVERVIEW</span>
+          <h2 class="section-main-heading">Lumina چیست؟</h2>
+          <p class="section-subtitle">
+            پلتفرم یکپارچه کتابخانه دیجیتال که کتاب‌ها، نویسندگان، دسته‌بندی‌ها و کتابخانه شخصی کاربران را در یک زیست‌بوم تعاملی گرد هم می‌آورد.
+          </p>
+        </div>
+
+        <div class="overview-grid">
+          
+          <!-- Left: Large Heading / Statement -->
+          <div class="overview-statement-col">
+            <h3 class="overview-editorial-statement">
+              پلی دیجیتال میان فرهنگ غنی کتابخوانی و معماری وب مدرن و بدون حواس‌پرتی.
+            </h3>
+
+            <ul class="overview-core-points">
+              <li class="overview-core-point">کشف هوشمند و آسان کتاب‌ها</li>
+              <li class="overview-core-point">کاوش جامع بیوگرافی و آثار نویسندگان</li>
+              <li class="overview-core-point">مرور ساختاریافته دسته‌بندی‌ها و کلکسیون‌ها</li>
+              <li class="overview-core-point">مدیریت قفسه و پیشرفت مطالعه شخصی</li>
+              <li class="overview-core-point">احراز هویت توکن‌محور و امنیت اطلاعات</li>
+              <li class="overview-core-point">مدل‌سازی دقیق داده‌ها با PostgreSQL</li>
+              <li class="overview-core-point">رابط کاربری مدرن و کاملاً واکنش‌گرا</li>
+            </ul>
+          </div>
+
+          <!-- Right: Detailed Description -->
+          <div class="overview-desc-col">
+            <p>
+              Lumina به عنوان یک سامانه فول‌استک آنلاین برای بازتعریف تجربه کاوش در میان متون ادبی و فکری شکل گرفته است. در طراحی پلتفرم‌های سنتی، معمولاً کاربران با رابط‌های کاربری کند، ساختارهای تو در تو و صفحات مملو از گزینه‌های زائد روبرو می‌شوند که تمرکز خواننده را بر هم می‌زند.
+            </p>
+            <p>
+              در Lumina، هدف اصلی ساده‌سازی ارتباط کاربر با مخزن کتاب‌هاست. از جستجوی سریع بلادرنگ گرفته تا بررسی نقل‌قول‌های برگزیده، زمان مطالعه تخمینی هر اثر، و تفکیک مجموعه‌های موضوعی مانند فلسفه، شعر و معماری، همه عناصر به گونه‌ای در کنار یکدیگر چیده شده‌اند که کاربر بدون اصطکاک به محتوای مورد نظر خود دست یابد.
+            </p>
+            <p>
+              در سمت مهندسی، داده‌های پلتفرم از طریق یک معماری RESTful با بهره‌گیری از فریم‌ورک قدرتمند Django و Django REST Framework در بستر پایگاه داده رابطه‌ای PostgreSQL ذخیره و پردازش می‌شوند و فرانت‌اند مدرن به شکل مستقل و با کمترین تاخیر زمانی با این سرویس‌ها تعامل دارد.
+            </p>
+
+            <!-- Typographic Project Statistics Layout -->
+            <div class="editorial-stats-row">
+              <div class="stat-editorial-item">
+                <span class="stat-editorial-label">معماری</span>
+                <span class="stat-editorial-value">Full-Stack</span>
+                <span class="stat-editorial-sub">کلاینت و سرور مستقل</span>
+              </div>
+              <div class="stat-editorial-item">
+                <span class="stat-editorial-label">ارتباطات</span>
+                <span class="stat-editorial-value">REST API</span>
+                <span class="stat-editorial-sub">اندپوینت‌های استاندارد DRF</span>
+              </div>
+              <div class="stat-editorial-item">
+                <span class="stat-editorial-label">امنیت</span>
+                <span class="stat-editorial-value">Token Auth</span>
+                <span class="stat-editorial-sub">احراز هویت توکن‌محور</span>
+              </div>
+              <div class="stat-editorial-item">
+                <span class="stat-editorial-label">پایگاه داده</span>
+                <span class="stat-editorial-value">PostgreSQL</span>
+                <span class="stat-editorial-sub">روابط نرمال‌سازی شده</span>
+              </div>
+              <div class="stat-editorial-item">
+                <span class="stat-editorial-label">رابط کاربری</span>
+                <span class="stat-editorial-value">Responsive UI</span>
+                <span class="stat-editorial-sub">انطباق ۱۰۰٪ با تمام صفحات</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         03. FEATURES
+         ======================================================================== -->
+    <section id="features" class="editorial-section">
+      <div class="editorial-container">
+        
+        <div class="section-header-block">
+          <span class="section-num-tag">03. FEATURES</span>
+          <h2 class="section-main-heading">ویژگی‌های اصلی</h2>
+          <p class="section-subtitle">
+            امکانات کلیدی Lumina که با ترکیب طراحی ادیتوریال و منطق مهندسی نرم‌افزار پیاده‌سازی شده‌اند.
+          </p>
+        </div>
+
+        <div class="features-container">
+          
+          <!-- Feature 1: Book Discovery -->
+          <div class="feature-editorial-row">
+            <div class="feature-media-wrap">
+              <img src="/images/lumina-discovery.jpg" alt="سیستم کشف کتاب در Lumina" />
+            </div>
+            <div class="feature-text-wrap">
+              <span class="feature-tag-mono">FEATURE 01 // DISCOVERY</span>
+              <h3 class="feature-heading-h3">کشف هوشمند کتاب</h3>
+              <p class="feature-desc-p">
+                کاربران می‌توانند در میان صدها عنوان کتاب با کارت‌های مینیمال و متادیتای دقیق به کاوش بپردازند. فیلترهای آنی بر پایه ژانر، زمان مطالعه و دسته‌بندی به کاربر اجازه می‌دهند بدون بارگذاری مجدد به نتیجه دلخواه دست یابد.
+              </p>
+              <ul class="feature-points-editorial">
+                <li class="feature-point-item">فیلتر بلادرنگ بر اساس ژانر و برچسب‌های موضوعی</li>
+                <li class="feature-point-item">جستجوی سریع در عناوین، چکیده‌ها و نام نویسندگان</li>
+                <li class="feature-point-item">پیش‌نمایش فوری جلد و زمان تخمینی مطالعه اثر</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 2: Authors -->
+          <div class="feature-editorial-row reverse">
+            <div class="feature-media-wrap">
+              <img src="/images/lumina-authors.png" alt="پروفایل اختصاصی نویسندگان در Lumina" />
+            </div>
+            <div class="feature-text-wrap">
+              <span class="feature-tag-mono">FEATURE 02 // AUTHORS</span>
+              <h3 class="feature-heading-h3">پروفایل اختصاصی نویسندگان</h3>
+              <p class="feature-desc-p">
+                نویسندگان دارای صفحات مستقل با پرتره‌های مونوکروم، بیوگرافی مستند و فهرست تمام آثار موجود در کتابخانه هستند. کاربر می‌تواند ردپای فکری مولفان بزرگ مانند آلبر کامو یا ویرجینیا وولف را به سادگی دنبال کند.
+              </p>
+              <ul class="feature-points-editorial">
+                <li class="feature-point-item">پیوند دوطرفه میان هر کتاب و پروفایل مولف</li>
+                <li class="feature-point-item">آرشیو کامل آثار منتشر شده به تفکیک دوره‌های زمانی</li>
+                <li class="feature-point-item">روابط معنایی میان نویسندگان هم‌عصر و جریان‌های فکری</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 3: Categories & Collections -->
+          <div class="feature-editorial-row">
+            <div class="feature-media-wrap">
+              <img src="/images/lumina-taxonomy.png" alt="دسته‌بندی‌ها و مجموعه‌های کتابخانه Lumina" />
+            </div>
+            <div class="feature-text-wrap">
+              <span class="feature-tag-mono">FEATURE 03 // TAXONOMY</span>
+              <h3 class="feature-heading-h3">دسته‌بندی‌ها و مجموعه‌های گزینش‌شده</h3>
+              <p class="feature-desc-p">
+                ساختار درختی دسته‌بندی‌ها شامل فلسفه، اگزیستانسیالیسم، ادبیات کلاسیک، روانشناسی و هنر به خواننده امکان می‌دهد بر حسب علاقه موضوعی خود به جستجو بپردازد و مجموعه‌های منحصربه‌فرد را ورق بزند.
+              </p>
+              <ul class="feature-points-editorial">
+                <li class="feature-point-item">طبقه‌بندی منظم چند سطحی با تگ‌های گرافیکی مونوکروم</li>
+                <li class="feature-point-item">مجموعه‌های موضوعی پیشنهادی برای شروع آسان مطالعه</li>
+                <li class="feature-point-item">نمایش آمار کتاب‌های موجود در هر شاخه علمی و ادبی</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 4: Authentication & Personal Library -->
+          <div class="feature-editorial-row reverse">
+            <div class="feature-media-wrap">
+              <img src="/images/lumina-dashboard.jpg" alt="داشبورد و کتابخانه شخصی کاربر در Lumina" />
+            </div>
+            <div class="feature-text-wrap">
+              <span class="feature-tag-mono">FEATURE 04 // AUTH & USER SHELF</span>
+              <h3 class="feature-heading-h3">احراز هویت و کتابخانه شخصی</h3>
+              <p class="feature-desc-p">
+                کاربر پس از ثبت‌نام و ورود امن، به داشبورد اختصاصی خود هدایت می‌شود؛ جایی که می‌تواند کتاب‌های در حال خواندن را نشانه‌گذاری کند، درصد پیشرفت فصول را ثبت کند و استریک روزانه مطالعه خود را زیر نظر بگیرد.
+              </p>
+              <ul class="feature-points-editorial">
+                <li class="feature-point-item">ثبت‌نام و ورود توکن‌محور امن با ذخیره‌سازی محافظت‌شده</li>
+                <li class="feature-point-item">قفسه مطالعه شخصی با دسته‌بندی «در حال خواندن»، «خوانده‌شده» و «موردعلاقه»</li>
+                <li class="feature-point-item">ثبت پیشرفت فصول و محاسبه روزهای مداوم مطالعه</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 5: Responsive Experience -->
+          <div class="feature-editorial-row">
+            <div class="feature-media-wrap">
+              <img src="/images/lumina-responsive.jpg" alt="طراحی واکنش‌گرای Lumina در دسکتاپ، تبلت و موبایل" />
+            </div>
+            <div class="feature-text-wrap">
+              <span class="feature-tag-mono">FEATURE 05 // RESPONSIVENESS</span>
+              <h3 class="feature-heading-h3">تجربه بی‌نقص و واکنش‌گرا</h3>
+              <p class="feature-desc-p">
+                رابط کاربری Lumina به گونه‌ای مهندسی شده است که چیدمان تمام عناصر، از جداول کشف کتاب گرفته تا دیاگرام‌های معماری و نوار ناوبری، بر اساس ابعاد نمایشگر دسکتاپ، تبلت و موبایل بازطراحی شود بدون اینکه از خوانایی متن کاسته شود.
+              </p>
+              <ul class="feature-points-editorial">
+                <li class="feature-point-item">طراحی کاملاً لمس‌محور و بهینه برای گوشی‌های هوشمند</li>
+                <li class="feature-point-item">منوی ناوبری افقی اسکرولی در صفحات کوچک</li>
+                <li class="feature-point-item">تایپوگرافی تطبیقی fluid با توابع محاسباتی مدرن CSS</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Secondary Grid for Backend & Admin Features -->
+          <div class="features-secondary-grid">
+            
+            <div class="feature-card-editorial">
+              <span class="feature-tag-mono">FEATURE 06 // ARCHITECTURE</span>
+              <h4 style="font-size: 1.3rem; font-weight: 800; margin: 1rem 0 0.5rem 0;">معماری مبتنی بر API</h4>
+              <p style="font-size: 0.95rem; color: var(--lumina-text-secondary); line-height: 1.75;">
+                فرانت‌اند به جای دسترسی مستقیم به پایگاه داده، تمام ارتباطات خود را منحصراً از طریق اندپوینت‌های استاندارد Django REST Framework برقرار می‌کند؛ این ساختار امنیت، سرعت و قابلیت ارتقای مستقل را تضمین می‌کند.
+              </p>
+            </div>
+
+            <div class="feature-card-editorial">
+              <span class="feature-tag-mono">FEATURE 07 // MANAGEMENT</span>
+              <h4 style="font-size: 1.3rem; font-weight: 800; margin: 1rem 0 0.5rem 0;">مدیریت محتوا و پنل ادمین</h4>
+              <p style="font-size: 0.95rem; color: var(--lumina-text-secondary); line-height: 1.75;">
+                پنل مدیریت جامع جنگو شخصی‌سازی شده برای کنترل دقیق کاتالوگ کتاب‌ها، ویرایش اطلاعات نویسندگان، دسته‌بندی‌های چندگانه و نظارت بر حساب‌های کاربری با بالاترین استانداردهای امنیتی.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         04. TECHNOLOGIES (فناوری‌ها — استایل مینیمال ادیتوریال با پس‌زمینه سفید)
+         ======================================================================== -->
+    <section id="tech" class="tech-white-section">
+      <div class="editorial-container">
+        
+        <!-- Minimal Technical Header -->
+        <div class="tech-white-header tech-black-header">
+          <span class="tech-white-tag tech-black-tag">04 // TECHNOLOGIES</span>
+          <h2 class="tech-white-heading tech-black-heading">فناوری‌ها</h2>
+        </div>
+
+        <!-- Minimal Typography Rows (No cards, no boxes, pure dividers & whitespace) -->
+        <div class="tech-minimal-stack">
+
+          <!-- Category 1: Frontend -->
+          <div class="tech-minimal-row">
+            <div class="tech-minimal-cat">
+              <span class="tech-cat-name">Frontend</span>
+              <span class="tech-cat-fa">فرانت‌اند</span>
+            </div>
+            <div class="tech-minimal-items">
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">HTML5</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Tailwind CSS</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">JavaScript</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Vite</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">GSAP</span></span>
+            </div>
+          </div>
+
+          <!-- Category 2: Backend -->
+          <div class="tech-minimal-row">
+            <div class="tech-minimal-cat">
+              <span class="tech-cat-name">Backend</span>
+              <span class="tech-cat-fa">بک‌اند</span>
+            </div>
+            <div class="tech-minimal-items">
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Python</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Django</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Django REST Framework</span></span>
+            </div>
+          </div>
+
+          <!-- Category 3: Database -->
+          <div class="tech-minimal-row">
+            <div class="tech-minimal-cat">
+              <span class="tech-cat-name">Database</span>
+              <span class="tech-cat-fa">پایگاه داده</span>
+            </div>
+            <div class="tech-minimal-items">
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">PostgreSQL</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Neon</span></span>
+            </div>
+          </div>
+
+          <!-- Category 4: DevOps -->
+          <div class="tech-minimal-row">
+            <div class="tech-minimal-cat">
+              <span class="tech-cat-name">DevOps</span>
+              <span class="tech-cat-fa">استقرار و دوآپس</span>
+            </div>
+            <div class="tech-minimal-items">
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Git</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">GitHub</span></span>
+              <span class="tech-item-bullet">·</span>
+              <span class="tech-item-node"><span class="tech-item-icon">✦</span><span class="tech-item-text">Vercel</span></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         05. ARCHITECTURE
+         ======================================================================== -->
+    <section id="architecture" class="editorial-section">
+      <div class="editorial-container">
+        
+        <div class="section-header-block">
+          <span class="section-num-tag">05. ARCHITECTURE</span>
+          <h2 class="section-main-heading">معماری سیستم</h2>
+          <p class="section-subtitle">
+            نمایش ساختار لایه‌بندی شده، تفکیک وظایف و توپولوژی جریان داده از کاربر تا پایگاه داده رابطه ای.
+          </p>
+        </div>
+
+        <div class="architecture-showcase-box">
+          
+          <div class="arch-header-meta">
+            <span>FULL-STACK REST ARCHITECTURE // LUMINA V1.0</span>
+            <span>FORMAT: DECOUPLED CLIENT / SERVER</span>
+            <span>DATABASE: NEON POSTGRESQL CLOUD</span>
+          </div>
+
+          <!-- Architecture Visual Diagram -->
+          <div class="arch-diagram-flow">
+            
+            <!-- Tier 1: Client / User -->
+            <div class="arch-tier-block">
+              <span class="arch-tier-badge">CLIENT TIER</span>
+              <h4 class="arch-tier-title">کاربر و رابط کاربری فرانت‌اند (User & Browser Client)</h4>
+              <p class="arch-tier-desc">Vite SPA / JavaScript ES6+ / Responsive Editorial UI / Interceptors</p>
+            </div>
+
+            <div class="arch-connector-line">
+              <svg width="24" height="28" viewBox="0 0 24 28" fill="none"><line x1="12" y1="0" x2="12" y2="24" stroke="currentColor" stroke-width="2"></line><polyline points="6 18 12 24 18 18" stroke="currentColor" stroke-width="2"></polyline></svg>
+            </div>
+
+            <!-- Tier 2: REST API Gateway & Modular Endpoints -->
+            <div class="arch-tier-block" style="background: var(--lumina-bg-pure); border: 2px solid var(--lumina-black);">
+              <span class="arch-tier-badge">API GATEWAY LAYER</span>
+              <h4 class="arch-tier-title">درگاه وب‌سرویس و اندپوینت‌های ساختاریافته (REST API Routes)</h4>
+              <p class="arch-tier-desc">انتقال سریع و بهینه‌سازی شده داده‌ها به تفکیک دامنه از طریق JSON</p>
+              
+              <div class="arch-endpoints-grid">
+                <div class="arch-endpoint-pill">/api/auth/</div>
+                <div class="arch-endpoint-pill">/api/books/</div>
+                <div class="arch-endpoint-pill">/api/authors/</div>
+                <div class="arch-endpoint-pill">/api/categories/</div>
+                <div class="arch-endpoint-pill">/api/collections/</div>
+              </div>
+            </div>
+
+            <div class="arch-connector-line">
+              <svg width="24" height="28" viewBox="0 0 24 28" fill="none"><line x1="12" y1="0" x2="12" y2="24" stroke="currentColor" stroke-width="2"></line><polyline points="6 18 12 24 18 18" stroke="currentColor" stroke-width="2"></polyline></svg>
+            </div>
+
+            <!-- Tier 3: Django Backend -->
+            <div class="arch-tier-block">
+              <span class="arch-tier-badge">BACKEND SERVICES</span>
+              <h4 class="arch-tier-title">هسته سرویس جنگو (Django & DRF Application Core)</h4>
+              <p class="arch-tier-desc">مدل‌های دامنه، سریالایزرها، کنترل دسترسی توکن، اعتبارسنجی و منطق تجاری</p>
+            </div>
+
+            <div class="arch-connector-line">
+              <svg width="24" height="28" viewBox="0 0 24 28" fill="none"><line x1="12" y1="0" x2="12" y2="24" stroke="currentColor" stroke-width="2"></line><polyline points="6 18 12 24 18 18" stroke="currentColor" stroke-width="2"></polyline></svg>
+            </div>
+
+            <!-- Tier 4: Database -->
+            <div class="arch-tier-block" style="background: var(--lumina-bg-pure);">
+              <span class="arch-tier-badge">PERSISTENCE TIER</span>
+              <h4 class="arch-tier-title">پایگاه داده ابری رابطه‌ای (Neon Serverless PostgreSQL)</h4>
+              <p class="arch-tier-desc">اسکیمای نرمال‌سازی شده، کلیدهای خارجی، ایندکس‌های جستجو و یکپارچگی ارجاعی</p>
+            </div>
+
+          </div>
+
+          <!-- Architecture Explanations Columns -->
+          <div class="arch-layers-columns">
+            
+            <div class="arch-layer-card">
+              <div class="arch-layer-header">
+                <span>۰۱ // لایه کلاینت</span>
+              </div>
+              <p class="arch-layer-body">
+                مدیریت درخواست‌های آسنکرون، ذخیره‌سازی توکن احراز هویت در حافظه مرورگر، و مدیریت وضعیت لودینگ و خطاها با رابط کاربری بدون رفرش.
+              </p>
+            </div>
+
+            <div class="arch-layer-card">
+              <div class="arch-layer-header">
+                <span>۰۲ // لایه API و روتینگ</span>
+              </div>
+              <p class="arch-layer-body">
+                جداسازی مسیرهای احراز هویت، کتاب‌ها، نویسندگان و دسته‌بندی‌ها به منظور بالا بردن قابلیت نگهداری و اعمال سیاست‌های امنیتی مختلف.
+              </p>
+            </div>
+
+            <div class="arch-layer-card">
+              <div class="arch-layer-header">
+                <span>۰۳ // لایه بک‌اند و ORM</span>
+              </div>
+              <p class="arch-layer-body">
+                استفاده از سیستم قدرتمند Django ORM برای واکشی بهینه داده‌ها و پیشگیری از کوئری‌های تکراری (N+1 Queries) با متدهای select_related و prefetch_related.
+              </p>
+            </div>
+
+            <div class="arch-layer-card">
+              <div class="arch-layer-header">
+                <span>۰۴ // لایه پایگاه داده</span>
+              </div>
+              <p class="arch-layer-body">
+                میزبانی روی پایگاه داده ابری Neon با قابلیت مقیاس‌پذیری اتوماتیک، پشتیبان‌گیری منظم و اعمال مایگریشن‌های بدون توقف برای کاتالوگ کتاب‌ها.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         06. CHALLENGES
+         ======================================================================== -->
+    <section id="challenges" class="editorial-section">
+      <div class="editorial-container">
+        
+        <div class="section-header-block">
+          <span class="section-num-tag">06. CHALLENGES</span>
+          <h2 class="section-main-heading">چالش‌هایی که حل کردم</h2>
+          <p class="section-subtitle">
+            رویکرد حل مسئله مهندسی در لایه‌های مختلف نرم‌افزار به صورت خلاصه: «مسئله ← راهکار ← دستاورد».
+          </p>
+        </div>
+
+        <div class="challenges-compact-grid">
+          
+          <!-- Challenge 1 -->
+          <div class="challenge-compact-card">
+            <div class="challenge-compact-header">
+              <span class="challenge-compact-badge">BACKEND & DB</span>
+              <span class="challenge-compact-num">چالش ۰۱</span>
+            </div>
+            <h3 class="challenge-compact-title">بهینه‌سازی N+1 در پایگاه داده</h3>
+            
+            <div class="challenge-flow-steps">
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">مسئله مهندسی</span>
+                <p class="challenge-step-text">کوئری‌های تکراری در واکشی ارتباطات چندبه‌چند کتاب‌ها و نویسندگان موجب افت سرعت کاتالوگ می‌شد.</p>
+              </div>
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">راهکار فنی</span>
+                <p class="challenge-step-text">استفاده از <code>select_related</code> و <code>prefetch_related</code> در ORM جنگو به همراه ایندکس‌گذاری دیتابیس.</p>
+              </div>
+              <div class="challenge-step-item highlight">
+                <span class="challenge-step-label">دستاورد</span>
+                <p class="challenge-step-text">کاهش ۹۰٪ کوئری‌ها و پاسخگویی سرور به زیر ۵۰ میلی‌ثانیه در لود کتاب‌ها.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Challenge 2 -->
+          <div class="challenge-compact-card">
+            <div class="challenge-compact-header">
+              <span class="challenge-compact-badge">SECURITY & AUTH</span>
+              <span class="challenge-compact-num">چالش ۰۲</span>
+            </div>
+            <h3 class="challenge-compact-title">احراز هویت توکن‌محور کلاینت و سرور</h3>
+            
+            <div class="challenge-flow-steps">
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">مسئله مهندسی</span>
+                <p class="challenge-step-text">مدیریت هماهنگ نشست کاربری، قفسه مطالعه شخصی و محافظت از اندپوینت‌ها بدون افشای توکن.</p>
+              </div>
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">راهکار فنی</span>
+                <p class="challenge-step-text">پیاده‌سازی Token Auth در DRF و ساخت اینترسپتور در کلاینت برای الصاق خودکار هدر اعتبارسنجی.</p>
+              </div>
+              <div class="challenge-step-item highlight">
+                <span class="challenge-step-label">دستاورد</span>
+                <p class="challenge-step-text">ورود ایمن و بدون اصطکاک کاربر و تفکیک پایدار اطلاعات قفسه اختصاصی هر فرد.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Challenge 3 -->
+          <div class="challenge-compact-card">
+            <div class="challenge-compact-header">
+              <span class="challenge-compact-badge">DEVOPS & CLOUD</span>
+              <span class="challenge-compact-num">چالش ۰۳</span>
+            </div>
+            <h3 class="challenge-compact-title">استقرار سرورلس و رفع خطاهای CORS</h3>
+            
+            <div class="challenge-flow-steps">
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">مسئله مهندسی</span>
+                <p class="challenge-step-text">محدودیت‌های اتصالات دیتابیس در محیط سرورلس Vercel و بروز خطاهای CORS در ارتباط فرانت و بک.</p>
+              </div>
+              <div class="challenge-step-item">
+                <span class="challenge-step-label">راهکار فنی</span>
+                <p class="challenge-step-text">تنظیم Connection Pooling در دیتابیس ابری Neon و تعریف دقیق دامنه‌های مجاز در <code>cors-headers</code>.</p>
+              </div>
+              <div class="challenge-step-item highlight">
+                <span class="challenge-step-label">دستاورد</span>
+                <p class="challenge-step-text">استقرار مداوم (CI/CD) کاملاً بدون خطا با پایداری کامل در محیط پروداکشن ابری.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         07. RESULTS (Liquid Glass Editorial Section)
+         ======================================================================== -->
+    <section id="results" class="results-liquid-glass-section">
+      <!-- Fluid Ambient Glow Elements Behind Glass -->
+      <div class="results-ambient-glow results-glow-1"></div>
+      <div class="results-ambient-glow results-glow-2"></div>
+      <div class="results-ambient-glow results-glow-3"></div>
+
+      <div class="editorial-container">
+        
+        <div class="section-header-block results-header-block">
+          <span class="section-num-tag">07. RESULTS</span>
+          <h2 class="section-main-heading">نتیجه نهایی پروژه</h2>
+          <p class="section-subtitle results-lead-text">
+            Lumina از یک ایده به یک <strong>پلتفرم کامل فول‌استک کتابخانه آنلاین</strong> تبدیل شد؛ محصولی با رابط کاربری مینیمال، معماری مستقل و زیرساخت آماده اجرا در محیط واقعی.
+          </p>
+        </div>
+
+        <div class="results-liquid-grid">
+          
+          <!-- 01 — Full-Stack Architecture -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۱</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">Full-Stack Architecture</h3>
+            <p class="result-glass-desc">
+              فرانت‌اند و بک‌اند مستقل با ساختاری قابل توسعه و نگهداری.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+          <!-- 02 — Responsive UI -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۲</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">Responsive UI</h3>
+            <p class="result-glass-desc">
+              رابط کاربری کاملاً واکنش‌گرا با طراحی ادیتوریال و تایپوگرافی Vazirmatn.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+          <!-- 03 — RESTful API -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۳</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">RESTful API</h3>
+            <p class="result-glass-desc">
+              API ساختاریافته با Django REST Framework برای ارتباط پایدار و امن داده‌ها.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+          <!-- 04 — PostgreSQL Database -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۴</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">PostgreSQL Database</h3>
+            <p class="result-glass-desc">
+              دیتابیس رابطه‌ای PostgreSQL با ساختار منظم و میزبانی ابری در Neon.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+          <!-- 05 — Token Authentication -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۵</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">Token Authentication</h3>
+            <p class="result-glass-desc">
+              احراز هویت توکن‌محور و تجربه شخصی‌سازی‌شده برای کاربران.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+          <!-- 06 — Production Deployment -->
+          <div class="result-glass-card">
+            <div class="result-glass-reflection"></div>
+            <div class="result-glass-top-bar">
+              <span class="result-glass-pill">۰۶</span>
+              <div class="result-glass-indicator">
+                <span class="indicator-pulse"></span>
+                <span class="indicator-dot"></span>
+              </div>
+            </div>
+            <h3 class="result-glass-title">Production Deployment</h3>
+            <p class="result-glass-desc">
+              استقرار موفق پروژه در محیط Production با Vercel و زیرساخت ابری.
+            </p>
+            <div class="result-glass-shimmer"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         10. LINKS
+         ======================================================================== -->
+    <section id="links" class="links-cta-section">
+      <div class="editorial-container">
+        
+        <div class="links-cta-container">
+          <span class="section-num-tag" style="margin-bottom: 1.25rem;">10. LINKS</span>
+          <h2 class="links-cta-heading">مشاهده و بررسی زنده Lumina</h2>
+          <p class="links-cta-desc">
+            نسخه آنلاین پلتفرم و کدهای منبع پروژه را در مخزن گیت‌هاب بررسی کنید.
+          </p>
+
+          <div class="links-cta-buttons">
+            <a href="https://luumina.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-editorial-primary">
+              <span>مشاهده نسخه آنلاین ↗</span>
+            </a>
+            <a href="https://github.com/Amin-Ezz/OnlineLibrary" target="_blank" rel="noopener noreferrer" class="btn-editorial-secondary">
+              <span>مشاهده در GitHub ↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         11. NEXT PROJECT
+         ======================================================================== -->
+    <section id="next-project" class="next-project-section">
+      <div class="editorial-container">
+        
+        <div class="section-header-block" style="margin-bottom: 2rem;">
+          <span class="section-num-tag">11. NEXT PROJECT</span>
+          <h2 class="section-main-heading">پروژه بعدی</h2>
+        </div>
+
+        <!-- Next Project Visual Preview Card -->
+        <a href="/projects/mod-style.html" class="next-project-card" data-transition-target data-href="/projects/mod-style.html" data-project-title="MODSTYLE" data-project-image="/images/modstyle-hero.png">
+          <div class="next-project-media-wrap">
+            <img src="/images/modstyle-hero.png" alt="پیش‌نمایش کیس‌استادی MODSTYLE" />
+          </div>
+          <div class="next-project-content-bar">
+            <div class="next-project-info">
+              <span class="next-project-label">پروژه بعدی // CASE STUDY</span>
+              <h3 class="next-project-title">MODSTYLE</h3>
+              <p class="next-project-summary">فروشگاه آنلاین مد و لباس — از کشف محصول تا خرید یکپارچه</p>
+            </div>
+            <div class="next-project-arrow-btn">
+              <span>مشاهده پروژه</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 19 19 12 12 19"></polyline></svg>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MINI EDITORIAL FOOTER
+       ======================================================================== -->
+  <footer class="lumina-footer-mini">
+    <div class="editorial-container">
+      <div class="lumina-footer-content">
+        <div>
+          <span>© ۲۰۲۶ امین اسماعیل زاده — AMIN.EZ // LUMINA CASE STUDY</span>
+        </div>
+        <div>
+          <a href="#hero" style="font-weight: 700; color: var(--lumina-black);">بازگشت به ابتدای صفحه ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       INTERACTIVE SCROLLSPY & NAVIGATION SCRIPT
+       ======================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navBar = document.querySelector('.lumina-nav-bar');
+      const navLinks = document.querySelectorAll('.lumina-nav-link');
+      const sections = document.querySelectorAll('section[id]');
+
+      // Sticky nav header scroll styling
+      const handleScroll = () => {
+        if (window.scrollY > 40) {
+          navBar.classList.add('scrolled');
+        } else {
+          navBar.classList.remove('scrolled');
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+
+      // Smooth scroll for anchor links with offset
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            e.preventDefault();
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              const navHeight = navBar ? navBar.offsetHeight : 70;
+              const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+
+      // Scrollspy active link tracking via IntersectionObserver
+      if ('IntersectionObserver' in window) {
+        const observerOptions = {
+          root: null,
+          rootMargin: '-20% 0px -65% 0px',
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${id}`) {
+                  link.classList.add('active');
+                  // Auto scroll link into view inside horizontal nav on mobile
+                  link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                  link.classList.remove('active');
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+      }
+    });
+  </script>
+
+  <!-- Global Main JavaScript Module -->
+
+  <!-- Dedicated GSAP ScrollTrigger Animations for Every Section -->
+</body>
+</html>

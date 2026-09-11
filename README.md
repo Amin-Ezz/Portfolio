@@ -43,27 +43,77 @@ Portfolio1_copy - Copy/
 
 ---
 
-## ۲. نحوه اجرا و راه‌اندازی
+## ۲. دامنه و معماری استقرار سرور (Production Deployment)
 
-### مرحله ۱: اجرای بک‌اند جنگو (Django)
-```bash
-cd backend
-python manage.py runserver 8000
+دامنه رسمی پورتفولیو: **`https://aminez.ir`** (و `www.aminez.ir`)
+
+### معماری نهایی در سرور (VPS / Linux Ubuntu):
+```text
+Client Browser (https://aminez.ir)
+       │
+       ▼
+  Nginx (Reverse Proxy + SSL Let's Encrypt + Caching)
+   ├── / (HTML/JS/CSS) ──────► front/dist/ (Static Files)
+   ├── /static/ & /media/ ───► backend/staticfiles/ & media/
+   └── /api/ & /admin/ ──────► Gunicorn (127.0.0.1:8000)
+                                      │
+                                      ▼
+                                Django 5 REST Backend
 ```
-- آدرس سرور بک‌اند: `http://127.0.0.1:8000`
-- اندپوینت بررسی سلامت: `http://127.0.0.1:8000/api/health/`
-- پنل مدیریت جنگو: `http://127.0.0.1:8000/admin/`
-  - **نام کاربری**: `admin`
-  - **رمز عبور**: `admin123456`
 
-### مرحله ۲: اجرای فرانت‌اند (Vite)
-در یک ترمینال دیگر:
+### مراحل استقرار روی سرور (Ubuntu / Debian):
+
+#### ۱. کلون پروژه و تنظیمات محیطی:
 ```bash
+git clone <repository_url> /var/www/portfolio
+cd /var/www/portfolio/backend
+cp .env.example .env
+# ویرایش فایل .env و قرار دادن DJANGO_DEBUG=False و کلید امنیتی:
+nano .env
+```
+
+#### ۲. اجرای اسکریپت استقرار خودکار:
+```bash
+chmod +x /var/www/portfolio/deploy.sh
+/var/www/portfolio/deploy.sh
+```
+
+#### ۳. تنظیم سرویس Gunicorn:
+```bash
+sudo cp /var/www/portfolio/deployment/systemd/aminez.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start aminez.service
+sudo systemctl enable aminez.service
+```
+
+#### ۴. تنظیم وب‌سرور Nginx و گواهی SSL:
+```bash
+sudo cp /var/www/portfolio/deployment/nginx/aminez.ir.conf /etc/nginx/sites-available/aminez.ir
+sudo ln -s /etc/nginx/sites-available/aminez.ir /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+# دریافت رایگان گواهی SSL از طریق Certbot:
+sudo certbot --nginx -d aminez.ir -d www.aminez.ir
+```
+
+---
+
+## ۳. نحوه اجرای پروژه در حالت توسعه لوکال (اختیاری)
+
+در صورت تمایل به توسعه لوکال:
+```bash
+# ترمینال ۱ (بک‌اند):
+cd backend
+python manage.py runserver
+
+# ترمینال ۲ (فرانت‌اند):
 cd front
 npm run dev
+# دسترسی فرانت‌اند در: http://localhost:3000
 ```
-- آدرس فرانت‌اند: `http://localhost:3000`
-- به لطف تنظیمات Proxy در `vite.config.js`، تمام درخواست‌های `/api/...` به صورت خودکار به پورت ۸۰۰۰ جنگو هدایت می‌شوند و نیازی به هیچ تنظیم دستی CORS نیست.
+> [!NOTE]
+> همچنین در حالت لوکال، اگر فقط `python manage.py runserver` را اجرا کنید، به صورت خودکار نسخه بیلد شده سایت در `http://127.0.0.1:8000` نیز در دسترس است.
 
 ---
 
