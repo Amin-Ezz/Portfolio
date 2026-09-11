@@ -317,13 +317,17 @@ function initSequentialSkillsShowcase(skillsSection) {
     });
   }
 
+  // Mobile-aware scroll distance & horizontal progress rail handling
+  const isMobileScreen = window.innerWidth <= 991;
+  const pinDistance = isMobileScreen ? '+=200%' : '+=320%';
+
   // Master Pinning & Scrubbed Sequential Transitions
   const masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: universe,
       pin: true,
       start: 'top top',
-      end: '+=320%',
+      end: pinDistance,
       scrub: 0.8,
       anticipatePin: 1,
       onUpdate: (self) => {
@@ -345,14 +349,23 @@ function initSequentialSkillsShowcase(skillsSection) {
     }
   });
 
-  // Smoothly scrub the rail fill from 8% to 100% across the 4 categories
+  // Smoothly scrub the rail fill across the 4 categories
   if (railFill) {
-    masterTl.fromTo(railFill,
-      { scaleY: 0.08 },
-      { scaleY: 1, ease: 'none', duration: 3 },
-      0
-    );
+    if (isMobileScreen) {
+      masterTl.fromTo(railFill,
+        { scaleX: 0.08, transformOrigin: '0% 50%' },
+        { scaleX: 1, ease: 'none', duration: 3 },
+        0
+      );
+    } else {
+      masterTl.fromTo(railFill,
+        { scaleY: 0.08, transformOrigin: '50% 0%' },
+        { scaleY: 1, ease: 'none', duration: 3 },
+        0
+      );
+    }
   }
+
 
   // --- Step 1 Transition: Panel 0 (FRONTEND) -> Panel 1 (BACKEND & APIS) ---
   masterTl
@@ -591,7 +604,9 @@ function initParticleCanvas(section) {
   };
 
   const seed = () => {
-    const target = Math.min(90, Math.max(34, Math.floor((width * height) / 22000)));
+    const maxTarget = window.innerWidth <= 860 ? 30 : 90;
+    const minTarget = window.innerWidth <= 860 ? 18 : 34;
+    const target = Math.min(maxTarget, Math.max(minTarget, Math.floor((width * height) / 22000)));
     particles = Array.from({ length: target }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -602,6 +617,7 @@ function initParticleCanvas(section) {
       twSpeed: Math.random() * 0.02 + 0.008
     }));
   };
+
 
   const onMove = (e) => {
     const rect = section.getBoundingClientRect();

@@ -64,4 +64,76 @@ export function initNavigation() {
       window.addEventListener('scroll', ensurePlaying, { passive: true });
     }
   }
+
+  // Mobile Navigation Drawer Controller
+  initMobileDrawer();
 }
+
+function initMobileDrawer() {
+  const toggleBtn = document.getElementById('mobileNavToggle');
+  const drawer = document.getElementById('mobileNavDrawer');
+  const closeBtn = document.getElementById('mobileNavClose');
+  const backdrop = document.getElementById('mobileNavBackdrop');
+  if (!toggleBtn || !drawer) return;
+
+  const openDrawer = () => {
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('mobile-menu-active');
+  };
+
+  const closeDrawer = () => {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('mobile-menu-active');
+  };
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (drawer.classList.contains('is-open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeDrawer);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeDrawer);
+  }
+
+  // Close when tapping Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+
+  // Handle mobile links smooth scroll and auto-close
+  const mobileLinks = drawer.querySelectorAll('.mobile-nav-link, .mobile-nav-cta');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        closeDrawer();
+        const target = document.querySelector(href);
+        if (target) {
+          setTimeout(() => {
+            if (window.lenis) {
+              window.lenis.scrollTo(target, { offset: -30, duration: 1.2 });
+            } else {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 200);
+        }
+      }
+    });
+  });
+}
+

@@ -175,6 +175,77 @@ button {
   }
 }
 
+/* Tablet refinements (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-title {
+    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+  }
+
+  .container-custom {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+
+  .works-grid-container {
+    gap: 2rem;
+  }
+}
+
+/* Mobile phone refinements (< 640px) */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(1.8rem, 8.2vw, 2.5rem);
+    line-height: 1.3;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 7.5vw, 2.3rem);
+  }
+
+  .body-large {
+    font-size: 1.02rem;
+    line-height: 1.8;
+  }
+
+  .container-custom {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  .section-spacing {
+    padding-top: clamp(3.5rem, 8vw, 5rem);
+    padding-bottom: clamp(3.5rem, 8vw, 5rem);
+  }
+
+  .works-grid-container {
+    gap: 1.5rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hero-cta-group .btn-wrap {
+    width: 100%;
+  }
+
+  .hero-cta-group a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Ensure touch targets meet 44px min dimension */
+  button, 
+  a.btn-primary, 
+  a.btn-secondary, 
+  .nav-slab-cta, 
+  .mobile-nav-link {
+    min-height: 44px;
+  }
+}
+
 /* Line-by-line mask reveal for card copy (entrance staggered via GSAP) */
 .work-card-line {
   overflow: hidden;
@@ -189,3 +260,4 @@ button {
 .works-grid-container.is-animated .work-card-line .work-card-line-inner {
   transform: translateY(0);
 }
+

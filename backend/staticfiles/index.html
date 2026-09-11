@@ -54,8 +54,8 @@
       pointer-events: none;
     }
   </style>
-  <script type="module" crossorigin src="/assets/main-TL1CoWCn.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-V0dQEGgZ.css">
+  <script type="module" crossorigin src="/assets/main-BGjVczeQ.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-8RIYyRTQ.css">
 </head>
 <body>
 
@@ -95,6 +95,11 @@
             <span class="pulse-dot"></span>
             <span>همکاری</span>
           </a>
+          <button id="mobileNavToggle" class="mobile-nav-toggle" aria-label="منوی ناوبری سایت" aria-expanded="false">
+            <span class="hamburger-bar bar-1"></span>
+            <span class="hamburger-bar bar-2"></span>
+            <span class="hamburger-bar bar-3"></span>
+          </button>
         </div>
 
       </div>
@@ -102,11 +107,59 @@
     </div>
   </header>
 
+  <!-- Mobile Glass Navigation Drawer (Displays for Mobile & Tablet screens) -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-header">
+        <span class="mobile-nav-title">ناوبری پورتفولیو</span>
+        <button id="mobileNavClose" class="mobile-nav-close" aria-label="بستن منو">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav class="mobile-nav-links" aria-label="منوی موبایل">
+        <a href="#projects" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۱</span>
+          <span class="mobile-link-text">پروژه‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="#skills" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۲</span>
+          <span class="mobile-link-text">مهارت‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="#about" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۳</span>
+          <span class="mobile-link-text">درباره من</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="#contact" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۴</span>
+          <span class="mobile-link-text">تماس و ارتباط</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a href="#contact" class="mobile-nav-cta">
+          <span class="pulse-dot"></span>
+          <span>شروع همکاری و سفارش</span>
+        </a>
+        <div class="mobile-nav-socials">
+          <a href="https://t.me/AminOmade" target="_blank" rel="noopener noreferrer">تلگرام</a>
+          <span>•</span>
+          <a href="https://github.com/Amin-Ezz" target="_blank" rel="noopener noreferrer">گیت‌هاب</a>
+          <span>•</span>
+          <a href="https://www.linkedin.com/in/amin-esmaeil-zadeh-a99503431" target="_blank" rel="noopener noreferrer">لینکدین</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN VIEWPORT CONTENT -->
   <main>
 
-    <!-- 01: HERO SECTION (100vh, min-height 760px, pure black canvas with B&W video background) -->
-    <section id="hero" class="hero-section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; padding-top: 10rem; padding-bottom: 3.5rem; background-color: #000000; overflow: hidden;">
+    <!-- 01: HERO SECTION (100vh / 100dvh, pure black canvas with B&W video background) -->
+    <section id="hero" class="hero-section" style="min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; position: relative; padding-top: clamp(6.5rem, 14vh, 10rem); padding-bottom: clamp(2.5rem, 6vh, 4rem); background-color: #000000; overflow: hidden;">
 
       <!-- Black & white video background (grayscale halos on pure black) -->
       <video class="hero-video-bg" aria-hidden="true" autoplay muted loop playsinline preload="auto">

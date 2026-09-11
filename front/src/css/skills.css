@@ -574,7 +574,10 @@
 @media (max-width: 991px) {
   .skills-universe {
     min-height: 100vh;
-    padding: 2rem 0;
+    min-height: 100dvh;
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
   }
 
   .skills-content {
@@ -582,29 +585,59 @@
     align-items: center;
     justify-content: center;
     min-height: auto;
+    gap: 1.25rem;
   }
 
-  /* Rail sits as a slim fixed strip on the right edge in mobile */
+  /* Sleek horizontal progress rail inside skills content on tablet & mobile */
   .skills-progress-rail {
-    position: fixed;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    height: 24px;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 0.75rem auto;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .skills-rail-track {
+    width: 100%;
+    height: 4px;
+    position: relative;
+  }
+
+  .skills-rail-nodes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: absolute;
     top: 50%;
-    right: clamp(0.4rem, 2vw, 1rem);
+    left: 0;
     transform: translateY(-50%);
-    height: 180px;
-    width: 18px;
-    margin: 0;
-    z-index: 45;
+  }
+
+  .skills-rail-node {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
   }
 
   .skills-stage {
+    width: 100%;
     min-height: 460px;
   }
 
   .skills-panel-inner {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
-    padding: 2rem 1.5rem;
-    border-radius: 20px;
+    gap: 1.5rem;
+    padding: 1.75rem 1.35rem;
+    border-radius: 22px;
   }
 
   .skills-panel-lead {
@@ -615,45 +648,66 @@
   }
 
   .skills-panel-watermark {
-    font-size: 7rem;
+    font-size: clamp(4.5rem, 15vw, 6.5rem);
     left: 10px;
     top: -10px;
+    opacity: 0.04;
   }
 
   .skills-cloud {
-    gap: 0.75rem;
+    gap: 0.65rem;
+    justify-content: center;
   }
 
   .skill-node {
-    padding: 0.65rem 1.15rem;
+    padding: 0.6rem 1.05rem;
   }
 
   .skill-node-name {
-    font-size: 0.94rem;
+    font-size: 0.92rem;
   }
 
   .skills-bg-orb {
-    filter: blur(60px);
-    opacity: 0.12;
+    filter: blur(50px);
+    opacity: 0.1;
   }
 }
 
 @media (max-width: 640px) {
   .skills-intro-title {
-    font-size: clamp(3rem, 14vw, 5rem);
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .skills-stage {
+    min-height: 480px;
   }
 
   .skills-panel-inner {
-    padding: 1.75rem 1.25rem;
+    padding: 1.5rem 1.15rem;
   }
 
   .skills-category-title {
-    font-size: 1.75rem;
+    font-size: 1.55rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skills-category-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .skills-cloud {
+    gap: 0.5rem;
   }
 
   .skill-node {
-    padding: 0.55rem 0.95rem;
-    font-size: 0.88rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.84rem;
+    border-radius: 12px;
+  }
+
+  .skill-node-idx {
+    font-size: 0.72rem;
   }
 }
 

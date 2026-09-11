@@ -829,12 +829,44 @@
 @media (max-width: 640px) {
   .contact-channels {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
 
   .contact-channel-card {
     padding: 1.15rem 1.25rem;
+    width: 100%;
+  }
+
+  .contact-form-container {
+    padding: 1.5rem 1.15rem;
+    margin: 1.75rem auto;
+    border-radius: 20px;
+  }
+
+  .contact-form-submit-row {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+  }
+
+  .contact-social-row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .contact-social-pill {
+    padding: 0.65rem 1.15rem;
+    font-size: 0.88rem;
   }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   .contact-bg-video {

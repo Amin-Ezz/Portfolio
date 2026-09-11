@@ -42,6 +42,20 @@ export function initScrollEngine() {
   // Setup ScrollTrigger Animations
   setupScrollAnimations();
 
+  // Recalculate ScrollTrigger on mobile orientation or resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+  });
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+  });
+
   return lenis;
 }
 
@@ -177,66 +191,113 @@ function setupScrollAnimations() {
     });
   });
 
-  // Project cards in the Selected Works grid — cinematic two-by-two entrance
+  // Project cards in the Selected Works grid — cinematic entrance
   const gridCards = document.querySelectorAll('.work-grid-card');
   const worksGrid = document.querySelector('.works-grid-container');
   if (gridCards.length > 0 && worksGrid) {
-    gsap.set(gridCards, {
-      y: 130,
-      opacity: 0,
-      scale: 0.92,
-      rotateX: 14,
-      transformPerspective: 1200,
-      transformOrigin: '50% 100%',
-      filter: 'blur(18px)',
-      willChange: 'transform, opacity, filter'
-    });
+    const isMobile = window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
 
-    // Group cards into visual row pairs (two per row)
-    const pairs = [];
-    for (let i = 0; i < gridCards.length; i += 2) {
-      pairs.push([gridCards[i], gridCards[i + 1]].filter(Boolean));
-    }
+    if (isMobile) {
+      // Fluid mobile/touch card animation (smooth 60fps without heavy 3D perspective or deep blurs)
+      gsap.set(gridCards, {
+        y: 45,
+        opacity: 0,
+        scale: 0.97,
+        willChange: 'transform, opacity'
+      });
 
-    const workTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: worksGrid,
-        start: 'top 80%',
-        once: true
-      },
-      onComplete: () => {
-        worksGrid.classList.add('is-animated');
-        gsap.set(gridCards, { clearProps: 'all' });
-        gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'transform' });
-      }
-    });
+      const workTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: worksGrid,
+          start: 'top 85%',
+          once: true
+        },
+        onComplete: () => {
+          worksGrid.classList.add('is-animated');
+          gsap.set(gridCards, { clearProps: 'all' });
+          gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'transform' });
+        }
+      });
 
-    pairs.forEach((pair, pairIndex) => {
-      const rowStart = pairIndex * 0.5;
+      gridCards.forEach((card, idx) => {
+        workTl.to(card, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.75,
+          ease: 'power3.out'
+        }, idx * 0.18);
 
-      workTl.to(pair, {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        rotateX: 0,
-        filter: 'blur(0px)',
-        duration: 1.15,
-        ease: 'power3.out'
-      }, rowStart);
-
-      pair.forEach((card) => {
         const lines = card.querySelectorAll('.work-card-line-inner');
         if (lines.length > 0) {
           workTl.to(lines, {
             y: '0%',
-            duration: 0.95,
-            ease: 'power4.out',
-            stagger: 0.14
-          }, rowStart + 0.55);
+            duration: 0.6,
+            ease: 'power3.out',
+            stagger: 0.08
+          }, idx * 0.18 + 0.15);
         }
       });
-    });
+    } else {
+      // Full cinematic desktop 3D entrance
+      gsap.set(gridCards, {
+        y: 130,
+        opacity: 0,
+        scale: 0.92,
+        rotateX: 14,
+        transformPerspective: 1200,
+        transformOrigin: '50% 100%',
+        filter: 'blur(18px)',
+        willChange: 'transform, opacity, filter'
+      });
+
+      // Group cards into visual row pairs (two per row)
+      const pairs = [];
+      for (let i = 0; i < gridCards.length; i += 2) {
+        pairs.push([gridCards[i], gridCards[i + 1]].filter(Boolean));
+      }
+
+      const workTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: worksGrid,
+          start: 'top 80%',
+          once: true
+        },
+        onComplete: () => {
+          worksGrid.classList.add('is-animated');
+          gsap.set(gridCards, { clearProps: 'all' });
+          gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'transform' });
+        }
+      });
+
+      pairs.forEach((pair, pairIndex) => {
+        const rowStart = pairIndex * 0.5;
+
+        workTl.to(pair, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotateX: 0,
+          filter: 'blur(0px)',
+          duration: 1.15,
+          ease: 'power3.out'
+        }, rowStart);
+
+        pair.forEach((card) => {
+          const lines = card.querySelectorAll('.work-card-line-inner');
+          if (lines.length > 0) {
+            workTl.to(lines, {
+              y: '0%',
+              duration: 0.95,
+              ease: 'power4.out',
+              stagger: 0.14
+            }, rowStart + 0.55);
+          }
+        });
+      });
+    }
   }
+
 
 
 
