@@ -1,0 +1,216 @@
+/* ==========================================================================
+   Editorial Transition Bridge — Pure Black Chapter Break with Seamless Shadow Transition
+   ========================================================================== */
+
+.transition-section {
+  position: relative;
+  /* Deep black background with subtle luxury radial depth and delicate grid */
+  background-color: #050505;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+  background-size: 72px 72px, 72px 72px, 100% 100%;
+  padding-top: clamp(7rem, 14vw, 13rem);
+  padding-bottom: clamp(8rem, 16vw, 14rem);
+  overflow: hidden;
+  color: #FFFFFF;
+}
+
+/* Hairline top separator connecting with Hero (removed as requested) */
+.transition-section::before {
+  display: none;
+}
+
+/* 
+   Bottom transition shadow:
+   Casts an elegant shadow & smooth blend into the bright (#F8F8F7) projects section below 
+*/
+.transition-section::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: clamp(6rem, 12vw, 11rem);
+  background: linear-gradient(180deg,
+      rgba(5, 5, 5, 0) 0%,
+      rgba(5, 5, 5, 0.35) 40%,
+      rgba(5, 5, 5, 0.85) 75%,
+      #050505 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* The ambient downward drop shadow cast from the black transition section onto the light section */
+.transition-bottom-shadow {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 48px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.transition-content {
+  max-width: 760px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Minimal editorial marker — hidden as requested */
+.transition-marker {
+  display: none;
+}
+
+.transition-headline {
+  font-family: var(--font-vazir);
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.22),
+    0 0 24px rgba(255, 255, 255, 0.12),
+    0 2px 14px rgba(0, 0, 0, 0.7);
+}
+
+/* White text with living chromatic RGB glow effect */
+.glow-rgb-term {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.04em;
+  padding: 0 0.15rem;
+  animation: rgbChromaticGlow 4s linear infinite;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+@keyframes rgbChromaticGlow {
+  0% {
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      -1px -1px 4px rgba(255, 60, 60, 0.7),
+      1px 1px 4px rgba(60, 160, 255, 0.7),
+      0 0 14px rgba(255, 60, 120, 0.5);
+  }
+
+  33% {
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      1px -1px 4px rgba(60, 255, 120, 0.7),
+      -1px 1px 4px rgba(255, 60, 180, 0.7),
+      0 0 14px rgba(60, 255, 180, 0.5);
+  }
+
+  66% {
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      -1px 1px 4px rgba(60, 140, 255, 0.7),
+      1px -1px 4px rgba(255, 220, 60, 0.7),
+      0 0 14px rgba(120, 60, 255, 0.5);
+  }
+
+  100% {
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      -1px -1px 4px rgba(255, 60, 60, 0.7),
+      1px 1px 4px rgba(60, 160, 255, 0.7),
+      0 0 14px rgba(255, 60, 120, 0.5);
+  }
+}
+
+.transition-lede {
+  font-family: var(--font-vazir);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 700;
+  color: rgba(235, 235, 235, 0.65);
+  line-height: 1.9;
+  margin-bottom: 1.25rem;
+}
+
+.transition-body {
+  font-family: var(--font-vazir);
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 500;
+  color: #E6E6E6;
+  line-height: 2;
+  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+/* CTA — quiet typographic link, no card or pill */
+.transition-cta-wrap {
+  display: inline-block;
+}
+
+.transition-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-vazir);
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  padding-bottom: 0.45rem;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Underline that draws itself in from the right on hover (RTL natural direction) */
+.transition-cta::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background: #FFFFFF;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s var(--ease-out-expo);
+}
+
+.transition-cta:hover::after {
+  transform: scaleX(1);
+}
+
+.transition-cta-arrow {
+  display: inline-block;
+  transition: transform 0.55s var(--ease-out-expo);
+}
+
+.transition-cta:hover .transition-cta-arrow {
+  transform: translateY(5px);
+}
+
+/* Pre-animation state — GSAP ScrollTrigger fades these up and blurs them sharp */
+.transition-reveal {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(36px);
+  will-change: opacity, filter, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-reveal {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .transition-content {
+    max-width: 100%;
+  }
+}

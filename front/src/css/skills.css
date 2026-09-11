@@ -1,0 +1,684 @@
+/* ==========================================================================
+   Skills Section Redesign («مهارت‌ها»)
+   Cinematic Black Interactive Showcase — video-inspired
+   One shared living particle background under the title screen AND the
+   skill panels. Scroll flows vertically; the title dissolves upward.
+   ========================================================================== */
+
+.skills-section {
+  position: relative;
+  /* overflow: hidden removed — it breaks position: sticky on the side rail */
+  background-color: #050505;
+  color: #F5F5F5;
+}
+
+/* Shared living background — spans the entire section */
+.skills-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(60, 60, 70, 0.35), transparent 60%),
+    #050505;
+}
+
+.skills-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+.skills-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.16;
+  will-change: transform;
+}
+
+.skills-bg-orb-1 {
+  width: 480px;
+  height: 480px;
+  top: -8%;
+  right: -6%;
+  background: radial-gradient(circle, #6b6b7a 0%, transparent 70%);
+  animation: orbDrift1 22s ease-in-out infinite alternate;
+}
+
+.skills-bg-orb-2 {
+  width: 420px;
+  height: 420px;
+  bottom: 4%;
+  left: -8%;
+  background: radial-gradient(circle, #4d4d5e 0%, transparent 70%);
+  animation: orbDrift2 26s ease-in-out infinite alternate;
+}
+
+.skills-bg-orb-3 {
+  width: 360px;
+  height: 360px;
+  top: 42%;
+  left: 38%;
+  background: radial-gradient(circle, #55556a 0%, transparent 70%);
+  animation: orbDrift3 30s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-90px, 70px) scale(1.18); }
+}
+
+@keyframes orbDrift2 {
+  from { transform: translate(0, 0) scale(1.1); }
+  to   { transform: translate(100px, -80px) scale(0.94); }
+}
+
+@keyframes orbDrift3 {
+  from { transform: translate(0, 0) scale(0.9); }
+  to   { transform: translate(-70px, -100px) scale(1.2); }
+}
+
+/* Faint architectural grid over the darkness */
+.skills-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 100%);
+}
+
+/* Transition portals for seamless entry & exit between light & dark sections */
+.skills-entry-portal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(180deg, rgba(248, 248, 247, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.5s ease;
+}
+
+.skills-exit-portal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background: linear-gradient(0deg, rgba(248, 248, 247, 0.04) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Fullscreen Title Screen — transparent so the shared living background
+   shows through. Scroll-scrubbed: it slides up & fades out as you scroll.
+   -------------------------------------------------------------------------- */
+.skills-intro-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.skills-intro-stage {
+  position: relative;
+  height: 62vh;
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #F5F5F5;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+/* Ambient luminous aura behind the title during entrance */
+.skills-intro-glow {
+  position: absolute;
+  width: clamp(280px, 48vw, 700px);
+  height: clamp(280px, 48vw, 700px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(130, 130, 130, 0.05) 45%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+.skills-intro-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.skills-intro-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: rgba(245, 245, 245, 0.45);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  will-change: transform, opacity, letter-spacing;
+}
+
+.skills-intro-title {
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #F5F5F5;
+  margin: 0;
+  font-feature-settings: "ss01", "ss02";
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.18);
+  will-change: transform, opacity, filter, letter-spacing;
+}
+
+.skills-intro-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(245, 245, 245, 0.4);
+  text-transform: uppercase;
+  will-change: transform, opacity, filter;
+}
+
+.skills-intro-hint svg {
+  animation: bounceDown 2s infinite ease-in-out;
+}
+
+/* Immersive universe wrapper — pins while scrolling sequentially through categories */
+.skills-universe {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.skills-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  width: 100%;
+  min-height: 85vh;
+}
+
+/* --------------------------------------------------------------------------
+   Futuristic Multi-Stage Progress Rail — Pure visual progress bar, Zero text
+   Sleek glass rail with glowing liquid fill and milestone pips for each category
+   -------------------------------------------------------------------------- */
+.skills-progress-rail {
+  position: sticky;
+  top: calc(50vh - 160px);
+  z-index: 40;
+  flex: 0 0 auto;
+  align-self: center;
+  height: 320px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: calc(-1 * clamp(1.25rem, 4vw, 3.5rem));
+  margin-left: clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.skills-rail-track {
+  position: relative;
+  width: 4px;
+  height: 100%;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+.skills-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #FFFFFF;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8), 0 0 28px rgba(255, 255, 255, 0.4);
+  transform-origin: top center;
+  transform: scaleY(0.08);
+  will-change: transform;
+}
+
+.skills-progress-glow-head {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 16px #FFFFFF, 0 0 30px rgba(255, 255, 255, 0.9);
+}
+
+.skills-rail-nodes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.skills-rail-node {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid #050505;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  transform: scale(0.9);
+  transition: background-color 0.4s ease, transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease;
+}
+
+.skills-rail-node.active {
+  background: #FFFFFF;
+  transform: scale(1.35);
+  box-shadow: 0 0 0 1px #FFFFFF, 0 0 16px #FFFFFF, 0 0 28px rgba(255, 255, 255, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Vertical Category Showcase — Stacked Single-Panel Viewport
+   Only ONE category is shown at a time! Scrolling sequentially transitions
+   to the next category.
+   -------------------------------------------------------------------------- */
+.skills-viewport {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  will-change: transform, opacity, filter;
+}
+
+.skills-stage {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  min-height: 520px;
+  will-change: transform, opacity, filter;
+}
+
+.skills-panel {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
+
+.skills-panel.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.skills-panel-inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  position: relative;
+  padding: 3.25rem 3.5rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.skills-panel-inner:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+}
+
+/* Architectural Watermark Number Behind Panel */
+.skills-panel-watermark {
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  font-size: clamp(8rem, 16vw, 15rem);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: #FFFFFF;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lead column in Panel */
+.skills-panel-lead {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  padding-left: 2.5rem;
+}
+
+.skills-panel-index-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(245, 245, 245, 0.45);
+  text-transform: uppercase;
+}
+
+.skills-meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+  animation: metaPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes metaPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.8); }
+}
+
+.skills-category-title {
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #F5F5F5;
+  margin: 0;
+  font-family: inherit;
+}
+
+.skills-category-desc {
+  font-size: 0.94rem;
+  color: rgba(245, 245, 245, 0.6);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.skills-category-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(245, 245, 245, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Skill Chips — video-style breathing bubbles
+   -------------------------------------------------------------------------- */
+.skills-cloud {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.skill-node {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.75rem 1.45rem;
+  cursor: pointer;
+  user-select: none;
+  color: #F5F5F5;
+  transition: background-color 0.3s ease,
+              border-color 0.35s var(--ease-out-expo),
+              box-shadow 0.35s var(--ease-out-expo),
+              color 0.3s ease;
+  will-change: transform;
+}
+
+.skill-node:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 255, 255, 0.08);
+}
+
+.skill-node-idx {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(245, 245, 245, 0.38);
+  margin-left: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+
+.skill-node:hover .skill-node-idx {
+  color: rgba(245, 245, 245, 0.85);
+}
+
+/* Monochrome tech logo chip — inherits the white-on-black stage theme */
+.skill-node-logo {
+  flex: 0 0 auto;
+  order: 2;
+  margin: 0 0.55rem 0 0;
+  color: rgba(245, 245, 245, 0.72);
+  transition: color 0.3s ease, transform 0.35s var(--ease-out-expo);
+}
+
+.skill-node:hover .skill-node-logo {
+  color: #FFFFFF;
+  transform: scale(1.12);
+}
+
+.skill-node[data-weight="lead"] .skill-node-logo {
+  color: rgba(245, 245, 245, 0.85);
+}
+
+.skill-node-name {
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #F5F5F5;
+}
+
+/* Subtle accent highlight dot that lights up on hover */
+.skill-node-accent {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  margin-right: 0.65rem;
+  opacity: 0;
+  transform: scale(0.3);
+  transition: transform 0.35s var(--ease-out-expo), opacity 0.35s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+.skill-node:hover .skill-node-accent {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Varied Staggered Offsets for Visual Dynamism */
+.skill-node[data-weight="lead"] {
+  font-size: 1.12rem;
+  padding: 0.85rem 1.65rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.skill-node[data-weight="lead"] .skill-node-name {
+  font-size: 1.12rem;
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile & Tablet Responsive Styling (< 992px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+  .skills-universe {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .skills-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: auto;
+  }
+
+  /* Rail sits as a slim fixed strip on the right edge in mobile */
+  .skills-progress-rail {
+    position: fixed;
+    top: 50%;
+    right: clamp(0.4rem, 2vw, 1rem);
+    transform: translateY(-50%);
+    height: 180px;
+    width: 18px;
+    margin: 0;
+    z-index: 45;
+  }
+
+  .skills-stage {
+    min-height: 460px;
+  }
+
+  .skills-panel-inner {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .skills-panel-lead {
+    border-left: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 0;
+    padding-bottom: 1.25rem;
+  }
+
+  .skills-panel-watermark {
+    font-size: 7rem;
+    left: 10px;
+    top: -10px;
+  }
+
+  .skills-cloud {
+    gap: 0.75rem;
+  }
+
+  .skill-node {
+    padding: 0.65rem 1.15rem;
+  }
+
+  .skill-node-name {
+    font-size: 0.94rem;
+  }
+
+  .skills-bg-orb {
+    filter: blur(60px);
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 640px) {
+  .skills-intro-title {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .skills-panel-inner {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .skills-category-title {
+    font-size: 1.75rem;
+  }
+
+  .skill-node {
+    padding: 0.55rem 0.95rem;
+    font-size: 0.88rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .skills-intro-stage {
+    min-height: 70vh;
+    height: auto;
+    padding: 6rem 0;
+  }
+
+  .skills-panel,
+  .skill-node {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .skill-node:hover {
+    transform: none !important;
+  }
+
+  .skills-bg-orb,
+  .skills-meta-dot {
+    animation: none !important;
+  }
+}

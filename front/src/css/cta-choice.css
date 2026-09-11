@@ -1,0 +1,395 @@
+/* ==========================================================================
+   Choice CTA Section — «حالا انتخاب با توئه...»
+   Monochrome Editorial Black & White Theme (Aligned with Portfolio Design System)
+   Two-panel comparison bridge before the Contact section:
+   - Left card: Luminous, prominent, glowing white/silver
+   - Right card: Muted, dark, understated
+   ========================================================================== */
+
+.cta-choice-section {
+  position: relative;
+  background:
+    radial-gradient(circle at 25% 45%, rgba(255, 255, 255, 0.035) 0%, transparent 55%),
+    radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
+    #060606;
+  padding: clamp(6rem, 11vw, 10rem) 0 clamp(8rem, 14vw, 13rem);
+  overflow: hidden;
+  color: #F5F5F5;
+  direction: rtl;
+}
+
+/* Soft transition from the light section above */
+.cta-choice-section::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: clamp(5rem, 9vw, 8rem);
+  background: linear-gradient(180deg, #FBFBFA 0%, rgba(6, 6, 6, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Seamless blend into the pure black Contact section below */
+.cta-choice-section::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: clamp(6rem, 11vw, 10rem);
+  background: linear-gradient(180deg, rgba(6, 6, 6, 0) 0%, #050505 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Header container */
+.cta-choice-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(3rem, 5.5vw, 4.75rem);
+  position: relative;
+  z-index: 2;
+}
+
+/* Top Badge — «• تصمیم نهایی •» (Monochrome Silver Pill) */
+.cta-choice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-vazir);
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+  font-weight: 600;
+  color: #D4D4D4;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.35rem 1.15rem;
+  margin-bottom: 1.25rem;
+  backdrop-filter: blur(10px);
+  letter-spacing: 0.02em;
+}
+
+.cta-choice-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.85);
+}
+
+/* Headline */
+.cta-choice-headline {
+  font-family: var(--font-vazir);
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0;
+  text-wrap: balance;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* --- Panels row --------------------------------------------------------- */
+
+.cta-choice-panels {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-choice-panel {
+  border-radius: 24px;
+  padding: clamp(2rem, 3.2vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    box-shadow 0.5s var(--ease-out-expo),
+    border-color 0.5s var(--ease-out-expo),
+    background-color 0.5s var(--ease-out-expo);
+}
+
+/* Right panel (RTL start) — The dark, muted option («فقط یک ایده») */
+.cta-choice-panel-idea {
+  background: rgba(16, 16, 16, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+.cta-choice-panel-idea:hover {
+  background: rgba(22, 22, 22, 0.75);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+
+.cta-choice-panel-idea .cta-choice-panel-title {
+  color: #8E8E93;
+  opacity: 0.9;
+}
+
+.cta-choice-panel-idea .cta-choice-item-text {
+  color: #6E6E73;
+}
+
+/* Left panel (RTL end) — The solid, prominent LUMINOUS option («تبدیل ایده به محصول») */
+.cta-choice-panel-product {
+  background: radial-gradient(
+    ellipse at 15% 15%,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(14, 14, 14, 0.95) 85%
+  );
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 55px -5px rgba(255, 255, 255, 0.18),
+    0 20px 45px rgba(0, 0, 0, 0.75),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+
+/* Ambient glow overlay inside the prominent product card */
+.cta-choice-glow-overlay {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cta-choice-panel-product:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 0 75px 0 rgba(255, 255, 255, 0.28),
+    0 25px 60px rgba(0, 0, 0, 0.85),
+    inset 0 1px 2px rgba(255, 255, 255, 0.55);
+}
+
+.cta-choice-panel-product .cta-choice-panel-title {
+  color: #FFFFFF;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.45);
+}
+
+.cta-choice-panel-product .cta-choice-item-text {
+  color: #F5F5F5;
+  font-weight: 500;
+}
+
+/* Panel titles */
+.cta-choice-panel-title {
+  font-family: var(--font-vazir);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  font-weight: 800;
+  margin-bottom: 1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- List & Item Icons ---------------------------------------------------- */
+
+.cta-choice-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  font-family: var(--font-vazir);
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-choice-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cta-choice-item-icon {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+/* Subtle cross circle (muted option) */
+.cta-choice-item-icon.icon-cross {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #636366;
+}
+
+/* Luminous white check circle (prominent option) */
+.cta-choice-item-icon.icon-check {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.28);
+}
+
+.cta-choice-panel:hover .cta-choice-item-icon {
+  transform: scale(1.08);
+}
+
+.cta-choice-item-text {
+  flex: 1;
+}
+
+/* --- Divider with «یا» (Monochrome Editorial) ---------------------------- */
+
+.cta-choice-divider {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-choice-or-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #8E8E93;
+  font-family: var(--font-vazir);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+/* --- CTA button (Editorial Black & White Luxury Pill) -------------------- */
+
+.cta-choice-action {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(3.25rem, 6vw, 5rem);
+  position: relative;
+  z-index: 2;
+}
+
+.cta-choice-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-vazir);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 800;
+  color: #050505;
+  background: #FFFFFF;
+  border-radius: 999px;
+  padding: 1.05rem 2.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 10px 30px rgba(255, 255, 255, 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  transition:
+    transform 0.4s var(--ease-out-expo),
+    box-shadow 0.4s var(--ease-out-expo),
+    background-color 0.4s ease,
+    color 0.4s ease;
+  text-decoration: none;
+}
+
+.cta-choice-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  background-color: #F0F0F0;
+  box-shadow:
+    0 18px 45px rgba(255, 255, 255, 0.35),
+    0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.cta-choice-arrow {
+  display: inline-block;
+  font-size: 1.25rem;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.cta-choice-button:hover .cta-choice-arrow {
+  transform: translateX(-6px);
+}
+
+/* --- Pre-animation states (GSAP animates to .is-shown) ------------------- */
+
+.cta-choice-reveal {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(30px);
+  will-change: opacity, filter, transform;
+}
+
+.cta-choice-panel-reveal {
+  opacity: 0;
+  filter: blur(12px);
+  will-change: opacity, filter, transform;
+}
+
+.cta-choice-panel-idea.cta-choice-panel-reveal {
+  transform: translateX(-40px);
+}
+
+.cta-choice-panel-product.cta-choice-panel-reveal {
+  transform: translateX(40px);
+}
+
+.cta-choice-reveal.is-shown,
+.cta-choice-panel-reveal.is-shown {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-choice-reveal,
+  .cta-choice-panel-reveal {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* --- Responsive ----------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .cta-choice-panels {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Keep luminous product card on top in mobile */
+  .cta-choice-panel-product {
+    order: -1;
+  }
+
+  .cta-choice-divider {
+    order: 0;
+    margin: 0.5rem 0;
+  }
+}

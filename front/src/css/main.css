@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Color Palette - Minimal White & Editorial */
+  --bg-primary: #F8F8F7;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F1F1EF;
+  --text-primary: #0A0A0A;
+  --text-secondary: #6F6F6F;
+  --text-tertiary: #9B9B9B;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.14);
+  --accent-black: #050505;
+  --accent-soft: rgba(0, 0, 0, 0.03);
+
+  /* Liquid Glass System */
+  --glass-bg: rgba(255, 255, 255, 0.68);
+  --glass-bg-hover: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-blur: 24px;
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  --glass-shadow-hover: 0 30px 70px rgba(0, 0, 0, 0.09);
+
+  /* Spacers & Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-smooth: all 0.5s var(--ease-out-expo);
+}
+
+/* Universal Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-vazir);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  scroll-behavior: auto; /* Handled via Lenis */
+  overflow-x: clip; /* clip (not hidden) — hidden turns html into a scroll container and breaks position: sticky */
+  font-feature-settings: "ss01", "ss02", "cv01";
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+
+/* Selection Color */
+::selection {
+  background-color: var(--accent-black);
+  color: #FFFFFF;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.hero-title {
+  font-size: clamp(2.3rem, 4.8vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.body-large {
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  color: var(--text-secondary);
+  line-height: 1.85;
+}
+
+.body-regular {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.tag-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+/* Links & Buttons */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Custom Scrollbar — light & wide */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+::-webkit-scrollbar-thumb {
+  background: #0A0A0A;
+  border-radius: 9999px;
+  border: 3px solid var(--bg-tertiary);
+  min-height: 90px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
+
+/* Layout Utilities */
+.container-custom {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 3.5rem);
+  padding-right: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.section-spacing {
+  padding-top: clamp(5rem, 10vw, 10rem);
+  padding-bottom: clamp(5rem, 10vw, 10rem);
+}
+
+/* Subtle separator line */
+.divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ==========================================================================
+   Selected Works — Two-Column Showcase Grid
+   ========================================================================== */
+.works-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .works-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Line-by-line mask reveal for card copy (entrance staggered via GSAP) */
+.work-card-line {
+  overflow: hidden;
+}
+
+.work-card-line .work-card-line-inner {
+  display: block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.works-grid-container.is-animated .work-card-line .work-card-line-inner {
+  transform: translateY(0);
+}
