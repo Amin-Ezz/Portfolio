@@ -557,6 +557,13 @@
   100% { transform: translate(0, 0) scale(0.94); opacity: 0.88; }
 }
 
+@media (max-width: 860px) {
+  .hero-halo::before {
+    filter: blur(24px); /* Optimized from 70px to preserve mobile GPU fill-rate at 60fps */
+    transform: translateZ(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-halo::before {
     animation: none;
@@ -761,8 +768,8 @@
     rgba(255, 255, 255, 0.08) 45%,
     rgba(255, 255, 255, 0.18) 100%
   );
-  backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
-  -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.45);
 
   /* Glass depth illusion: crisp inner specular bevel + clean ambient drop shadow */
@@ -1189,6 +1196,8 @@ body.mobile-menu-active {
     gap: 0.75rem;
     padding: 0.5rem 0.85rem;
     max-width: calc(100vw - 2rem);
+    backdrop-filter: blur(6px) saturate(130%);
+    -webkit-backdrop-filter: blur(6px) saturate(130%);
   }
 
   .nav-logo-name .logo-txt-main {

@@ -7,6 +7,11 @@ export function initCursor() {
   if (existingDot) existingDot.remove();
   if (existingFollower) existingFollower.remove();
 
+  // Skip hover cursor physics on touch/mobile screens to prevent layout reflows
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    return;
+  }
+
   // Magnetic Button Physics (Subtle button movement on hover)
   const magneticElements = document.querySelectorAll('[data-magnetic]');
   magneticElements.forEach((el) => {

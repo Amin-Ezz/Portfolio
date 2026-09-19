@@ -5,25 +5,37 @@ import Lenis from 'lenis';
 gsap.registerPlugin(ScrollTrigger);
 
 export function initScrollEngine() {
-  // Initialize Lenis smooth scroll
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    smoothTouch: false,
-    touchMultiplier: 2
-  });
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 860;
 
-  // Synchronize Lenis with GSAP ScrollTrigger
-  lenis.on('scroll', ScrollTrigger.update);
+  let lenis = null;
 
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
+  if (!isTouchDevice) {
+    // Initialize Lenis smooth scroll for Desktop (mouse wheel)
+    lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1
+    });
 
-  gsap.ticker.lagSmoothing(0);
+    // Synchronize Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+  } else {
+    // Mobile / Touch devices: native 120Hz/60Hz compositor scrolling
+    // ScrollTrigger will update passively with zero main thread blocking
+    window.addEventListener('scroll', () => {
+      ScrollTrigger.update();
+    }, { passive: true });
+  }
+
+  // Enable lag smoothing to prevent jarring frame skips during mobile GC/rendering spikes
+  gsap.ticker.lagSmoothing(500, 33);
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -33,7 +45,11 @@ export function initScrollEngine() {
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
           e.preventDefault();
-          lenis.scrollTo(targetElement, { offset: -40, duration: 1.2 });
+          if (lenis) {
+            lenis.scrollTo(targetElement, { offset: -40, duration: 1.1 });
+          } else {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
     });
@@ -60,6 +76,8 @@ export function initScrollEngine() {
 }
 
 function setupScrollAnimations() {
+  const isMobile = window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
+
   // Line reveals
   const revealWrappers = document.querySelectorAll('.reveal-wrapper');
   revealWrappers.forEach(wrapper => {
@@ -79,7 +97,7 @@ function setupScrollAnimations() {
     }
   });
 
-  // Transition bridge (Hero → Projects): scrubbed blur-to-sharp reveal
+  // Transition bridge (Hero → Projects): scrubbed reveal
   const transitionReveals = document.querySelectorAll('.transition-reveal');
   if (transitionReveals.length > 0) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -89,7 +107,6 @@ function setupScrollAnimations() {
     } else {
       gsap.to(transitionReveals, {
         opacity: 1,
-        filter: 'blur(0px)',
         y: 0,
         ease: 'none',
         stagger: 0.1,
@@ -105,11 +122,10 @@ function setupScrollAnimations() {
 
   // Choice CTA (before Contact): headline → panels from opposite sides → button.
   // Each tween flips a .is-shown class on completion so the CSS reveal state
-  // (blur/translate) is fully overridden and never leaves a blurred residue.
+  // (translate) is fully overridden and never leaves a residue.
   const ctaChoiceSection = document.querySelector('.cta-choice-section');
   if (ctaChoiceSection) {
     const revealTargets = ctaChoiceSection.querySelectorAll('.cta-choice-reveal, .cta-choice-panel-reveal');
-
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reducedMotion) {
@@ -135,7 +151,6 @@ function setupScrollAnimations() {
       if (badgeEl) {
         ctaTl.to(badgeEl, {
           opacity: 1,
-          filter: 'blur(0px)',
           y: 0,
           duration: 0.8,
           ease: 'power3.out'
@@ -145,28 +160,24 @@ function setupScrollAnimations() {
       ctaTl
         .to(ctaChoiceSection.querySelector('.cta-choice-headline'), {
           opacity: 1,
-          filter: 'blur(0px)',
           y: 0,
           duration: 1,
           ease: 'power3.out'
         }, 0.2)
         .to(ctaChoiceSection.querySelectorAll('.cta-choice-panel-idea'), {
           opacity: 1,
-          filter: 'blur(0px)',
           x: 0,
           duration: 1.1,
           ease: 'power3.out'
         }, 0.55)
         .to(ctaChoiceSection.querySelectorAll('.cta-choice-panel-product'), {
           opacity: 1,
-          filter: 'blur(0px)',
           x: 0,
           duration: 1.1,
           ease: 'power3.out'
         }, 0.75)
         .to(ctaChoiceSection.querySelector('.cta-choice-action'), {
           opacity: 1,
-          filter: 'blur(0px)',
           y: 0,
           duration: 0.9,
           ease: 'power3.out'
@@ -239,16 +250,15 @@ function setupScrollAnimations() {
         }
       });
     } else {
-      // Full cinematic desktop 3D entrance
+      // Full cinematic desktop 3D entrance (pure GPU transform & opacity without heavy raster blur)
       gsap.set(gridCards, {
-        y: 130,
+        y: 80,
         opacity: 0,
-        scale: 0.92,
-        rotateX: 14,
+        scale: 0.94,
+        rotateX: 10,
         transformPerspective: 1200,
         transformOrigin: '50% 100%',
-        filter: 'blur(18px)',
-        willChange: 'transform, opacity, filter'
+        willChange: 'transform, opacity'
       });
 
       // Group cards into visual row pairs (two per row)
@@ -271,15 +281,14 @@ function setupScrollAnimations() {
       });
 
       pairs.forEach((pair, pairIndex) => {
-        const rowStart = pairIndex * 0.5;
+        const rowStart = pairIndex * 0.4;
 
         workTl.to(pair, {
           y: 0,
           opacity: 1,
           scale: 1,
           rotateX: 0,
-          filter: 'blur(0px)',
-          duration: 1.15,
+          duration: 1.0,
           ease: 'power3.out'
         }, rowStart);
 

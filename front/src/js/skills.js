@@ -3,6 +3,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+let cleanupCanvas = null;
+
 /**
  * Interactive Skills Section («مهارت‌ها»)
  * Cinematic black stage with a living particle canvas shared by the title
@@ -17,6 +19,7 @@ export function initSkillsSection() {
   if (panels.length === 0) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
 
   // ------------------------------------------------------------------------
   // Cinematic Entrance, Title Screen Transition, Sequential Pinned Showcase & Exit:
@@ -30,12 +33,17 @@ export function initSkillsSection() {
     initTitleScreenTransition(skillsSection);
     initSequentialSkillsShowcase(skillsSection);
     initSkillsExit(skillsSection);
+
+    // Living particle canvas (enabled for fine pointer/desktop; touch uses CSS grid for max FPS)
+    if (!isMobile) {
+      cleanupCanvas = initParticleCanvas(skillsSection);
+    }
   }
 
   // ------------------------------------------------------------------------
   // Helper: Micro-interactions on Skill Nodes (lift above the idle float)
   // ------------------------------------------------------------------------
-  if (!prefersReducedMotion) {
+  if (!prefersReducedMotion && !isMobile) {
     const allNodes = document.querySelectorAll('.skill-node');
     allNodes.forEach(node => {
       node.addEventListener('mouseenter', () => {
@@ -74,6 +82,7 @@ function initSkillsEntrance(skillsSection) {
   const introStage = skillsSection.querySelector('.skills-intro-stage');
   if (!introStage) return;
 
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const title = introStage.querySelector('.skills-intro-title');
   const hint = introStage.querySelector('.skills-intro-hint');
   const tag = introStage.querySelector('.skills-intro-tag');
@@ -88,7 +97,6 @@ function initSkillsEntrance(skillsSection) {
       y: 80,
       opacity: 0,
       scale: 0.86,
-      filter: 'blur(16px)',
       letterSpacing: '0.06em'
     });
   }
@@ -96,8 +104,7 @@ function initSkillsEntrance(skillsSection) {
   if (hint) {
     gsap.set(hint, {
       y: 35,
-      opacity: 0,
-      filter: 'blur(6px)'
+      opacity: 0
     });
   }
 
@@ -131,7 +138,6 @@ function initSkillsEntrance(skillsSection) {
       y: 0,
       opacity: 1,
       scale: 1,
-      filter: 'blur(0px)',
       letterSpacing: '-0.035em',
       ease: 'power2.out',
       duration: 1
@@ -142,7 +148,6 @@ function initSkillsEntrance(skillsSection) {
     entranceTl.to(hint, {
       y: 0,
       opacity: 1,
-      filter: 'blur(0px)',
       ease: 'power2.out',
       duration: 0.85
     }, 0.15);
@@ -221,6 +226,7 @@ function initTitleScreenTransition(skillsSection) {
     }
   });
 
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const dissolveTargets = [title, hint, tag, glow].filter(Boolean);
 
   timeline
@@ -233,7 +239,6 @@ function initTitleScreenTransition(skillsSection) {
     }, 0)
     .to(dissolveTargets, {
       y: -120,
-      filter: 'blur(8px)',
       ease: 'power1.in',
       duration: 0.85
     }, 0)
@@ -263,33 +268,41 @@ function initSequentialSkillsShowcase(skillsSection) {
 
   if (!universe || !stage || panels.length === 0) return;
 
+  // Mobile-aware scroll distance & horizontal progress rail handling
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
+  const pinDistance = isMobile ? '+=180%' : '+=320%';
+  const floatTweens = [];
+
   // Initialize panels: Panel 0 is visible, panels 1..3 are hidden
   panels.forEach((panel, idx) => {
     if (idx === 0) {
-      gsap.set(panel, { opacity: 1, visibility: 'visible', y: 0, scale: 1, filter: 'blur(0px)' });
+      gsap.set(panel, { opacity: 1, visibility: 'visible', y: 0, scale: 1 });
       panel.classList.add('active');
     } else {
-      gsap.set(panel, { opacity: 0, visibility: 'hidden', y: 50, scale: 0.94, filter: 'blur(10px)' });
+      gsap.set(panel, { opacity: 0, visibility: 'hidden', y: isMobile ? 30 : 50, scale: 0.94 });
       panel.classList.remove('active');
     }
 
-    // Set up continuous gentle floating loop on each panel's chips
-    const nodes = panel.querySelectorAll('.skill-node');
-    nodes.forEach((node, i) => {
-      gsap.to(node, {
-        y: i % 2 === 0 ? -6 : 6,
-        x: i % 3 === 0 ? 4 : -4,
-        duration: 2.8 + (i % 4) * 0.5,
-        delay: i * 0.1,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1
+    // Set up continuous gentle floating loop on each panel's chips (Desktop only to guarantee 60-120fps touch scroll)
+    if (!isMobile) {
+      const nodes = panel.querySelectorAll('.skill-node');
+      nodes.forEach((node, i) => {
+        const tween = gsap.to(node, {
+          y: i % 2 === 0 ? -6 : 6,
+          x: i % 3 === 0 ? 4 : -4,
+          duration: 2.8 + (i % 4) * 0.5,
+          delay: i * 0.1,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1
+        });
+        floatTweens.push(tween);
       });
-    });
+    }
 
     // Watermark slow drift
     const watermark = panel.querySelector('.skills-panel-watermark');
-    if (watermark) {
+    if (watermark && !isMobile) {
       gsap.to(watermark, {
         yPercent: -18,
         ease: 'none',
@@ -303,23 +316,31 @@ function initSequentialSkillsShowcase(skillsSection) {
     }
   });
 
+  // Pause chip float tweens when skills section is off-screen to save 100% idle CPU
+  if (floatTweens.length > 0) {
+    ScrollTrigger.create({
+      trigger: skillsSection,
+      start: 'top bottom',
+      end: 'bottom top',
+      onToggle: (self) => {
+        floatTweens.forEach(t => self.isActive ? t.resume() : t.pause());
+      }
+    });
+  }
+
   // Reveal chips on initial panel (Frontend)
   const initialNodes = panels[0].querySelectorAll('.skill-node');
   if (initialNodes.length > 0) {
     gsap.from(initialNodes, {
-      y: 28,
+      y: isMobile ? 14 : 28,
       opacity: 0,
-      scale: 0.7,
-      stagger: 0.07,
-      duration: 0.7,
-      ease: 'back.out(2)',
-      delay: 0.2
+      scale: 0.85,
+      stagger: isMobile ? 0.03 : 0.07,
+      duration: 0.6,
+      ease: 'power2.out',
+      delay: 0.15
     });
   }
-
-  // Mobile-aware scroll distance & horizontal progress rail handling
-  const isMobileScreen = window.innerWidth <= 991;
-  const pinDistance = isMobileScreen ? '+=200%' : '+=320%';
 
   // Master Pinning & Scrubbed Sequential Transitions
   const masterTl = gsap.timeline({
@@ -351,7 +372,7 @@ function initSequentialSkillsShowcase(skillsSection) {
 
   // Smoothly scrub the rail fill across the 4 categories
   if (railFill) {
-    if (isMobileScreen) {
+    if (isMobile) {
       masterTl.fromTo(railFill,
         { scaleX: 0.08, transformOrigin: '0% 50%' },
         { scaleX: 1, ease: 'none', duration: 3 },
@@ -366,14 +387,12 @@ function initSequentialSkillsShowcase(skillsSection) {
     }
   }
 
-
   // --- Step 1 Transition: Panel 0 (FRONTEND) -> Panel 1 (BACKEND & APIS) ---
   masterTl
     .to(panels[0], {
-      y: -60,
+      y: isMobile ? -35 : -60,
       opacity: 0,
       scale: 0.94,
-      filter: 'blur(10px)',
       duration: 0.35,
       ease: 'power2.inOut',
       onComplete: () => {
@@ -390,26 +409,26 @@ function initSequentialSkillsShowcase(skillsSection) {
       y: 0,
       opacity: 1,
       scale: 1,
-      filter: 'blur(0px)',
       duration: 0.35,
       ease: 'power2.out',
       onStart: () => {
         panels[1].classList.add('active');
-        const nodes1 = panels[1].querySelectorAll('.skill-node');
-        gsap.fromTo(nodes1,
-          { y: 22, opacity: 0, scale: 0.75 },
-          { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
-        );
+        if (!isMobile) {
+          const nodes1 = panels[1].querySelectorAll('.skill-node');
+          gsap.fromTo(nodes1,
+            { y: 22, opacity: 0, scale: 0.75 },
+            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+          );
+        }
       }
     }, 0.82);
 
   // --- Step 2 Transition: Panel 1 (BACKEND & APIS) -> Panel 2 (MOTION & 3D) ---
   masterTl
     .to(panels[1], {
-      y: -60,
+      y: isMobile ? -35 : -60,
       opacity: 0,
       scale: 0.94,
-      filter: 'blur(10px)',
       duration: 0.35,
       ease: 'power2.inOut',
       onComplete: () => {
@@ -426,26 +445,26 @@ function initSequentialSkillsShowcase(skillsSection) {
       y: 0,
       opacity: 1,
       scale: 1,
-      filter: 'blur(0px)',
       duration: 0.35,
       ease: 'power2.out',
       onStart: () => {
         panels[2].classList.add('active');
-        const nodes2 = panels[2].querySelectorAll('.skill-node');
-        gsap.fromTo(nodes2,
-          { y: 22, opacity: 0, scale: 0.75 },
-          { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
-        );
+        if (!isMobile) {
+          const nodes2 = panels[2].querySelectorAll('.skill-node');
+          gsap.fromTo(nodes2,
+            { y: 22, opacity: 0, scale: 0.75 },
+            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+          );
+        }
       }
     }, 1.82);
 
   // --- Step 3 Transition: Panel 2 (MOTION & 3D) -> Panel 3 (TOOLS & AI) ---
   masterTl
     .to(panels[2], {
-      y: -60,
+      y: isMobile ? -35 : -60,
       opacity: 0,
       scale: 0.94,
-      filter: 'blur(10px)',
       duration: 0.35,
       ease: 'power2.inOut',
       onComplete: () => {
@@ -462,16 +481,17 @@ function initSequentialSkillsShowcase(skillsSection) {
       y: 0,
       opacity: 1,
       scale: 1,
-      filter: 'blur(0px)',
       duration: 0.35,
       ease: 'power2.out',
       onStart: () => {
         panels[3].classList.add('active');
-        const nodes3 = panels[3].querySelectorAll('.skill-node');
-        gsap.fromTo(nodes3,
-          { y: 22, opacity: 0, scale: 0.75 },
-          { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
-        );
+        if (!isMobile) {
+          const nodes3 = panels[3].querySelectorAll('.skill-node');
+          gsap.fromTo(nodes3,
+            { y: 22, opacity: 0, scale: 0.75 },
+            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+          );
+        }
       }
     }, 2.82);
 }
@@ -504,12 +524,13 @@ function initSkillsExit(skillsSection) {
     }
   });
 
-  // Gracefully dissolve, scale down, blur, and lift the skills stage
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
+
+  // Gracefully dissolve, scale down, and lift the skills stage
   exitTl.to(stage, {
     y: -70,
     scale: 0.94,
     opacity: 0,
-    filter: 'blur(14px)',
     ease: 'power2.in',
     duration: 1
   }, 0);
@@ -594,7 +615,7 @@ function initParticleCanvas(section) {
 
   const resize = () => {
     const rect = section.getBoundingClientRect();
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = 1; // High performance DPR 1 saves >100MB texture memory
     width = rect.width;
     height = rect.height;
     canvas.width = Math.floor(width * dpr);
@@ -604,9 +625,7 @@ function initParticleCanvas(section) {
   };
 
   const seed = () => {
-    const maxTarget = window.innerWidth <= 860 ? 30 : 90;
-    const minTarget = window.innerWidth <= 860 ? 18 : 34;
-    const target = Math.min(maxTarget, Math.max(minTarget, Math.floor((width * height) / 22000)));
+    const target = 36; // Lightweight particle count for butter-smooth 60+ FPS
     particles = Array.from({ length: target }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,

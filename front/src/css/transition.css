@@ -17,6 +17,13 @@
   color: #FFFFFF;
 }
 
+@media (max-width: 860px) {
+  .transition-section {
+    background-image: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.05) 0%, transparent 75%);
+    background-size: 100% 100%;
+  }
+}
+
 /* Hairline top separator connecting with Hero (removed as requested) */
 .transition-section::before {
   display: none;
@@ -93,6 +100,13 @@
   animation: rgbChromaticGlow 4s linear infinite;
   direction: ltr;
   unicode-bidi: embed;
+}
+
+@media (max-width: 860px) {
+  .glow-rgb-term {
+    animation: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 16px rgba(100, 180, 255, 0.4);
+  }
 }
 
 @keyframes rgbChromaticGlow {
@@ -193,18 +207,22 @@
   transform: translateY(5px);
 }
 
-/* Pre-animation state — GSAP ScrollTrigger fades these up and blurs them sharp */
+/* Pre-animation state — GSAP ScrollTrigger fades these up smoothly */
 .transition-reveal {
   opacity: 0;
-  filter: blur(10px);
   transform: translateY(36px);
-  will-change: opacity, filter, transform;
+  will-change: opacity, transform;
+}
+
+@media (max-width: 860px) {
+  .transition-reveal {
+    will-change: opacity, transform;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .transition-reveal {
     opacity: 1;
-    filter: blur(0);
     transform: none;
   }
 }

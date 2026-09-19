@@ -339,15 +339,13 @@
 
 .cta-choice-reveal {
   opacity: 0;
-  filter: blur(10px);
   transform: translateY(30px);
-  will-change: opacity, filter, transform;
+  will-change: opacity, transform;
 }
 
 .cta-choice-panel-reveal {
   opacity: 0;
-  filter: blur(12px);
-  will-change: opacity, filter, transform;
+  will-change: opacity, transform;
 }
 
 .cta-choice-panel-idea.cta-choice-panel-reveal {
@@ -361,7 +359,6 @@
 .cta-choice-reveal.is-shown,
 .cta-choice-panel-reveal.is-shown {
   opacity: 1;
-  filter: blur(0);
   transform: none;
   will-change: auto;
 }
