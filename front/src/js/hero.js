@@ -6,13 +6,15 @@ export function initHero3D() {
 
   if (!video || !heroSection) return null;
 
-  // 1. Performance: Pause video when scrolled out of view to save 30-50% CPU/GPU on mobile & desktop
+  // 1. Performance: Pause video and ambient halo animations when scrolled out of view to save CPU/GPU
   if ('IntersectionObserver' in window) {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          heroSection.classList.remove('is-hero-offscreen');
           if (video.paused) video.play().catch(() => {});
         } else {
+          heroSection.classList.add('is-hero-offscreen');
           if (!video.paused) video.pause();
         }
       });
@@ -23,10 +25,12 @@ export function initHero3D() {
     // Also pause if document is hidden (background tab)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
+        heroSection.classList.add('is-hero-offscreen');
         if (!video.paused) video.pause();
       } else {
         const rect = heroSection.getBoundingClientRect();
         if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          heroSection.classList.remove('is-hero-offscreen');
           if (video.paused) video.play().catch(() => {});
         }
       }

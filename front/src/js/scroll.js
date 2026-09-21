@@ -12,12 +12,12 @@ export function initScrollEngine() {
   if (!isTouchDevice) {
     // Initialize Lenis smooth scroll for Desktop (mouse wheel)
     lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1
+      wheelMultiplier: 0.95
     });
 
     // Synchronize Lenis with GSAP ScrollTrigger
@@ -26,16 +26,10 @@ export function initScrollEngine() {
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
-  } else {
-    // Mobile / Touch devices: native 120Hz/60Hz compositor scrolling
-    // ScrollTrigger will update passively with zero main thread blocking
-    window.addEventListener('scroll', () => {
-      ScrollTrigger.update();
-    }, { passive: true });
   }
 
-  // Enable lag smoothing to prevent jarring frame skips during mobile GC/rendering spikes
-  gsap.ticker.lagSmoothing(500, 33);
+  // Official GSAP + Lenis recommendation: disable lagSmoothing to avoid frame stutter/skips
+  gsap.ticker.lagSmoothing(0);
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -46,7 +40,7 @@ export function initScrollEngine() {
         if (targetElement) {
           e.preventDefault();
           if (lenis) {
-            lenis.scrollTo(targetElement, { offset: -40, duration: 1.1 });
+            lenis.scrollTo(targetElement, { offset: -40, duration: 1.0 });
           } else {
             targetElement.scrollIntoView({ behavior: 'smooth' });
           }
@@ -202,19 +196,22 @@ function setupScrollAnimations() {
     });
   });
 
-  // Project cards in the Selected Works grid — cinematic entrance
+  // Project cards in the Selected Works grid — silky smooth 60fps entrance
   const gridCards = document.querySelectorAll('.work-grid-card');
   const worksGrid = document.querySelector('.works-grid-container');
   if (gridCards.length > 0 && worksGrid) {
     const isMobile = window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (isMobile) {
-      // Fluid mobile/touch card animation (smooth 60fps without heavy 3D perspective or deep blurs)
+    if (reducedMotion) {
+      worksGrid.classList.add('is-animated');
+      gsap.set(gridCards, { clearProps: 'all' });
+    } else {
+      // Lightweight 2D GPU translation and opacity — eliminates 3D rasterization bottlenecks
       gsap.set(gridCards, {
-        y: 45,
+        y: isMobile ? 35 : 55,
         opacity: 0,
-        scale: 0.97,
-        willChange: 'transform, opacity'
+        scale: 0.98
       });
 
       const workTl = gsap.timeline({
@@ -226,7 +223,7 @@ function setupScrollAnimations() {
         onComplete: () => {
           worksGrid.classList.add('is-animated');
           gsap.set(gridCards, { clearProps: 'all' });
-          gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'transform' });
+          gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'all' });
         }
       });
 
@@ -235,74 +232,19 @@ function setupScrollAnimations() {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.75,
+          duration: isMobile ? 0.6 : 0.75,
           ease: 'power3.out'
-        }, idx * 0.18);
+        }, idx * 0.1);
 
         const lines = card.querySelectorAll('.work-card-line-inner');
         if (lines.length > 0) {
           workTl.to(lines, {
             y: '0%',
-            duration: 0.6,
+            duration: 0.55,
             ease: 'power3.out',
-            stagger: 0.08
-          }, idx * 0.18 + 0.15);
+            stagger: 0.06
+          }, idx * 0.1 + 0.08);
         }
-      });
-    } else {
-      // Full cinematic desktop 3D entrance (pure GPU transform & opacity without heavy raster blur)
-      gsap.set(gridCards, {
-        y: 80,
-        opacity: 0,
-        scale: 0.94,
-        rotateX: 10,
-        transformPerspective: 1200,
-        transformOrigin: '50% 100%',
-        willChange: 'transform, opacity'
-      });
-
-      // Group cards into visual row pairs (two per row)
-      const pairs = [];
-      for (let i = 0; i < gridCards.length; i += 2) {
-        pairs.push([gridCards[i], gridCards[i + 1]].filter(Boolean));
-      }
-
-      const workTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: worksGrid,
-          start: 'top 80%',
-          once: true
-        },
-        onComplete: () => {
-          worksGrid.classList.add('is-animated');
-          gsap.set(gridCards, { clearProps: 'all' });
-          gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'transform' });
-        }
-      });
-
-      pairs.forEach((pair, pairIndex) => {
-        const rowStart = pairIndex * 0.4;
-
-        workTl.to(pair, {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          rotateX: 0,
-          duration: 1.0,
-          ease: 'power3.out'
-        }, rowStart);
-
-        pair.forEach((card) => {
-          const lines = card.querySelectorAll('.work-card-line-inner');
-          if (lines.length > 0) {
-            workTl.to(lines, {
-              y: '0%',
-              duration: 0.95,
-              ease: 'power4.out',
-              stagger: 0.14
-            }, rowStart + 0.55);
-          }
-        });
       });
     }
   }

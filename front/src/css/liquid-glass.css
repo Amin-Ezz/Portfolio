@@ -10,7 +10,13 @@
   box-shadow: var(--glass-shadow);
   border-radius: 20px;
   position: relative;
-  transition: transform 0.4s var(--ease-out-expo), 
+  transition: box-shadow 0.4s var(--ease-out-expo), 
+              background-color 0.4s ease, 
+              border-color 0.4s ease;
+}
+
+.liquid-glass-interactive {
+  transition: transform 0.4s var(--ease-out-expo),
               box-shadow 0.4s var(--ease-out-expo), 
               background-color 0.4s ease, 
               border-color 0.4s ease;
@@ -391,7 +397,6 @@
 
 .hero-halo {
   position: absolute;
-  will-change: transform;
   mix-blend-mode: screen;
 }
 
@@ -404,7 +409,10 @@
   inset: 0;
   border-radius: 50%;
   filter: blur(70px);
-  will-change: transform, opacity;
+}
+
+.is-hero-offscreen .hero-halo::before {
+  animation-play-state: paused !important;
 }
 
 /* 01: Bright White — Upper Right (behind headline) */
@@ -870,6 +878,12 @@
   border-radius: 6px;
 }
 
+.nav-logo-emblem .emblem-bg,
+.nav-logo-emblem .emblem-glyph,
+.nav-logo-emblem .emblem-dot {
+  transition: fill 0.35s ease;
+}
+
 .nav-logo-name {
   display: inline-flex;
   align-items: center;
@@ -929,13 +943,30 @@
   border-color: rgba(255, 255, 255, 0.4);
 }
 
+/* In white/light sections: Links are solid high-contrast black as requested */
+.nav-3d-slab:not(.is-dark) .nav-link-item {
+  color: #000000 !important;
+  font-weight: 700;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-3d-slab:not(.is-dark) .nav-link-item:hover {
+  color: #000000 !important;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 9999px;
+}
+
+/* In dark/black sections: Links are bright crisp white matching Hero */
 .nav-3d-slab.is-dark .nav-link-item {
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-weight: 600;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .nav-3d-slab.is-dark .nav-link-item:hover {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
 }
 
 .nav-3d-slab.is-dark .nav-slab-cta {
@@ -963,7 +994,10 @@
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s ease;
+  transition: transform 0.3s var(--ease-out-expo),
+              box-shadow 0.3s ease,
+              background-color 0.35s ease,
+              color 0.35s ease;
 }
 
 .nav-slab-cta:hover {

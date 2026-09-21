@@ -356,6 +356,10 @@
   transform: translateX(40px);
 }
 
+.cta-choice-panel.cta-choice-panel-reveal:not(.is-shown) {
+  transition: none !important;
+}
+
 .cta-choice-reveal.is-shown,
 .cta-choice-panel-reveal.is-shown {
   opacity: 1;

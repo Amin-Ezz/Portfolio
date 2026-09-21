@@ -11,12 +11,31 @@ export function initNavigation() {
   if (navSlab || backToTopBtn) {
     let ticking = false;
 
+    // Detect all sections with a dark/black background
+    const darkSections = Array.from(document.querySelectorAll(
+      '#hero, .transition-section, #skills, #cta-choice, #contact, [data-theme="dark"], .skills-section, .cta-choice-section, .contact-section'
+    ));
+
     const onScroll = () => {
       const scrollY = window.scrollY;
       const innerHeight = window.innerHeight;
 
       if (navSlab) {
-        navSlab.classList.toggle('is-dark', scrollY < innerHeight - 72);
+        // Vertical check point where the fixed navbar slab sits in viewport
+        const navRect = navSlab.getBoundingClientRect();
+        const checkY = navRect.top + navRect.height / 2;
+
+        let isOverDark = false;
+        for (let i = 0; i < darkSections.length; i++) {
+          const rect = darkSections[i].getBoundingClientRect();
+          // Check if navbar's vertical center lies inside this dark section
+          if (rect.top <= checkY && rect.bottom >= checkY) {
+            isOverDark = true;
+            break;
+          }
+        }
+
+        navSlab.classList.toggle('is-dark', isOverDark);
       }
 
       if (backToTopBtn) {
@@ -38,6 +57,18 @@ export function initNavigation() {
     };
 
     window.addEventListener('scroll', requestTick, { passive: true });
+
+    // Synchronize with Lenis smooth scroll updates
+    if (window.lenis) {
+      window.lenis.on('scroll', requestTick);
+    } else {
+      setTimeout(() => {
+        if (window.lenis) {
+          window.lenis.on('scroll', requestTick);
+        }
+      }, 200);
+    }
+
     onScroll(); // Run initially
 
     if (backToTopBtn) {

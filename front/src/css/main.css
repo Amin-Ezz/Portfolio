@@ -259,10 +259,28 @@ button {
 .work-card-line .work-card-line-inner {
   display: block;
   transform: translateY(110%);
-  will-change: transform;
 }
 
 .works-grid-container.is-animated .work-card-line .work-card-line-inner {
   transform: translateY(0);
+}
+
+/* Selected Works Grid Cards Performance Isolation */
+.work-grid-card {
+  contain: paint;
+  transition: box-shadow 0.4s var(--ease-out-expo), 
+              background-color 0.4s ease, 
+              border-color 0.4s ease;
+}
+
+.works-grid-container.is-animated .work-grid-card {
+  transition: transform 0.4s var(--ease-out-expo), 
+              box-shadow 0.4s var(--ease-out-expo), 
+              background-color 0.4s ease, 
+              border-color 0.4s ease;
+}
+
+.works-grid-container.is-animated .work-grid-card:hover {
+  transform: translateY(-4px);
 }
 
