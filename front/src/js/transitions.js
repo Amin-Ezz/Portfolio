@@ -189,7 +189,7 @@ export function executeProjectExit(targetUrl = '/') {
     if (path.includes('mod-style')) {
       slug = 'mod-style';
       title = 'MODSTYLE';
-      imageSrc = '/images/modstyle-hero.png';
+      imageSrc = '/images/modstyle-hero.png?v=2';
     } else if (path.includes('project-management')) {
       slug = 'project-management';
       title = 'NORTHWIND';

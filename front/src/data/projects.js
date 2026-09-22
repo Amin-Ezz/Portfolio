@@ -71,9 +71,9 @@ export const projects = [
     technologies: ["HTML5", "Tailwind CSS", "Vanilla JavaScript (ES6+)", "Django", "Django REST Framework", "GSAP", "Lenis"],
     liveUrl: "https://modstyle.vercel.app/",
     githubUrl: "https://github.com/Amin-Ezz/OnlineShopping",
-    heroImage: "/images/modstyle-hero.png",
+    heroImage: "/images/modstyle-hero.png?v=2",
     detailImages: [
-      "/images/modstyle-hero.png",
+      "/images/modstyle-hero.png?v=2",
       "/images/modstyle-discovery.png",
       "/images/modstyle-filtering.png",
       "/images/modstyle-product.png",
