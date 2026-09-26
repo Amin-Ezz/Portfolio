@@ -202,10 +202,13 @@ function setupScrollAnimations() {
   if (gridCards.length > 0 && worksGrid) {
     const isMobile = window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isReturningFromProject = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true' ||
+                                   document.documentElement.classList.contains('is-returning-from-project');
 
-    if (reducedMotion) {
+    if (reducedMotion || isReturningFromProject) {
       worksGrid.classList.add('is-animated');
       gsap.set(gridCards, { clearProps: 'all' });
+      gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'all' });
     } else {
       // Lightweight 2D GPU translation and opacity — eliminates 3D rasterization bottlenecks
       gsap.set(gridCards, {

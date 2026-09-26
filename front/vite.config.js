@@ -5,7 +5,8 @@ export default defineConfig({
   root: '.',
   publicDir: 'public',
   server: {
-    port: 3000,
+    // PORT is injected by the preview harness (autoPort); 3000 stays the local default
+    port: process.env.PORT ? Number(process.env.PORT) : 3000,
     open: false,
     proxy: {
       '/api': {

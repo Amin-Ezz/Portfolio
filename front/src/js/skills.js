@@ -272,6 +272,35 @@ function initSequentialSkillsShowcase(skillsSection) {
   const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const pinDistance = isMobile ? '+=180%' : '+=320%';
   const floatTweens = [];
+  const panelFloatMap = new Map();
+
+  // Helper: start continuous organic floating loop on a panel's skill chips
+  function startPanelFloat(panel) {
+    if (isMobile || !panel) return;
+    const existing = panelFloatMap.get(panel);
+    if (existing && existing.length > 0) {
+      existing.forEach(t => {
+        if (!t.isActive()) t.restart();
+      });
+      return;
+    }
+    const nodes = panel.querySelectorAll('.skill-node');
+    const tweens = [];
+    nodes.forEach((node, i) => {
+      const tw = gsap.to(node, {
+        y: i % 2 === 0 ? -6.5 : 6.5,
+        x: i % 3 === 0 ? 4.5 : -4.5,
+        duration: 2.7 + (i % 4) * 0.45,
+        delay: (i % 5) * 0.12,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+      tweens.push(tw);
+      floatTweens.push(tw);
+    });
+    panelFloatMap.set(panel, tweens);
+  }
 
   // Initialize panels: Panel 0 is visible, panels 1..3 are hidden
   panels.forEach((panel, idx) => {
@@ -283,21 +312,9 @@ function initSequentialSkillsShowcase(skillsSection) {
       panel.classList.remove('active');
     }
 
-    // Set up continuous gentle floating loop on each panel's chips (Desktop only to guarantee 60-120fps touch scroll)
+    // Set up continuous gentle floating loop on ALL panels' chips (Frontend, Backend, Creative Web, Tools & AI)
     if (!isMobile) {
-      const nodes = panel.querySelectorAll('.skill-node');
-      nodes.forEach((node, i) => {
-        const tween = gsap.to(node, {
-          y: i % 2 === 0 ? -6 : 6,
-          x: i % 3 === 0 ? 4 : -4,
-          duration: 2.8 + (i % 4) * 0.5,
-          delay: i * 0.1,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1
-        });
-        floatTweens.push(tween);
-      });
+      startPanelFloat(panel);
     }
 
     // Watermark slow drift
@@ -343,6 +360,7 @@ function initSequentialSkillsShowcase(skillsSection) {
   }
 
   // Master Pinning & Scrubbed Sequential Transitions
+  let currentActiveIdx = 0;
   const masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: universe,
@@ -366,28 +384,41 @@ function initSequentialSkillsShowcase(skillsSection) {
             node.classList.remove('active');
           }
         });
+
+        if (activeIdx !== currentActiveIdx) {
+          currentActiveIdx = activeIdx;
+          startPanelFloat(panels[currentActiveIdx]);
+        }
       }
     }
   });
 
-  // Smoothly scrub the rail fill across the 4 categories
+  // Enable click navigation on custom section rail badges
+  railNodes.forEach((node, idx) => {
+    node.addEventListener('click', (e) => {
+      e.preventDefault();
+      const st = masterTl.scrollTrigger;
+      if (!st) return;
+      const targetRatios = [0.01, 0.28, 0.58, 0.88];
+      const targetScroll = st.start + (st.end - st.start) * targetRatios[idx];
+      if (window.lenis) {
+        window.lenis.scrollTo(targetScroll, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Smoothly scrub the vertical rail fill across the 4 categories
   if (railFill) {
-    if (isMobile) {
-      masterTl.fromTo(railFill,
-        { scaleX: 0.08, transformOrigin: '0% 50%' },
-        { scaleX: 1, ease: 'none', duration: 3 },
-        0
-      );
-    } else {
-      masterTl.fromTo(railFill,
-        { scaleY: 0.08, transformOrigin: '50% 0%' },
-        { scaleY: 1, ease: 'none', duration: 3 },
-        0
-      );
-    }
+    masterTl.fromTo(railFill,
+      { scaleY: 0.08, transformOrigin: '50% 0%' },
+      { scaleY: 1, ease: 'none', duration: 3 },
+      0
+    );
   }
 
-  // --- Step 1 Transition: Panel 0 (FRONTEND) -> Panel 1 (BACKEND & APIS) ---
+  // --- Step 1 Transition: Panel 0 (FRONTEND) -> Panel 1 (BACKEND) ---
   masterTl
     .to(panels[0], {
       y: isMobile ? -35 : -60,
@@ -402,6 +433,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       onReverseComplete: () => {
         panels[0].classList.add('active');
         gsap.set(panels[0], { visibility: 'visible' });
+        startPanelFloat(panels[0]);
       }
     }, 0.65)
     .set(panels[1], { visibility: 'visible' }, 0.82)
@@ -413,17 +445,25 @@ function initSequentialSkillsShowcase(skillsSection) {
       ease: 'power2.out',
       onStart: () => {
         panels[1].classList.add('active');
+        startPanelFloat(panels[1]);
         if (!isMobile) {
           const nodes1 = panels[1].querySelectorAll('.skill-node');
           gsap.fromTo(nodes1,
-            { y: 22, opacity: 0, scale: 0.75 },
-            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: 1,
+              scale: 1,
+              stagger: 0.04,
+              duration: 0.45,
+              ease: 'back.out(1.7)',
+              onComplete: () => startPanelFloat(panels[1])
+            }
           );
         }
       }
     }, 0.82);
 
-  // --- Step 2 Transition: Panel 1 (BACKEND & APIS) -> Panel 2 (MOTION & 3D) ---
+  // --- Step 2 Transition: Panel 1 (BACKEND) -> Panel 2 (CREATIVE WEB) ---
   masterTl
     .to(panels[1], {
       y: isMobile ? -35 : -60,
@@ -438,6 +478,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       onReverseComplete: () => {
         panels[1].classList.add('active');
         gsap.set(panels[1], { visibility: 'visible' });
+        startPanelFloat(panels[1]);
       }
     }, 1.65)
     .set(panels[2], { visibility: 'visible' }, 1.82)
@@ -449,17 +490,25 @@ function initSequentialSkillsShowcase(skillsSection) {
       ease: 'power2.out',
       onStart: () => {
         panels[2].classList.add('active');
+        startPanelFloat(panels[2]);
         if (!isMobile) {
           const nodes2 = panels[2].querySelectorAll('.skill-node');
           gsap.fromTo(nodes2,
-            { y: 22, opacity: 0, scale: 0.75 },
-            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: 1,
+              scale: 1,
+              stagger: 0.04,
+              duration: 0.45,
+              ease: 'back.out(1.7)',
+              onComplete: () => startPanelFloat(panels[2])
+            }
           );
         }
       }
     }, 1.82);
 
-  // --- Step 3 Transition: Panel 2 (MOTION & 3D) -> Panel 3 (TOOLS & AI) ---
+  // --- Step 3 Transition: Panel 2 (CREATIVE WEB) -> Panel 3 (TOOLS & AI) ---
   masterTl
     .to(panels[2], {
       y: isMobile ? -35 : -60,
@@ -474,6 +523,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       onReverseComplete: () => {
         panels[2].classList.add('active');
         gsap.set(panels[2], { visibility: 'visible' });
+        startPanelFloat(panels[2]);
       }
     }, 2.65)
     .set(panels[3], { visibility: 'visible' }, 2.82)
@@ -485,11 +535,19 @@ function initSequentialSkillsShowcase(skillsSection) {
       ease: 'power2.out',
       onStart: () => {
         panels[3].classList.add('active');
+        startPanelFloat(panels[3]);
         if (!isMobile) {
           const nodes3 = panels[3].querySelectorAll('.skill-node');
           gsap.fromTo(nodes3,
-            { y: 22, opacity: 0, scale: 0.75 },
-            { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' }
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: 1,
+              scale: 1,
+              stagger: 0.04,
+              duration: 0.45,
+              ease: 'back.out(1.7)',
+              onComplete: () => startPanelFloat(panels[3])
+            }
           );
         }
       }

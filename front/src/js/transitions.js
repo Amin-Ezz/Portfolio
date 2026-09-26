@@ -269,33 +269,44 @@ export function executeProjectExit(targetUrl = '/') {
  */
 function handlePageReturn() {
   const originStr = sessionStorage.getItem('amin_project_origin');
-  if (!originStr) return;
+  const clearReturnCover = () => {
+    document.documentElement.classList.remove('is-returning-from-project');
+  };
 
-  const returnHash = sessionStorage.getItem('amin_return_hash');
-  // If returning to a different section (not projects) and no card animation is wanted
-  if (returnHash && returnHash !== 'projects') {
-    sessionStorage.removeItem('amin_return_hash');
-    sessionStorage.removeItem('amin_project_origin');
-    sessionStorage.removeItem('amin_trigger_reverse_transition');
-    scrollToHomeSection(returnHash);
+  if (!originStr) {
+    clearReturnCover();
     return;
   }
-  if (returnHash) {
-    sessionStorage.removeItem('amin_return_hash');
-  }
 
-  const isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true' ||
-    (document.referrer && document.referrer.includes('/projects/'));
-
-  if (!isReturning) return;
-  sessionStorage.removeItem('amin_trigger_reverse_transition');
-
-  let originData;
   try {
-    originData = JSON.parse(originStr);
-  } catch (e) {
-    return;
-  }
+    const returnHash = sessionStorage.getItem('amin_return_hash');
+    // If returning to a different section (not projects) and no card animation is wanted
+    if (returnHash && returnHash !== 'projects') {
+      sessionStorage.removeItem('amin_return_hash');
+      sessionStorage.removeItem('amin_project_origin');
+      sessionStorage.removeItem('amin_trigger_reverse_transition');
+      clearReturnCover();
+      scrollToHomeSection(returnHash);
+      return;
+    }
+    if (returnHash) {
+      sessionStorage.removeItem('amin_return_hash');
+    }
+
+    const isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
+    if (!isReturning) {
+      clearReturnCover();
+      return;
+    }
+    sessionStorage.removeItem('amin_trigger_reverse_transition');
+
+    let originData;
+    try {
+      originData = JSON.parse(originStr);
+    } catch (e) {
+      clearReturnCover();
+      return;
+    }
 
   // Disable browser automatic scroll restoration to avoid jumping
   if ('scrollRestoration' in history) {
@@ -353,6 +364,12 @@ function handlePageReturn() {
     gsap.set(overlay, { opacity: 0 });
   }
 
+  // The clone now covers the viewport, so the white pre-paint sheet has done
+  // its job. Drop it immediately — while it stays up it sits at z-index 99998,
+  // just under the clone, so the shrinking card would play over an empty white
+  // page instead of over the site it is shrinking back into.
+  clearReturnCover();
+
   // Use double requestAnimationFrame to ensure browser has completed layout & scroll restoration
   requestAnimationFrame(() => {
     window.scrollTo({ top: targetScrollY, behavior: 'instant' });
@@ -393,7 +410,8 @@ function handlePageReturn() {
       const reverseTl = gsap.timeline({
         onComplete: () => {
           targetCard.style.visibility = '';
-          document.documentElement.classList.remove('is-returning-from-project');
+          gsap.set(targetCard, { opacity: 1, y: 0, scale: 1 });
+          clearReturnCover();
           gsap.fromTo(
             targetCard,
             { scale: 0.96 },
@@ -401,6 +419,9 @@ function handlePageReturn() {
           );
           returnClone.remove();
           sessionStorage.removeItem('amin_project_origin');
+          if (window.ScrollTrigger) {
+            window.ScrollTrigger.refresh();
+          }
         }
       });
 
@@ -428,6 +449,10 @@ function handlePageReturn() {
       }, '-=0.15');
     });
   });
+  } catch (err) {
+    console.error('[AMIN.EZ Transitions] handlePageReturn error:', err);
+    clearReturnCover();
+  }
 }
 
 /**

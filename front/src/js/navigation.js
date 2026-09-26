@@ -44,6 +44,18 @@ export function initNavigation() {
         } else {
           backToTopBtn.classList.remove('is-visible');
         }
+
+        const bRect = backToTopBtn.getBoundingClientRect();
+        const bY = bRect.top + bRect.height / 2;
+        let isBOverDark = false;
+        for (let i = 0; i < darkSections.length; i++) {
+          const rect = darkSections[i].getBoundingClientRect();
+          if (rect.top <= bY && rect.bottom >= bY) {
+            isBOverDark = true;
+            break;
+          }
+        }
+        backToTopBtn.classList.toggle('is-dark', isBOverDark);
       }
 
       ticking = false;

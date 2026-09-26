@@ -19,10 +19,10 @@ import { initContactForm, checkBackendHealth } from './api.js';
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Global Systems
   initCursor();
-  initTransitions();
-  initNavigation();
   const lenis = initScrollEngine();
   window.lenis = lenis;
+  initNavigation();
+  initTransitions();
 
   // Initialize Interactive Skills Section («مهارت‌ها»)
   initSkillsSection();
