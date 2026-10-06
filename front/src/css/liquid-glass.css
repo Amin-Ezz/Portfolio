@@ -1,0 +1,1212 @@
+/* ==========================================================================
+   Liquid Glass & 3D Physical Cards Engine
+   ========================================================================== */
+
+.liquid-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 20px;
+  position: relative;
+  transition: box-shadow 0.4s var(--ease-out-expo), 
+              background-color 0.4s ease, 
+              border-color 0.4s ease;
+}
+
+.liquid-glass-interactive {
+  transition: transform 0.4s var(--ease-out-expo),
+              box-shadow 0.4s var(--ease-out-expo), 
+              background-color 0.4s ease, 
+              border-color 0.4s ease;
+}
+
+.liquid-glass-interactive:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: var(--glass-shadow-hover);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+/* Floating Navigation Bar — 3D Liquid Glass */
+.liquid-glass-nav {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(255, 255, 255, 0.62) 45%,
+    rgba(255, 255, 255, 0.78) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -1px 1px rgba(255, 255, 255, 0.35) inset,
+    0 10px 35px rgba(0, 0, 0, 0.06),
+    0 24px 60px rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+  padding: 0.55rem 1.4rem;
+  transition: box-shadow 0.4s var(--ease-out-expo), border-color 0.4s ease;
+  overflow: hidden;
+}
+
+/* Moving specular light sweep across the glass surface — disabled */
+.glass-specular {
+  display: none;
+}
+
+.liquid-glass-nav:hover .glass-specular {
+  opacity: 0;
+}
+
+.liquid-glass-nav .nav-link-item {
+  position: relative;
+  z-index: 2;
+}
+
+/* Small Tag/Pill Badges */
+.liquid-glass-pill {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 9999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* 3D Scene Viewport */
+.hero-3d-scene {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* 3D Stack Container */
+.project-stack-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 580px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Physical Project Card (Layered & Realistic) */
+.project-card-3d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 15px 35px -5px rgba(0, 0, 0, 0.06),
+    0 35px 80px -15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transform-origin: center center;
+  transition: box-shadow 0.5s var(--ease-out-expo), border-color 0.4s ease;
+  will-change: transform, opacity;
+}
+
+.project-card-3d:hover {
+  box-shadow:
+    0 25px 45px -5px rgba(0, 0, 0, 0.09),
+    0 45px 100px -10px rgba(0, 0, 0, 0.14);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+/* Inside Card Content Structure */
+.project-card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.project-card-media {
+  position: relative;
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+  background-color: #F1F1EF;
+}
+
+.project-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transform: scale(1.02);
+  transition: transform 0.7s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.project-card-3d:hover .project-card-media img {
+  transform: scale(1.08);
+}
+
+/* Subtle Light Sheen Overlay on Hover */
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
+}
+
+.project-card-3d:hover .card-sheen {
+  opacity: 1;
+}
+
+/* Card Bottom Metadata Area */
+.project-card-info {
+  height: 30%;
+  padding: 1.4rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #FFFFFF;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Project Selector Dock at bottom of Hero */
+.project-selector-dock {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+  padding: 0.35rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.selector-item {
+  padding: 0.45rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.selector-item:hover {
+  color: var(--text-primary);
+}
+
+.selector-item.active {
+  color: var(--text-primary);
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.selector-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-black);
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.3s var(--ease-out-expo), opacity 0.3s ease;
+}
+
+.selector-item.active .selector-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Autoplay Progress Line underneath active tab */
+.selector-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: var(--accent-black);
+  transform-origin: right center; /* RTL support: fills right-to-left */
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+.selector-item.active .selector-progress {
+  opacity: 0.65;
+}
+
+/* Magnetic Buttons */
+.magnetic-btn-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+/* ==========================================================================
+   Hero background wave — monochrome clip, full-bleed cover
+   The clip's own framing puts the wave in the lower part of the frame, so a
+   straight cover crop reproduces the source composition without any manual
+   positioning. It is already monochrome with a true-black background, so it
+   decodes on the hardware path with no CSS filter and never repaints.
+   ========================================================================== */
+.hero-wave-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  background-color: #000000;
+}
+
+/* Vignette — the clip's top-right sweep passes behind the copy, so the edges
+   are darkened just enough to hold contrast without dimming the wave itself. */
+.hero-ambient-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 92% 82% at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.34) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+/* Dark-theme overrides scoped to the hero section */
+.hero-section {
+  color: #F5F5F5;
+}
+
+.hero-section .hero-title,
+.hero-section h1,
+.hero-section h2,
+.hero-section h3 {
+  color: #FFFFFF;
+}
+
+.hero-section .hero-title .hero-heading-inner {
+  color: #FFFFFF;
+}
+
+.hero-section .hero-title .hero-heading-inner[style*="text-secondary"] {
+  color: rgba(235, 235, 235, 0.72) !important;
+}
+
+.hero-section .hero-description {
+  color: rgba(235, 235, 235, 0.78) !important;
+}
+
+.hero-section .hero-stats-grid {
+  border-top-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.hero-section .hero-stat-item .stat-counter-number {
+  color: #FFFFFF;
+}
+
+.hero-section .hero-stat-item div:last-child {
+  color: rgba(235, 235, 235, 0.6) !important;
+}
+
+.hero-section .liquid-glass-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-section .hero-social-icon {
+  color: #F5F5F5;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.hero-section .hero-social-icon::after {
+  background: #FFFFFF;
+}
+
+.hero-section .hero-social-icon:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero-section .hero-social-icon:hover svg {
+  color: #0A0A0A;
+}
+
+.hero-section .hero-social-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hero-section .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.hero-section .btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.hero-section .btn-primary {
+  background-color: #FFFFFF;
+  color: #050505;
+  box-shadow: 0 8px 28px rgba(255, 255, 255, 0.18);
+}
+
+
+/* Hero Social Icon Row — monochrome, matches editorial black/white theme */
+.hero-social-row {
+  --social-accent: var(--accent-black);
+}
+
+.hero-social-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.hero-social-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-black);
+  opacity: 0;
+  transform: scale(0.4);
+  border-radius: inherit;
+  transition: transform 0.35s var(--ease-out-expo), opacity 0.25s ease;
+  z-index: 0;
+}
+
+.hero-social-icon svg {
+  position: relative;
+  z-index: 1;
+  transition: color 0.25s ease;
+}
+
+.hero-social-icon:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.hero-social-icon:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-social-icon:hover svg {
+  color: #FFFFFF;
+}
+
+.hero-social-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border-medium);
+  margin: 0 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .hero-social-icon {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* Back to Top Button — Pure Transparent Liquid Glass HUD */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 60;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0A0A0A;
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 
+    0 10px 28px rgba(0, 0, 0, 0.08),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity 0.4s var(--ease-out-expo),
+    transform 0.4s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.back-to-top-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-4px) scale(1.06);
+  background: rgba(255, 255, 255, 0.45);
+  color: #000000;
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.12),
+    inset 0 1.5px 1.5px #FFFFFF,
+    inset 0 -1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Floating over dark background sections (Skills, Contact, etc.) */
+.back-to-top-btn.is-dark {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.38);
+  box-shadow: 
+    0 10px 28px rgba(0, 0, 0, 0.35),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.back-to-top-btn.is-dark:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #FFFFFF;
+}
+
+@media (max-width: 640px) {
+  .back-to-top-btn {
+    bottom: 1.25rem;
+    left: 1.25rem;
+    width: 46px;
+    height: 46px;
+  }
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background-color: var(--accent-black);
+  color: #FFFFFF;
+  padding: 0.85rem 1.9rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.85rem 1.8rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.3s var(--ease-out-expo), border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background-color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Floating Vertical Side Toolbar (Removed) */
+.floating-side-toolbar {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Header 3D Liquid Glass — Single Unified Slab
+   One glass bar containing logo, links and actions, leaning in 3D
+   ========================================================================== */
+
+.nav-3d-slab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 22px;
+  isolation: isolate;
+
+  /* Clear Liquid Glass body — translucent, not white */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  /* Glass depth illusion: crisp inner specular bevel + clean ambient drop shadow */
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.05) inset,
+    0 14px 38px -8px rgba(0, 0, 0, 0.10),
+    0 4px 12px -2px rgba(0, 0, 0, 0.05);
+
+  transition: box-shadow 0.5s var(--ease-out-expo), border-color 0.4s ease, background 0.4s ease;
+}
+
+/* Over dark surfaces (hero video): lighter tint + light text */
+.nav-3d-slab.is-dark {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.10) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.30) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.18) inset,
+    0 14px 38px -8px rgba(0, 0, 0, 0.35),
+    0 4px 12px -2px rgba(0, 0, 0, 0.20);
+}
+
+.nav-3d-slab.is-dark::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* Top specular reflection gloss */
+.nav-3d-slab::before {
+  content: '';
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 48%;
+  border-radius: 21px 21px 100px 100px / 21px 21px 18px 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nav-3d-slab:hover {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.08) inset,
+    0 18px 46px -10px rgba(0, 0, 0, 0.12),
+    0 6px 16px -2px rgba(0, 0, 0, 0.06);
+}
+
+/* Bottom edge band — reads as the glass thickness in 3D */
+.nav-slab-edge {
+  display: none;
+}
+
+/* Content sits above the specular layer and floats in 3D */
+.nav-3d-slab > a,
+.nav-3d-slab > nav,
+.nav-3d-slab > div {
+  position: relative;
+  z-index: 2;
+}
+
+/* Logo: Custom High-Contrast Black & White AMIN.EZ */
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.nav-logo:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.nav-logo-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover .nav-logo-emblem {
+  transform: scale(1.08);
+}
+
+.nav-logo-emblem svg {
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
+
+.nav-logo-emblem .emblem-bg,
+.nav-logo-emblem .emblem-glyph,
+.nav-logo-emblem .emblem-dot {
+  transition: fill 0.35s ease;
+}
+
+.nav-logo-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  line-height: 1;
+}
+
+.logo-txt-main {
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.logo-txt-badge {
+  font-family: monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.18rem 0.42rem;
+  border-radius: 4px;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.nav-logo:hover .logo-txt-badge {
+  background: #1a1a1a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark-surface variant: Inverted B&W contrast over the dark hero */
+.nav-3d-slab.is-dark .nav-logo:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-3d-slab.is-dark .nav-logo-emblem .emblem-bg {
+  fill: #ffffff;
+}
+
+.nav-3d-slab.is-dark .nav-logo-emblem .emblem-glyph,
+.nav-3d-slab.is-dark .nav-logo-emblem .emblem-dot {
+  fill: #000000;
+}
+
+.nav-3d-slab.is-dark .logo-txt-main {
+  color: #ffffff;
+}
+
+.nav-3d-slab.is-dark .logo-txt-badge {
+  background: #ffffff;
+  color: #000000;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* In white/light sections: Links are solid high-contrast black as requested */
+.nav-3d-slab:not(.is-dark) .nav-link-item {
+  color: #000000 !important;
+  font-weight: 700;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-3d-slab:not(.is-dark) .nav-link-item:hover {
+  color: #000000 !important;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 9999px;
+}
+
+/* In dark/black sections: Links are bright crisp white matching Hero */
+.nav-3d-slab.is-dark .nav-link-item {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-weight: 600;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-3d-slab.is-dark .nav-link-item:hover {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+
+.nav-3d-slab.is-dark .nav-slab-cta {
+  background: #FFFFFF;
+  color: #050505;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Actions */
+.nav-slab-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.nav-slab-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  background: var(--accent-black);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s var(--ease-out-expo),
+              box-shadow 0.3s ease,
+              background-color 0.35s ease,
+              color 0.35s ease;
+}
+
+.nav-slab-cta:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+}
+
+/* Mobile Nav Toggle Button (Hamburger) */
+.mobile-nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+.mobile-nav-toggle .hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-3d-slab.is-dark .mobile-nav-toggle {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+.mobile-nav-toggle:active {
+  transform: scale(0.92);
+}
+
+/* Mobile Navigation Drawer Overlay */
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+}
+
+.mobile-nav-drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 10, 0.42);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1;
+}
+
+.mobile-nav-panel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100dvh - 2.5rem);
+  overflow-y: auto;
+  background: linear-gradient(145deg, rgba(24, 27, 34, 0.62) 0%, rgba(12, 14, 18, 0.72) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 26px;
+  padding: 1.6rem 1.4rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.55), 
+              0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+              0 1px 0 0 rgba(255, 255, 255, 0.22) inset;
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  transform: translateY(-20px) scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-panel {
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered top-to-bottom entrance animation for drawer sections */
+.mobile-nav-header,
+.mobile-nav-link,
+.mobile-nav-cta,
+.mobile-nav-socials {
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-header {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.08s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-link:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-link:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.21s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-link:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.27s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-link:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.33s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.39s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-socials {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.mobile-nav-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-close:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              border-color 0.25s ease;
+}
+
+.mobile-nav-link:active {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(-4px);
+}
+
+.mobile-link-num {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mobile-link-text {
+  font-size: 1.12rem;
+  font-weight: 700;
+  flex-grow: 1;
+}
+
+.mobile-link-arrow {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.mobile-nav-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 14px;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  font-weight: 800;
+  font-size: 0.96rem;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.mobile-nav-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mobile-nav-socials a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Prevent background scroll when mobile drawer is open */
+body.mobile-menu-active {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+@media (max-width: 860px) {
+  .nav-slab-links {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .nav-3d-slab {
+    gap: 0.75rem;
+    padding: 0.5rem 0.85rem;
+    max-width: calc(100vw - 2rem);
+    backdrop-filter: blur(6px) saturate(130%);
+    -webkit-backdrop-filter: blur(6px) saturate(130%);
+  }
+
+  .nav-logo-name .logo-txt-main {
+    font-size: 0.94rem;
+  }
+
+  .nav-slab-cta {
+    padding: 0.48rem 0.85rem;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-slab-cta span:not(.pulse-dot) {
+    display: inline;
+  }
+  
+  .nav-3d-slab {
+    padding: 0.45rem 0.65rem;
+    gap: 0.5rem;
+  }
+}
+
+
+/* Reduced motion: freeze the 3D stage */
+@media (prefers-reduced-motion: reduce) {
+  .nav-3d-slab > a,
+  .nav-3d-slab > nav,
+  .nav-3d-slab > div {
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+.toolbar-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.3s var(--ease-out-expo);
+  position: relative;
+}
+
+.toolbar-btn:hover, .toolbar-btn.active {
+  color: var(--text-primary);
+  background-color: rgba(0, 0, 0, 0.06);
+  transform: scale(1.08);
+}
+
+/* Toolbar Tooltip (Persian) */
+.toolbar-tooltip {
+  position: absolute;
+  left: calc(100% + 12px);
+  background: var(--accent-black);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-out-expo);
+}
+
+.toolbar-btn:hover .toolbar-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}

@@ -1,0 +1,7 @@
+# robots.txt for https://aminez.ir
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://aminez.ir/sitemap.xml
