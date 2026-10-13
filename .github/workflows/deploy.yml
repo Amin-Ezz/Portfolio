@@ -27,8 +27,10 @@ jobs:
       - name: 🔨 Install & Build Frontend
         working-directory: front
         run: |
+          rm -rf node_modules
           npm install
-          npm run build
+          chmod -R +x node_modules/.bin || true
+          npx vite build
 
       - name: 🌐 Deploy front/dist to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
