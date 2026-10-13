@@ -208,21 +208,29 @@ html {
 }
 
 /* ==========================================================================
-   Selected Works — Two-Column Balanced Showcase Grid (4 Projects)
+   Selected Works — Three-Column Side-by-Side Showcase Grid (3 Projects)
    ========================================================================== */
 .works-grid-container {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.85rem;
-  max-width: 1240px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.65rem;
+  max-width: 1400px;
   margin-inline: auto;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1120px) {
+  .works-grid-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 900px;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
   .works-grid-container {
     grid-template-columns: 1fr;
-    max-width: 580px;
-    gap: 1.6rem;
+    max-width: 540px;
+    gap: 1.5rem;
   }
 }
 

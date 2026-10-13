@@ -52,17 +52,29 @@ def frontend_view(request, filename='index.html'):
     target_file = dist_dir / filename
     if target_file.exists() and target_file.is_file():
         content_type = 'text/html' if filename.endswith('.html') else 'text/plain; charset=utf-8'
-        return HttpResponse(target_file.read_bytes(), content_type=content_type)
+        response = HttpResponse(target_file.read_bytes(), content_type=content_type)
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     # Fallback to staticfiles index.html
     staticfiles_index = Path(settings.STATIC_ROOT) / 'index.html'
     if staticfiles_index.exists() and staticfiles_index.is_file():
-        return HttpResponse(staticfiles_index.read_bytes(), content_type='text/html; charset=utf-8')
+        response = HttpResponse(staticfiles_index.read_bytes(), content_type='text/html; charset=utf-8')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     # Fallback to dist index.html
     index_file = dist_dir / 'index.html'
     if index_file.exists():
-        return HttpResponse(index_file.read_bytes(), content_type='text/html; charset=utf-8')
+        response = HttpResponse(index_file.read_bytes(), content_type='text/html; charset=utf-8')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     # If frontend has not been compiled yet, return API root
     return api_root_view(request)
@@ -70,15 +82,25 @@ def frontend_view(request, filename='index.html'):
 
 def project_page_view(request, project_slug):
     """Serve specific project editorial case study HTML if available."""
+    # Strip any trailing .html or query string from slug if present
+    clean_slug = project_slug.replace('.html', '').split('?')[0]
     dist_dir = settings.BASE_DIR.parent / 'front' / 'dist' / 'projects'
-    project_html = dist_dir / f"{project_slug}.html"
+    project_html = dist_dir / f"{clean_slug}.html"
     if project_html.exists():
-        return HttpResponse(project_html.read_bytes(), content_type='text/html; charset=utf-8')
+        response = HttpResponse(project_html.read_bytes(), content_type='text/html; charset=utf-8')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     # Check staticfiles projects
-    static_project = Path(settings.STATIC_ROOT) / 'projects' / f"{project_slug}.html"
+    static_project = Path(settings.STATIC_ROOT) / 'projects' / f"{clean_slug}.html"
     if static_project.exists():
-        return HttpResponse(static_project.read_bytes(), content_type='text/html; charset=utf-8')
+        response = HttpResponse(static_project.read_bytes(), content_type='text/html; charset=utf-8')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     return frontend_view(request, 'index.html')
 

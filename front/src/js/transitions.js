@@ -16,6 +16,7 @@ export function isProjectDetailPage() {
   return !!(
     document.querySelector('.project-detail-hero-media') ||
     document.querySelector('.lumina-page') ||
+    document.querySelector('.lumina-showcase-page') ||
     document.querySelector('.lumina-hero-section') ||
     document.querySelector('[data-project-page]') ||
     window.location.pathname.includes('/projects/')
@@ -86,7 +87,7 @@ function executeCardExpansion(sourceElement, targetUrl, title, imageSrc) {
   const rect = sourceElement.getBoundingClientRect();
   const isHero = !!sourceElement.closest('.hero-3d-scene') || sourceElement.classList.contains('hero-project-card');
   const slug = sourceElement.getAttribute('data-slug') || 
-    targetUrl.replace('/projects/', '').replace('.html', '').replace('/', '');
+    targetUrl.split('?')[0].replace('/projects/', '').replace('.html', '').replace('/', '');
 
   // Calculate targetIndex in hero stack if applicable
   let targetIndex = 0;
