@@ -1,16 +1,20 @@
+import 'lenis/dist/lenis.css';
 import '../css/main.css';
 import '../css/liquid-glass.css';
 import '../css/animations.css';
 import '../css/skills.css';
 import '../css/about.css';
 import '../css/transition.css';
-import '../css/cta-choice.css';
+import '../css/problems.css';
+import '../css/expert-impact.css';
 
 import { initCursor } from './cursor.js';
 import { initHero3D } from './hero.js';
 import { initTransitions } from './transitions.js';
 import { initNavigation } from './navigation.js';
 import { initScrollEngine } from './scroll.js';
+import { initProblemsSection } from './problems.js';
+import { initServicesSection } from './services.js';
 import { initSkillsSection } from './skills.js';
 import { initAboutSection } from './about.js';
 import { runInitialLoader } from './loader.js';
@@ -23,6 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.lenis = lenis;
   initNavigation();
   initTransitions();
+
+  // Initialize Diagnostic Problems Section («عارضه‌یابی دیجیتال»)
+  initProblemsSection();
+
+  // Initialize Services & Collaboration Tabs («راه‌های همکاری با من»)
+  initServicesSection();
 
   // Initialize Interactive Skills Section («مهارت‌ها»)
   initSkillsSection();

@@ -68,6 +68,23 @@ export function initContactForm() {
   const statusBox = document.getElementById('contactFormStatus');
   const btnOriginalText = submitBtn ? submitBtn.innerHTML : 'ارسال پیام';
 
+  // High-performance video background controller (Zero CPU/GPU waste when off-screen)
+  const contactSec = document.getElementById('contact');
+  const bgVideo = contactSec?.querySelector('.contact-bg-video');
+  if (contactSec && bgVideo && 'IntersectionObserver' in window) {
+    const vidObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          bgVideo.play().catch(() => {});
+        } else {
+          bgVideo.pause();
+        }
+      });
+    }, { threshold: 0.05 });
+    vidObserver.observe(contactSec);
+  }
+
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 

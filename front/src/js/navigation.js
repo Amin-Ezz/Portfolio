@@ -10,52 +10,80 @@ export function initNavigation() {
 
   if (navSlab || backToTopBtn) {
     let ticking = false;
+    let lastNavDark = null;
+    let lastBVisible = null;
+    let lastBDark = null;
 
     // Detect all sections with a dark/black background
     const darkSections = Array.from(document.querySelectorAll(
-      '#hero, .transition-section, #skills, #cta-choice, #contact, [data-theme="dark"], .skills-section, .cta-choice-section, .contact-section'
+      '#hero, #skills, #contact, [data-theme="dark"], .skills-section, .contact-section'
     ));
+
+    // Cache dark section vertical bounds — eliminates repetitive getBoundingClientRect calls on scroll
+    let darkBounds = [];
+    let navFixedOffset = 45; // fixed top offset of navbar center from viewport top
+
+    const updateBounds = () => {
+      const scrollY = window.scrollY;
+      darkBounds = darkSections.map(sec => {
+        const rect = sec.getBoundingClientRect();
+        return {
+          top: rect.top + scrollY,
+          bottom: rect.bottom + scrollY
+        };
+      });
+
+      if (navSlab) {
+        const nr = navSlab.getBoundingClientRect();
+        navFixedOffset = nr.top + nr.height / 2;
+      }
+    };
+
+    updateBounds();
+    window.addEventListener('resize', updateBounds, { passive: true });
+    window.addEventListener('orientationchange', updateBounds, { passive: true });
+    window.addEventListener('load', updateBounds, { passive: true });
 
     const onScroll = () => {
       const scrollY = window.scrollY;
       const innerHeight = window.innerHeight;
 
       if (navSlab) {
-        // Vertical check point where the fixed navbar slab sits in viewport
-        const navRect = navSlab.getBoundingClientRect();
-        const checkY = navRect.top + navRect.height / 2;
-
+        const checkY = scrollY + navFixedOffset;
         let isOverDark = false;
-        for (let i = 0; i < darkSections.length; i++) {
-          const rect = darkSections[i].getBoundingClientRect();
-          // Check if navbar's vertical center lies inside this dark section
-          if (rect.top <= checkY && rect.bottom >= checkY) {
+        for (let i = 0; i < darkBounds.length; i++) {
+          if (checkY >= darkBounds[i].top && checkY <= darkBounds[i].bottom) {
             isOverDark = true;
             break;
           }
         }
 
-        navSlab.classList.toggle('is-dark', isOverDark);
+        if (isOverDark !== lastNavDark) {
+          lastNavDark = isOverDark;
+          navSlab.classList.toggle('is-dark', isOverDark);
+        }
       }
 
       if (backToTopBtn) {
-        if (scrollY > innerHeight * 0.8) {
-          backToTopBtn.classList.add('is-visible');
-        } else {
-          backToTopBtn.classList.remove('is-visible');
+        const shouldBeVisible = scrollY > innerHeight * 0.8;
+        if (shouldBeVisible !== lastBVisible) {
+          lastBVisible = shouldBeVisible;
+          backToTopBtn.classList.toggle('is-visible', shouldBeVisible);
         }
 
-        const bRect = backToTopBtn.getBoundingClientRect();
-        const bY = bRect.top + bRect.height / 2;
+        const bCheckY = scrollY + innerHeight - 50;
         let isBOverDark = false;
-        for (let i = 0; i < darkSections.length; i++) {
-          const rect = darkSections[i].getBoundingClientRect();
-          if (rect.top <= bY && rect.bottom >= bY) {
+        for (let i = 0; i < darkBounds.length; i++) {
+          if (bCheckY >= darkBounds[i].top && bCheckY <= darkBounds[i].bottom) {
             isBOverDark = true;
             break;
           }
         }
-        backToTopBtn.classList.toggle('is-dark', isBOverDark);
+
+        if (isBOverDark !== lastBDark) {
+          lastBDark = isBOverDark;
+          backToTopBtn.classList.toggle('is-dark', isBOverDark);
+        }
       }
 
       ticking = false;
@@ -70,17 +98,6 @@ export function initNavigation() {
 
     window.addEventListener('scroll', requestTick, { passive: true });
 
-    // Synchronize with Lenis smooth scroll updates
-    if (window.lenis) {
-      window.lenis.on('scroll', requestTick);
-    } else {
-      setTimeout(() => {
-        if (window.lenis) {
-          window.lenis.on('scroll', requestTick);
-        }
-      }, 200);
-    }
-
     onScroll(); // Run initially
 
     if (backToTopBtn) {
@@ -94,30 +111,6 @@ export function initNavigation() {
     }
   }
 
-  // Contact live video backdrop: some browsers defer autoplay while the tab
-  // is hidden; guarantee playback resumes once the section approaches view.
-  const contactVideo = document.querySelector('.contact-bg-video');
-  if (contactVideo) {
-    const ensurePlaying = () => {
-      if (document.visibilityState === 'visible' && contactVideo.paused) {
-        contactVideo.play().catch(() => {});
-      }
-    };
-
-    ensurePlaying();
-    document.addEventListener('visibilitychange', ensurePlaying);
-
-    if (window.gsap && window.gsap.ScrollTrigger) {
-      window.gsap.ScrollTrigger.create({
-        trigger: '#contact',
-        start: 'top bottom',
-        onEnter: ensurePlaying,
-        onEnterBack: ensurePlaying
-      });
-    } else {
-      window.addEventListener('scroll', ensurePlaying, { passive: true });
-    }
-  }
 
   // Mobile Navigation Drawer Controller
   initMobileDrawer();
@@ -126,13 +119,14 @@ export function initNavigation() {
 function initMobileDrawer() {
   const toggleBtn = document.getElementById('mobileNavToggle');
   const drawer = document.getElementById('mobileNavDrawer');
-  const closeBtn = document.getElementById('mobileNavClose');
   const backdrop = document.getElementById('mobileNavBackdrop');
   if (!toggleBtn || !drawer) return;
 
   const openDrawer = () => {
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
+    toggleBtn.classList.add('is-active');
+    toggleBtn.setAttribute('aria-label', 'بستن منوی ناوبری');
     toggleBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('mobile-menu-active');
   };
@@ -140,6 +134,8 @@ function initMobileDrawer() {
   const closeDrawer = () => {
     drawer.classList.remove('is-open');
     drawer.setAttribute('aria-hidden', 'true');
+    toggleBtn.classList.remove('is-active');
+    toggleBtn.setAttribute('aria-label', 'منوی ناوبری سایت');
     toggleBtn.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('mobile-menu-active');
   };
@@ -152,10 +148,6 @@ function initMobileDrawer() {
       openDrawer();
     }
   });
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeDrawer);
-  }
 
   if (backdrop) {
     backdrop.addEventListener('click', closeDrawer);

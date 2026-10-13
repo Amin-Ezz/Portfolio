@@ -86,7 +86,7 @@ def project_page_view(request, project_slug):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('api-info/', api_root_view, name='api-root-info'),
+    path('projects/', lambda request: project_page_view(request, 'all'), name='projects-archive-root'),
     path('projects/<slug:project_slug>/', project_page_view, name='project-detail-page'),
     path('projects/<slug:project_slug>.html', project_page_view, name='project-detail-html'),
 

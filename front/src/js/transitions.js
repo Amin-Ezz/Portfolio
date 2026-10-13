@@ -10,6 +10,9 @@ import gsap from 'gsap';
  * Helper to check if current page is any project detail page (mod-style, lumina, project-management, trip-os)
  */
 export function isProjectDetailPage() {
+  if (window.location.pathname.includes('/projects/all') || document.querySelector('.projects-archive-page')) {
+    return false;
+  }
   return !!(
     document.querySelector('.project-detail-hero-media') ||
     document.querySelector('.lumina-page') ||
@@ -48,9 +51,9 @@ export function initTransitions() {
     executeCardExpansion(targetEl, href, title, imageSrc);
   });
 
-  // Intercept clicks on return-to-home buttons on project detail pages
+  // Intercept clicks on return-to-home, section anchor buttons, and archive links on project detail pages
   document.addEventListener('click', (e) => {
-    const returnBtn = e.target.closest('a[href="/"], a[href="/#projects"], a[href="/index.html"], [data-return-home]');
+    const returnBtn = e.target.closest('a[href="/"], a[href^="/#"], a[href="/index.html"], a[href^="/index.html#"], [data-return-home], a[href="/projects/all.html"]');
     if (!returnBtn) return;
 
     // Only intercept if we are on a project detail page
@@ -62,7 +65,9 @@ export function initTransitions() {
 
   // Set return flag if user navigates back using browser Back button
   window.addEventListener('pagehide', () => {
-    sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    if (!sessionStorage.getItem('amin_return_hash') && sessionStorage.getItem('amin_project_origin')) {
+      sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    }
   });
 
   // Check if we are on a project detail page -> trigger entrance animation
@@ -214,35 +219,53 @@ export function executeProjectExit(targetUrl = '/') {
   let finalTargetUrl = targetUrl;
   if (targetUrl === '/#projects' || targetUrl.endsWith('/#projects')) {
     finalTargetUrl = '/';
+    sessionStorage.setItem('amin_return_hash', 'projects');
   } else if (targetUrl.includes('#')) {
-    sessionStorage.setItem('amin_return_hash', targetUrl.split('#')[1]);
+    const hash = targetUrl.split('#')[1];
+    sessionStorage.setItem('amin_return_hash', hash);
+    sessionStorage.removeItem('amin_project_origin');
+    sessionStorage.removeItem('amin_trigger_reverse_transition');
+  } else if (targetUrl === '/' || targetUrl === '/index.html') {
+    sessionStorage.removeItem('amin_return_hash');
+    sessionStorage.removeItem('amin_project_origin');
+    sessionStorage.removeItem('amin_trigger_reverse_transition');
+  } else if (targetUrl.includes('/projects/all')) {
+    sessionStorage.removeItem('amin_return_hash');
+    sessionStorage.removeItem('amin_project_origin');
+    sessionStorage.removeItem('amin_trigger_reverse_transition');
   }
 
-  const projectTitle = document.querySelector('.project-detail-title, .lumina-hero-h1');
-  const projectContent = document.querySelector('.project-case-content, .editorial-container');
-  const projectHeader = document.querySelector('header, .lumina-nav-header');
-  const projectMonitor = document.querySelector('.lumina-white-monitor, .lumina-hero-monitor-col, .lumina-hero-img-col, .lumina-hero-img-wrap');
+  const projectTitle = document.querySelector('.project-detail-title, .lumina-hero-h1, .lumina-info-title');
+  const projectContent = document.querySelector('.project-case-content, .editorial-container, .lumina-main-stream');
+  const projectHeader = document.querySelector('header, .lumina-nav-header, .site-header');
+  const projectMonitor = document.querySelector('.lumina-white-monitor, .lumina-hero-monitor-col, .lumina-hero-img-col, .lumina-hero-img-wrap, .lumina-stage-card');
   const projectHeroMedia = document.querySelector('.project-detail-hero-media');
 
-  const tl = gsap.timeline({
-    onComplete: () => {
+  let hasNavigated = false;
+  const navigate = () => {
+    if (!hasNavigated) {
+      hasNavigated = true;
       window.location.href = finalTargetUrl;
     }
+  };
+
+  const tl = gsap.timeline({
+    onComplete: navigate
   });
 
   if (projectHeader) {
-    tl.to(projectHeader, { opacity: 0, y: -20, duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(projectHeader, { opacity: 0, y: -20, duration: 0.22, ease: 'power2.in' }, 0);
   }
   if (projectMonitor) {
-    tl.to(projectMonitor, { opacity: 0, scale: 0.95, y: 15, duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(projectMonitor, { opacity: 0, scale: 0.95, y: 15, duration: 0.22, ease: 'power2.in' }, 0);
   } else if (projectHeroMedia) {
-    tl.to(projectHeroMedia, { opacity: 0, scale: 0.96, duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(projectHeroMedia, { opacity: 0, scale: 0.96, duration: 0.22, ease: 'power2.in' }, 0);
   }
   if (projectContent) {
-    tl.to(projectContent, { opacity: 0, y: 25, duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(projectContent, { opacity: 0, y: 25, duration: 0.22, ease: 'power2.in' }, 0);
   }
   if (projectTitle) {
-    tl.to(projectTitle, { opacity: 0, duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(projectTitle, { opacity: 0, duration: 0.22, ease: 'power2.in' }, 0);
   }
 
   let overlay = document.querySelector('.transition-overlay');
@@ -259,36 +282,45 @@ export function executeProjectExit(targetUrl = '/') {
   tl.to(overlay, {
     opacity: 1,
     clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-    duration: 0.3,
+    duration: 0.28,
     ease: 'power2.inOut'
-  }, 0.05);
+  }, 0.04);
+
+  // Fallback safety timeout in case GSAP timeline is suspended or interrupted
+  setTimeout(navigate, 400);
 }
 
 /**
  * Handles reverse animation when returning from a project back to homepage
  */
 function handlePageReturn() {
-  const originStr = sessionStorage.getItem('amin_project_origin');
   const clearReturnCover = () => {
     document.documentElement.classList.remove('is-returning-from-project');
   };
 
+  const hashFromUrl = window.location.hash ? window.location.hash.replace('#', '') : null;
+  const returnHash = sessionStorage.getItem('amin_return_hash') || hashFromUrl;
+
+  // If returning to a specific section (e.g. contact, services, skills, about)
+  if (returnHash && returnHash !== 'projects') {
+    sessionStorage.removeItem('amin_return_hash');
+    sessionStorage.removeItem('amin_project_origin');
+    sessionStorage.removeItem('amin_trigger_reverse_transition');
+    clearReturnCover();
+    scrollToHomeSection(returnHash);
+    return;
+  }
+
+  const originStr = sessionStorage.getItem('amin_project_origin');
   if (!originStr) {
     clearReturnCover();
+    if (returnHash === 'projects') {
+      scrollToHomeSection('projects');
+    }
     return;
   }
 
   try {
-    const returnHash = sessionStorage.getItem('amin_return_hash');
-    // If returning to a different section (not projects) and no card animation is wanted
-    if (returnHash && returnHash !== 'projects') {
-      sessionStorage.removeItem('amin_return_hash');
-      sessionStorage.removeItem('amin_project_origin');
-      sessionStorage.removeItem('amin_trigger_reverse_transition');
-      clearReturnCover();
-      scrollToHomeSection(returnHash);
-      return;
-    }
     if (returnHash) {
       sessionStorage.removeItem('amin_return_hash');
     }
@@ -296,6 +328,9 @@ function handlePageReturn() {
     const isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
     if (!isReturning) {
       clearReturnCover();
+      if (returnHash === 'projects') {
+        scrollToHomeSection('projects');
+      }
       return;
     }
     sessionStorage.removeItem('amin_trigger_reverse_transition');
@@ -305,6 +340,7 @@ function handlePageReturn() {
       originData = JSON.parse(originStr);
     } catch (e) {
       clearReturnCover();
+      scrollToHomeSection('projects');
       return;
     }
 
@@ -313,12 +349,22 @@ function handlePageReturn() {
     history.scrollRestoration = 'manual';
   }
 
-  // Restore scroll position immediately
+  // Restore scroll position immediately — if returning to projects, target the selected works section («پروژه‌های منتخب»)
   let targetScrollY = originData.scrollY;
-  if (typeof targetScrollY !== 'number' || targetScrollY <= 0) {
-    const cardEl = document.querySelector(`.work-grid-card[data-slug="${originData.slug}"]`);
+  const cardEl = document.querySelector(`.work-grid-card[data-slug="${originData.slug || 'lumina'}"]`);
+  const projectsSec = document.getElementById('projects');
+
+  if (returnHash === 'projects') {
+    if (cardEl) {
+      targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 120;
+    } else if (projectsSec) {
+      targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
+    }
+  } else if (typeof targetScrollY !== 'number' || targetScrollY <= 0) {
     if (cardEl) {
       targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 140;
+    } else if (projectsSec) {
+      targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
     } else {
       targetScrollY = 0;
     }
@@ -548,17 +594,28 @@ export function navigateWithTransition(url) {
  * swallowed by Lenis' manual scroll handling.
  */
 function scrollToHomeSection(sectionId) {
-  const attemptScroll = (attempt = 0) => {
+  const scrollTarget = () => {
     const targetEl = document.getElementById(sectionId);
-    if (!targetEl) {
-      if (attempt < 120) requestAnimationFrame(() => attemptScroll(attempt + 1));
-      return;
+    if (!targetEl) return false;
+    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+      window.lenis.scrollTo(targetEl, { offset: -60, duration: 1.1 });
+    } else {
+      const top = targetEl.getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
-    if (window.lenis) {
-      window.lenis.scrollTo(targetEl, { offset: -40, duration: 1.2 });
-    } else if (attempt < 120) {
-      requestAnimationFrame(() => attemptScroll(attempt + 1));
+    return true;
+  };
+
+  let attempts = 0;
+  const poll = () => {
+    attempts++;
+    if (scrollTarget()) {
+      // Re-scroll once dynamic images, fonts, and hero scene settle
+      setTimeout(scrollTarget, 300);
+      setTimeout(scrollTarget, 750);
+    } else if (attempts < 60) {
+      setTimeout(poll, 50);
     }
   };
-  requestAnimationFrame(() => attemptScroll());
+  setTimeout(poll, 70);
 }

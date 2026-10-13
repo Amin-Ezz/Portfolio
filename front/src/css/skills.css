@@ -35,9 +35,9 @@
 .skills-bg-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.16;
-  will-change: transform;
+  opacity: 0.22;
+  transform: translateZ(0);
+  pointer-events: none;
 }
 
 .skills-bg-orb-1 {
@@ -45,7 +45,7 @@
   height: 480px;
   top: -8%;
   right: -6%;
-  background: radial-gradient(circle, #6b6b7a 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(107, 107, 122, 0.45) 0%, rgba(107, 107, 122, 0.15) 38%, transparent 70%);
   animation: orbDrift1 22s ease-in-out infinite alternate;
 }
 
@@ -54,7 +54,7 @@
   height: 420px;
   bottom: 4%;
   left: -8%;
-  background: radial-gradient(circle, #4d4d5e 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(77, 77, 94, 0.45) 0%, rgba(77, 77, 94, 0.15) 38%, transparent 70%);
   animation: orbDrift2 26s ease-in-out infinite alternate;
 }
 
@@ -63,7 +63,7 @@
   height: 360px;
   top: 42%;
   left: 38%;
-  background: radial-gradient(circle, #55556a 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(85, 85, 106, 0.45) 0%, rgba(85, 85, 106, 0.15) 38%, transparent 70%);
   animation: orbDrift3 30s ease-in-out infinite alternate;
 }
 
@@ -176,7 +176,7 @@
   color: rgba(245, 245, 245, 0.45);
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-  will-change: transform, opacity, letter-spacing;
+  will-change: transform, opacity;
 }
 
 .skills-intro-title {
@@ -188,7 +188,7 @@
   margin: 0;
   font-feature-settings: "ss01", "ss02";
   text-shadow: 0 0 60px rgba(255, 255, 255, 0.18);
-  will-change: transform, opacity, filter, letter-spacing;
+  will-change: transform, opacity;
 }
 
 .skills-intro-hint {
@@ -201,7 +201,7 @@
   letter-spacing: 0.08em;
   color: rgba(245, 245, 245, 0.4);
   text-transform: uppercase;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .skills-intro-hint svg {
@@ -391,7 +391,7 @@
   position: relative;
   width: 100%;
   min-width: 0;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .skills-stage {
@@ -403,7 +403,7 @@
   align-items: center;
   justify-items: center;
   min-height: 520px;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .skills-panel {
@@ -414,7 +414,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .skills-panel.active {
@@ -438,6 +438,8 @@
   border-radius: 28px;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  transform: translateZ(0);
+  contain: layout style;
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -552,10 +554,10 @@
   cursor: pointer;
   user-select: none;
   color: #F5F5F5;
+  transform: translateZ(0);
   transition: background-color 0.3s ease,
               border-color 0.35s var(--ease-out-expo),
               box-shadow 0.35s var(--ease-out-expo),
-              transform 0.3s var(--ease-out-expo),
               color 0.3s ease;
 }
 

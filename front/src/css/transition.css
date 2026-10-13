@@ -1,66 +1,61 @@
 /* ==========================================================================
-   Editorial Transition Bridge — Pure Black Chapter Break with Seamless Shadow Transition
+   Editorial Transition Bridge — Darkened Canvas with Static Black Halos
+   Centered Headline & Text + Left-Side Interactive Transformation Path
    ========================================================================== */
 
 .transition-section {
   position: relative;
-  /* Deep black background with subtle luxury radial depth and delicate grid */
-  background-color: #050505;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Checkered Grid Canvas identical to Services & Collaboration section («راه‌های همکاری با من») */
+  background-color: #FFFFFF;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.035) 0%, transparent 70%);
   background-size: 72px 72px, 72px 72px, 100% 100%;
-  padding-top: clamp(7rem, 14vw, 13rem);
-  padding-bottom: clamp(8rem, 16vw, 14rem);
+  padding-top: clamp(5rem, 9vh, 8rem);
+  padding-bottom: clamp(5rem, 9vh, 8rem);
+  box-sizing: border-box;
   overflow: hidden;
-  color: #FFFFFF;
+  color: #0A0A0A;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 @media (max-width: 860px) {
   .transition-section {
-    background-image: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.05) 0%, transparent 75%);
-    background-size: 100% 100%;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.035) 0%, transparent 70%);
+    background-size: 54px 54px, 54px 54px, 100% 100%;
   }
 }
 
-/* Hairline top separator connecting with Hero (removed as requested) */
-.transition-section::before {
-  display: none;
-}
-
-/* 
-   Bottom transition shadow:
-   Casts an elegant shadow & smooth blend into the bright (#F8F8F7) projects section below 
-*/
-.transition-section::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: clamp(6rem, 12vw, 11rem);
-  background: linear-gradient(180deg,
-      rgba(5, 5, 5, 0) 0%,
-      rgba(5, 5, 5, 0.35) 40%,
-      rgba(5, 5, 5, 0.85) 75%,
-      #050505 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* The ambient downward drop shadow cast from the black transition section onto the light section */
+.transition-section::before,
+.transition-section::after,
 .transition-bottom-shadow {
-  position: absolute;
-  inset-inline: 0;
-  bottom: -1px;
-  height: 48px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 50%, transparent 100%);
-  pointer-events: none;
-  z-index: 10;
+  display: none !important;
 }
 
+.transition-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Centered Headline & Content (کاملاً در وسط صفحه)
+   ========================================================================== */
 .transition-content {
-  max-width: 760px;
+  max-width: 820px;
+  width: 100%;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -68,102 +63,351 @@
   text-align: center;
   position: relative;
   z-index: 2;
+  padding-inline: 1.5rem;
 }
 
-/* Minimal editorial marker — hidden as requested */
 .transition-marker {
   display: none;
 }
 
 .transition-headline {
   font-family: var(--font-vazir);
-  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
   font-weight: 900;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
-  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
-  text-shadow:
-    0 0 12px rgba(255, 255, 255, 0.22),
-    0 0 24px rgba(255, 255, 255, 0.12),
-    0 2px 14px rgba(0, 0, 0, 0.7);
+  color: #0A0A0A;
+  margin-bottom: clamp(1.4rem, 2.5vh, 2rem);
+  white-space: nowrap;
+  max-width: 100%;
 }
 
-/* White text with living chromatic RGB glow effect */
-.glow-rgb-term {
-  position: relative;
-  display: inline-block;
-  font-weight: 800;
-  color: #FFFFFF;
-  letter-spacing: 0.04em;
-  padding: 0 0.15rem;
-  animation: rgbChromaticGlow 4s linear infinite;
-  direction: ltr;
-  unicode-bidi: embed;
+/* "مسیر روشن" rendered in gray (طوسی) while the rest of the headline stays ink */
+.transition-headline-muted {
+  color: #71717A;
 }
 
 @media (max-width: 860px) {
-  .glow-rgb-term {
-    animation: none;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 16px rgba(100, 180, 255, 0.4);
-  }
-}
-
-@keyframes rgbChromaticGlow {
-  0% {
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.9),
-      -1px -1px 4px rgba(255, 60, 60, 0.7),
-      1px 1px 4px rgba(60, 160, 255, 0.7),
-      0 0 14px rgba(255, 60, 120, 0.5);
-  }
-
-  33% {
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.9),
-      1px -1px 4px rgba(60, 255, 120, 0.7),
-      -1px 1px 4px rgba(255, 60, 180, 0.7),
-      0 0 14px rgba(60, 255, 180, 0.5);
-  }
-
-  66% {
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.9),
-      -1px 1px 4px rgba(60, 140, 255, 0.7),
-      1px -1px 4px rgba(255, 220, 60, 0.7),
-      0 0 14px rgba(120, 60, 255, 0.5);
-  }
-
-  100% {
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.9),
-      -1px -1px 4px rgba(255, 60, 60, 0.7),
-      1px 1px 4px rgba(60, 160, 255, 0.7),
-      0 0 14px rgba(255, 60, 120, 0.5);
+  .transition-headline {
+    white-space: nowrap !important;
+    font-size: clamp(1.02rem, 4.2vw, 1.6rem) !important;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.85rem;
   }
 }
 
 .transition-lede {
   font-family: var(--font-vazir);
-  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-size: clamp(1.08rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  color: #52525B;
+  line-height: 2.15;
+  max-width: 780px;
+  margin-bottom: clamp(2.5rem, 4.5vh, 3.75rem);
+}
+
+/* ==========================================================================
+   Left-Side Pathway Component (سمت چپ صفحه)
+   Top: Confused -> Middle: Winding Track with Traveling Dot -> Bottom: Lit Lightbulb
+   ========================================================================== */
+.transition-side-journey {
+  position: absolute;
+  left: max(1.5rem, calc(50% - 410px - 145px));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 10;
+  width: 130px;
+  pointer-events: auto;
+  /* The page is RTL, but flex-start/flex-end must track the SVG's own left-to-right
+     coordinate system so each node lands on its endpoint. Labels restore RTL. */
+  direction: ltr;
+}
+
+/* 1. Start Node: Confused Person — centered exactly ON the path's first point */
+.side-journey-start {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  text-align: center;
+  width: 64px;
+}
+
+.side-journey-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #FAFAFA;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  /* Pull the circle down so its center lands on the track's y=0 point */
+  margin-bottom: -32px;
+}
+
+.side-journey-avatar:hover {
+  transform: scale(1.08);
+}
+
+.side-journey-avatar img {
+  max-width: 82%;
+  max-height: 82%;
+  object-fit: contain;
+}
+
+.side-journey-label {
+  font-size: 0.72rem;
   font-weight: 700;
-  color: rgba(235, 235, 235, 0.65);
-  line-height: 1.9;
-  margin-bottom: 1.25rem;
+  color: #71717A;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  direction: rtl;
+  unicode-bidi: isolate;
 }
 
-.transition-body {
-  font-family: var(--font-vazir);
-  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-  font-weight: 500;
-  color: #E6E6E6;
-  line-height: 2;
-  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+.side-journey-start .side-journey-label {
+  margin-bottom: 0.4rem;
 }
 
-/* CTA — quiet typographic link, no card or pill */
+.side-journey-end .side-journey-label {
+  margin-top: 0.4rem;
+}
+
+/* 2. Middle SVG Track (Directly connected to the icons) */
+.side-journey-track {
+  width: 130px;
+  height: 220px;
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 0;
+}
+
+.side-journey-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* 3. End Node: Lightbulb — centered exactly ON the path's last point */
+.side-journey-end {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
+  text-align: center;
+  width: 64px;
+}
+
+.side-bulb-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #FAFAFA;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #71717A;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.08);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+  /* Pull the circle up so its center lands on the track's y=220 point */
+  margin-top: -32px;
+}
+
+.bulb-halo {
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.6) 0%, rgba(251, 191, 36, 0.25) 50%, transparent 75%);
+  filter: blur(12px);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.side-bulb-icon {
+  color: #71717A;
+  transition: all 0.5s ease;
+}
+
+.bulb-ray {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* 4. Illuminated State (هنگامی که نقطه به آخر مسیر می‌رسد و روشن می‌شود) */
+.side-journey-end.is-illuminated .side-bulb-wrap {
+  background: #FFFBEB;
+  border-color: #F59E0B;
+  box-shadow: 0 0 25px rgba(251, 191, 36, 0.55), 0 0 60px rgba(251, 191, 36, 0.28);
+  transform: scale(1.1);
+}
+
+.side-journey-end.is-illuminated .bulb-halo {
+  opacity: 1;
+  transform: scale(1.35);
+}
+
+.side-journey-end.is-illuminated .side-bulb-icon {
+  color: #D97706;
+  fill: #FDE68A;
+  filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.85));
+}
+
+.side-journey-end.is-illuminated .bulb-ray {
+  opacity: 1;
+  stroke: #D97706;
+  filter: drop-shadow(0 0 4px #F59E0B);
+}
+
+.side-journey-end.is-illuminated .end-dot {
+  background: #F59E0B;
+  box-shadow: 0 0 10px #F59E0B;
+}
+
+.side-journey-end.is-illuminated .side-journey-label {
+  color: #B45309;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+}
+
+/* Responsive Handling */
+@media (max-width: 1100px) {
+  .transition-side-journey {
+    left: 1rem;
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+
+@media (max-width: 860px) {
+  .transition-section {
+    padding-top: clamp(3.5rem, 7vh, 5.5rem);
+    padding-bottom: clamp(3.5rem, 7vh, 5.5rem);
+    min-height: auto;
+  }
+
+  .transition-container {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+
+  .transition-side-journey {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: 0;
+    width: 68px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    direction: ltr;
+  }
+
+  .side-journey-track {
+    display: block !important;
+    width: 60px;
+    height: 125px;
+    margin: -4px 0;
+  }
+
+  .side-journey-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .side-journey-start,
+  .side-journey-end {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .side-journey-avatar {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 0;
+  }
+
+  .side-journey-avatar img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .side-bulb-wrap {
+    width: 42px;
+    height: 42px;
+    margin-top: 0;
+  }
+
+  .side-bulb-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .side-journey-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    direction: rtl;
+  }
+
+  .transition-content {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 0.25rem;
+    text-align: right;
+    align-items: flex-start;
+  }
+
+  .transition-lede {
+    text-align: right;
+    font-size: clamp(0.78rem, 3.1vw, 0.92rem);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    max-width: 100%;
+  }
+
+  .transition-cta-wrap {
+    align-self: flex-start;
+    margin-top: 0;
+  }
+
+  .transition-cta {
+    font-size: 0.92rem;
+  }
+}
+
+/* ==========================================================================
+   Transition CTA Link
+   ========================================================================== */
 .transition-cta-wrap {
   display: inline-block;
+  margin-top: 0.5rem;
 }
 
 .transition-cta {
@@ -173,13 +417,12 @@
   font-family: var(--font-vazir);
   font-size: clamp(1.05rem, 1.3vw, 1.2rem);
   font-weight: 700;
-  color: #FFFFFF;
+  color: #0A0A0A;
   padding-bottom: 0.45rem;
   position: relative;
   text-decoration: none;
 }
 
-/* Underline that draws itself in from the right on hover (RTL natural direction) */
 .transition-cta::after {
   content: "";
   position: absolute;
@@ -187,8 +430,8 @@
   right: 0;
   width: 100%;
   height: 2px;
-  background: #FFFFFF;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  background: #0A0A0A;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.55s var(--ease-out-expo);
@@ -201,6 +444,7 @@
 .transition-cta-arrow {
   display: inline-block;
   transition: transform 0.55s var(--ease-out-expo);
+  color: #0A0A0A;
 }
 
 .transition-cta:hover .transition-cta-arrow {
@@ -224,11 +468,5 @@
   .transition-reveal {
     opacity: 1;
     transform: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .transition-content {
-    max-width: 100%;
   }
 }

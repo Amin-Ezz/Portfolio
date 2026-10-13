@@ -24,7 +24,8 @@ export default defineConfig({
         lumina: resolve(__dirname, 'projects/lumina.html'),
         modStyle: resolve(__dirname, 'projects/mod-style.html'),
         projectManagement: resolve(__dirname, 'projects/project-management.html'),
-        tripOs: resolve(__dirname, 'projects/trip-os.html')
+        tripOs: resolve(__dirname, 'projects/trip-os.html'),
+        allProjects: resolve(__dirname, 'projects/all.html')
       }
     }
   }

@@ -51,21 +51,12 @@ export function initHero3D() {
   const setX = gsap.quickTo(video, 'x', { duration: 2.4, ease: 'power2.out' });
   const setY = gsap.quickTo(video, 'y', { duration: 2.4, ease: 'power2.out' });
 
-  // The hero box only moves on scroll or resize, so cache it rather than forcing
-  // a layout read on every mouse move. Refreshes are rAF-gated so a burst of
-  // scroll events can still only cost one measurement per frame.
   let rect = heroSection.getBoundingClientRect();
-  let rectStale = false;
   const refreshRect = () => {
-    if (rectStale) return;
-    rectStale = true;
-    requestAnimationFrame(() => {
-      rect = heroSection.getBoundingClientRect();
-      rectStale = false;
-    });
+    rect = heroSection.getBoundingClientRect();
   };
-  window.addEventListener('resize', refreshRect);
-  window.addEventListener('scroll', refreshRect, { passive: true });
+  window.addEventListener('resize', refreshRect, { passive: true });
+  heroSection.addEventListener('mouseenter', refreshRect, { passive: true });
 
   const onMouseMove = (e) => {
     const normX = (e.clientX - rect.left) / rect.width - 0.5;

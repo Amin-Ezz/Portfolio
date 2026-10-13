@@ -1,0 +1,641 @@
+/* ==========================================================================
+   Services & Collaboration Models («راه‌های همکاری با من»)
+   Full Chapter Break — Pure White Editorial Canvas with Precision Cards
+   Placed seamlessly between Projects (#F8F8F7) and Skills Universe (#050505)
+   ========================================================================== */
+
+.expert-impact-section,
+.services-section {
+  position: relative;
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(4.5rem, 6.5vw, 6.5rem);
+  padding-bottom: clamp(4.5rem, 6.5vw, 6.5rem);
+  overflow: hidden;
+  direction: rtl;
+  z-index: 3;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  /* Delicate luxury grid and radial depth tailored for pure white canvas */
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% 35%, rgba(0, 0, 0, 0.035) 0%, transparent 70%);
+  background-size: 72px 72px, 72px 72px, 100% 100%;
+}
+
+@media (max-width: 860px) {
+  .expert-impact-section,
+  .services-section {
+    background-image: radial-gradient(circle at 50% 35%, rgba(0, 0, 0, 0.04) 0%, transparent 75%);
+    background-size: 100% 100%;
+  }
+}
+
+/* Subtle top hairline shadow transition */
+.expert-impact-section::before,
+.services-section::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.services-container-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1260px;
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Centered Header (Top-Center of Section)
+   -------------------------------------------------------------------------- */
+.services-header-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(2.25rem, 3.5vw, 3rem);
+}
+
+.services-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 1.05rem;
+  border-radius: 9999px;
+  background: rgba(10, 10, 10, 0.04);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  font-family: var(--font-vazir);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #525252;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.services-badge:hover {
+  background: rgba(10, 10, 10, 0.07);
+  color: #0A0A0A;
+}
+
+.services-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0A0A0A;
+  animation: servicePulse 2s infinite ease-in-out;
+}
+
+@keyframes servicePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+/* Title cluster with interactive handshake icon */
+.services-title-cluster {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 1.8vw, 1.35rem);
+  margin-bottom: 0.95rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.services-title-cluster .services-main-title {
+  margin: 0;
+}
+
+.services-main-title {
+  font-family: var(--font-vazir);
+  font-size: clamp(2.2rem, 4.2vw, 3.3rem);
+  font-weight: 900;
+  line-height: 1.25;
+  color: #0A0A0A;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Interactive Handshake Icon (کنار تیتر راه‌های همکاری با من) */
+.services-collab-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(52px, 5.2vw, 64px);
+  height: clamp(52px, 5.2vw, 64px);
+  border-radius: 18px;
+  background: #000000;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 10px 24px -4px rgba(0, 0, 0, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  z-index: 2;
+}
+
+.services-collab-icon .collab-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Hover: Wiggle/shake animation ("وقتی موس میاد روی این آیکون باید تکون بخوره") */
+.services-collab-icon:hover,
+.services-title-cluster:hover .services-collab-icon {
+  animation: handshakeShake 0.75s ease-in-out infinite;
+  box-shadow: 
+    0 14px 32px -4px rgba(0, 0, 0, 0.42),
+    0 6px 14px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+@keyframes handshakeShake {
+  0% {
+    transform: translateY(-3px) scale(1.08) rotate(0deg);
+  }
+  15% {
+    transform: translateY(-3px) scale(1.08) rotate(-14deg);
+  }
+  30% {
+    transform: translateY(-3px) scale(1.08) rotate(12deg);
+  }
+  45% {
+    transform: translateY(-3px) scale(1.08) rotate(-9deg);
+  }
+  60% {
+    transform: translateY(-3px) scale(1.08) rotate(8deg);
+  }
+  75% {
+    transform: translateY(-3px) scale(1.08) rotate(-4deg);
+  }
+  90% {
+    transform: translateY(-3px) scale(1.08) rotate(2deg);
+  }
+  100% {
+    transform: translateY(-3px) scale(1.08) rotate(0deg);
+  }
+}
+
+.services-subtitle {
+  font-family: var(--font-vazir);
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-weight: 400;
+  line-height: 1.9;
+  color: #555555;
+  max-width: 660px;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Tab Switcher (خدمات من / نوع همکاری) — sliding thumb
+   -------------------------------------------------------------------------- */
+.services-tabs {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 auto clamp(2rem, 3vw, 2.75rem);
+  padding: 0.35rem;
+  border-radius: 9999px;
+  background: rgba(10, 10, 10, 0.045);
+  border: 1px solid rgba(10, 10, 10, 0.09);
+}
+
+.services-tab {
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-vazir);
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  font-weight: 700;
+  color: #6B7280;
+  padding: 0.6rem clamp(1.4rem, 2.4vw, 2.4rem);
+  border-radius: 9999px;
+  transition: color 0.35s ease;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.services-tab:hover {
+  color: #0A0A0A;
+}
+
+.services-tab.is-active {
+  color: #FFFFFF;
+}
+
+.services-tab:focus-visible {
+  outline: 2px solid #0A0A0A;
+  outline-offset: 3px;
+}
+
+.services-tabs-thumb {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  border-radius: 9999px;
+  background: #0A0A0A;
+  box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, width;
+}
+
+/* --------------------------------------------------------------------------
+   Panels — only the active panel is painted (others are hidden)
+   -------------------------------------------------------------------------- */
+.services-panels {
+  position: relative;
+}
+
+.services-panel[hidden] {
+  display: none;
+}
+
+.services-panel.is-active {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   3-Column Modern Cards Grid (responsive collapse below)
+   -------------------------------------------------------------------------- */
+.services-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.1rem, 1.8vw, 1.75rem);
+  align-items: stretch;
+}
+
+.service-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.55);
+  border: 2px solid rgba(10, 10, 10, 0.55);
+  border-radius: 22px;
+  padding: clamp(1.4rem, 2vw, 1.85rem) clamp(1.4rem, 2vw, 1.95rem);
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s ease,
+              border-color 0.35s ease,
+              background-color 0.35s ease;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 10px 28px -8px rgba(0, 0, 0, 0.05),
+    0 1px 0 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.68);
+  border-color: rgba(0, 0, 0, 0.8);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 20px 42px -10px rgba(0, 0, 0, 0.15),
+    0 1px 0 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Card Top: Icon & Big Number */
+.service-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.service-card-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: #0A0A0A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, background 0.3s ease;
+}
+
+.service-card:hover .service-card-icon-wrap {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.service-card-icon-wrap svg {
+  width: 23px;
+  height: 23px;
+}
+
+/* Card Number — Enlarged and Prominent (بزرگ‌تر و برجسته) */
+.service-card-number {
+  font-family: var(--font-vazir);
+  font-size: clamp(2.4rem, 3.4vw, 3.25rem);
+  font-weight: 950;
+  line-height: 1;
+  color: rgba(10, 10, 10, 0.18);
+  letter-spacing: -0.04em;
+  user-select: none;
+  transition: transform 0.35s ease, color 0.35s ease;
+}
+
+.service-card:hover .service-card-number {
+  color: rgba(10, 10, 10, 0.34);
+  transform: scale(1.06);
+}
+
+/* Card Header */
+.service-card-header {
+  margin-bottom: 0.65rem;
+}
+
+.service-card-tag {
+  display: inline-block;
+  font-family: var(--font-vazir);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #737373;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.02em;
+}
+
+.service-card-title {
+  font-family: var(--font-vazir);
+  font-size: clamp(1.15rem, 1.3vw, 1.3rem);
+  font-weight: 800;
+  color: #0A0A0A;
+  line-height: 1.4;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+/* Card Description */
+.service-card-desc {
+  font-family: var(--font-vazir);
+  font-size: 0.91rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #525252;
+  margin: 0 0 1.25rem;
+}
+
+/* Key Features List */
+.service-card-features {
+  list-style: none;
+  padding: 1.1rem 0 0;
+  margin: 0 0 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-grow: 1;
+}
+
+.service-card-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-vazir);
+  font-size: 0.88rem;
+  color: #262626;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.feature-check {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-check svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Card CTA Button */
+.service-card-footer {
+  margin-top: auto;
+}
+
+.service-card-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.76rem 1.25rem;
+  border-radius: 12px;
+  background: #0A0A0A;
+  color: #FFFFFF;
+  border: 1px solid #0A0A0A;
+  font-family: var(--font-vazir);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.service-card-cta:hover {
+  background: #262626;
+  color: #FFFFFF;
+  border-color: #262626;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.service-card-cta:hover .service-cta-arrow {
+  transform: translateX(-4px);
+}
+
+/* --------------------------------------------------------------------------
+   Collaboration Cards (نوع همکاری) — Light Gray & White Editorial Theme
+   (رنگ کارت‌های بخش نوع همکاری به رنگ طوسی روشن و سفید)
+   -------------------------------------------------------------------------- */
+.services-panel[data-panel="collab"] .service-card {
+  background: linear-gradient(165deg, #FFFFFF 0%, #F5F5F7 55%, #EAEAEF 100%);
+  border: 2px solid rgba(10, 10, 10, 0.55);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.03),
+    0 16px 36px -8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 #FFFFFF;
+}
+
+.services-panel[data-panel="collab"] .service-card:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(165deg, #FFFFFF 0%, #F9F9FB 55%, #EEEEF4 100%);
+  border-color: rgba(0, 0, 0, 0.85);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    0 24px 48px -10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 #FFFFFF;
+}
+
+.services-panel[data-panel="collab"] .service-card-number {
+  color: rgba(10, 10, 10, 0.18);
+}
+
+.services-panel[data-panel="collab"] .service-card:hover .service-card-number {
+  color: rgba(10, 10, 10, 0.34);
+}
+
+.services-panel[data-panel="collab"] .service-card-tag {
+  background: #FFFFFF;
+  color: #374151;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.services-panel[data-panel="collab"] .service-card-title {
+  color: #0A0A0A;
+  text-shadow: none;
+}
+
+.services-panel[data-panel="collab"] .service-card-desc {
+  color: #4B5563;
+}
+
+.services-panel[data-panel="collab"] .service-card-features {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.services-panel[data-panel="collab"] .service-card-features li {
+  color: #1F2937;
+}
+
+.services-panel[data-panel="collab"] .feature-check {
+  background: #FFFFFF;
+  color: #111827;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.services-panel[data-panel="collab"] .service-card-cta {
+  background: #0A0A0A;
+  color: #FFFFFF;
+  border: 1.5px solid #0A0A0A;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.services-panel[data-panel="collab"] .service-card-cta:hover {
+  background: #262626;
+  color: #FFFFFF;
+  border-color: #262626;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Monochrome Black & White Icon Badges for All Cards Across Both Panels
+   (لوگوی مشکی و سفید برای تمام کارت‌های خدمات و نوع همکاری)
+   -------------------------------------------------------------------------- */
+.services-panel[data-panel="services"] .service-card .service-card-icon-wrap,
+.services-panel[data-panel="collab"] .service-card .service-card-icon-wrap {
+  background: #0A0A0A;
+  color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+}
+
+.services-panel[data-panel="services"] .service-card:hover .service-card-icon-wrap,
+.services-panel[data-panel="collab"] .service-card:hover .service-card-icon-wrap {
+  background: #1F1F1F;
+  color: #FFFFFF;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.services-bottom-note {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .services-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-bottom-note {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .services-note-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-tabs {
+    width: 100%;
+  }
+
+  .services-tab {
+    flex: 1;
+    padding-inline: 0.75rem;
+  }
+
+  .services-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .services-main-title {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+  }
+
+  .services-subtitle {
+    font-size: 0.96rem;
+  }
+
+  .service-card {
+    padding: 1.75rem 1.35rem;
+    border-radius: 20px;
+  }
+}

@@ -1,0 +1,642 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@1,500&display=swap');
+
+@font-face {
+  font-family: 'Alex Brush';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/alex-brush.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/dancing-script.ttf') format('truetype');
+}
+
+/* ==========================================================================
+   Problems & Needs Diagnostic Section — عارضه‌یابی دیجیتال
+   Smoked Liquid Glass Cards on Dark Obsidian Matrix (Theme Aligned with AMIN.EZ)
+   Continuous Infinite Loop Marquee (Left to Right Motion)
+   Placed seamlessly between Hero (#000000) and Transition Bridge (#050505)
+   ========================================================================== */
+
+.problems-section {
+  position: relative;
+  background-color: #000000;
+  /* Ambient dark matrix grid & subtle dual luxury radial glows */
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.035) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.025) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  padding-top: clamp(5rem, 9vw, 8rem);
+  padding-bottom: clamp(6rem, 10vw, 9rem);
+  overflow: hidden;
+  color: #FFFFFF;
+  direction: rtl;
+  z-index: 2;
+}
+
+/* Subtle top atmospheric blend from Hero */
+.problems-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 80px;
+  background: linear-gradient(180deg, #000000 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Header & Eyebrow Badge
+   -------------------------------------------------------------------------- */
+.problems-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: clamp(1.5rem, 3.2vw, 2.75rem);
+  margin-bottom: clamp(2.5rem, 4.5vw, 3.75rem);
+  position: relative;
+  z-index: 2;
+}
+
+/* Eyebrow Badge Above Title: Black & White Blinking Dot + Cursive Script Challenges */
+.problems-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.35rem 1.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 1.25rem;
+  transition: all 0.35s ease;
+  user-select: none;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.problems-eyebrow:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+/* Black & White Blinking / Radar Dot (نقطه چشمک‌زن مشکی سفید) */
+.problems-blinking-dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.9);
+  animation: bwDotBlink 1.8s infinite ease-in-out;
+  flex-shrink: 0;
+  display: inline-block;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.problems-blinking-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: bwDotRadar 1.8s infinite ease-out;
+}
+
+@keyframes bwDotBlink {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.88);
+    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.3), 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 2.5px #000000, 0 0 14px rgba(255, 255, 255, 1);
+  }
+}
+
+@keyframes bwDotRadar {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Calligraphic English Word Challenges (Matching Projects Section Font) */
+.problems-script-badge {
+  font-family: 'Alex Brush', 'Dancing Script', 'Playfair Display', 'Brush Script MT', 'Segoe Script', cursive, serif;
+  font-size: clamp(1.85rem, 2.7vw, 2.45rem);
+  font-weight: 400;
+  color: #FFFFFF !important;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
+  direction: ltr;
+  display: inline-block;
+  padding-bottom: 0.15rem;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.problems-title {
+  font-family: var(--font-vazir);
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  margin-bottom: 0;
+  text-wrap: balance;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* "دغدغه‌ها" rendered in gray (طوسی) inside the otherwise white headline */
+.problems-title-muted {
+  color: #9B9B9B;
+}
+
+.problems-subtitle {
+  font-family: var(--font-vazir);
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  font-weight: 400;
+  color: rgba(235, 235, 235, 0.62);
+  max-width: 640px;
+  line-height: 1.85;
+}
+
+/* --------------------------------------------------------------------------
+   Infinite Loop Marquee Viewport & Track (Left-to-Right Motion)
+   -------------------------------------------------------------------------- */
+.problems-marquee-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  direction: ltr; /* LTR coordinates for pure left-to-right physics */
+  padding: 1.5rem 0 2.5rem;
+  z-index: 2;
+  /* Ambient edge fading on left and right borders */
+  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+
+.problems-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: stretch;
+}
+
+.problems-marquee-group {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(1.25rem, 2vw, 1.85rem);
+  padding-right: clamp(1.25rem, 2vw, 1.85rem);
+  flex-shrink: 0;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: problemMarqueeLTR 34s linear infinite;
+}
+
+/* Smooth pause on mouse hover or touch active */
+.problems-marquee-viewport:hover .problems-marquee-group,
+.problems-marquee-viewport:active .problems-marquee-group {
+  animation-play-state: paused;
+}
+
+/* Continuous Translation from Left (-100%) to Right (0%) */
+@keyframes problemMarqueeLTR {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Problem Card Base — Smoked Liquid Glass Slab
+   -------------------------------------------------------------------------- */
+.problem-card {
+  position: relative;
+  direction: rtl; /* Proper RTL Persian text alignment inside each card */
+  text-align: right;
+  flex: 0 0 clamp(320px, 28vw, 410px);
+  width: clamp(320px, 28vw, 410px);
+  /* Smoked glass: soft top-left gloss over a deep translucent charcoal gradient */
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.015) 20%, transparent 44%),
+    linear-gradient(
+      165deg,
+      rgba(38, 38, 42, 0.62) 0%,
+      rgba(24, 24, 28, 0.52) 40%,
+      rgba(12, 12, 14, 0.6) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 28px;
+  padding: clamp(1.75rem, 2.5vw, 2.35rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform: translateZ(0);
+  contain: layout paint style;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease,
+    box-shadow 0.45s ease,
+    background-color 0.4s ease;
+  min-height: 410px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.16) inset,
+    0 -1px 1px rgba(255, 255, 255, 0.05) inset,
+    0 16px 36px rgba(0, 0, 0, 0.5),
+    0 24px 60px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+/* Ambient inner spotlight on card hover */
+.problem-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(255, 255, 255, 0.09) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.problem-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 22%, transparent 46%),
+    linear-gradient(
+      165deg,
+      rgba(48, 48, 54, 0.7) 0%,
+      rgba(30, 30, 36, 0.6) 40%,
+      rgba(16, 16, 18, 0.68) 100%
+    );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 -1px 1px rgba(255, 255, 255, 0.08) inset,
+    0 28px 65px rgba(0, 0, 0, 0.7),
+    0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.problem-card:hover::before {
+  opacity: 1;
+}
+
+/* Top bar inside card: index badge & category */
+.problem-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.problem-index-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-vazir);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.problem-status-tag {
+  font-family: var(--font-vazir);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.problem-status-tag::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   Core Question & Editorial Typography
+   -------------------------------------------------------------------------- */
+.problem-card-body {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 1.75rem;
+}
+
+.problem-question {
+  font-family: var(--font-vazir);
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin-bottom: 0.85rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  transition: color 0.3s ease;
+}
+
+.problem-card:hover .problem-question {
+  color: #FFFFFF;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.28);
+}
+
+.problem-desc {
+  font-family: var(--font-vazir);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-weight: 400;
+  line-height: 1.85;
+  color: rgba(235, 235, 235, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   Micro-Visual Widgets inside Cards (Each unique)
+   -------------------------------------------------------------------------- */
+.problem-widget-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Card 1 Widget: Blueprint Wireframe to Live Signal */
+.widget-wireframe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.3s ease;
+}
+
+.problem-card:hover .widget-wireframe {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.widget-wireframe-slots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.wireframe-slot {
+  width: 24px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+}
+
+.problem-card:hover .wireframe-slot {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.widget-live-state {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.widget-state-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E0E0E0;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Card 2 Widget: Speedometer & Latency Comparison Bar */
+.widget-speed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+}
+
+.widget-speed-metrics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.speed-metric-slow {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: line-through;
+  font-feature-settings: "tnum";
+}
+
+.speed-metric-fast {
+  color: #FFFFFF;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-feature-settings: "tnum";
+}
+
+.speed-metric-fast::before {
+  content: "⚡";
+  font-size: 0.85rem;
+}
+
+.speed-bar-track {
+  height: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.speed-bar-fill {
+  height: 100%;
+  width: 94%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, #FFFFFF 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  transition: width 0.8s ease;
+}
+
+/* Card 3 Widget: Viewport & Screen Dimensions Indicator */
+.widget-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.82rem;
+}
+
+.viewport-device-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.viewport-device-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewport-resolution-pill {
+  font-family: var(--font-vazir);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.65rem;
+  border-radius: 6px;
+  direction: ltr;
+  font-feature-settings: "tnum";
+}
+
+/* Card 4 Widget: User Conversion Flow Pipeline */
+.widget-funnel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  z-index: 2;
+}
+
+.funnel-step.is-final {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+.funnel-step-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.funnel-step.is-final .funnel-step-dot {
+  background: #FFFFFF;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+}
+
+.funnel-arrow {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.9rem;
+  user-select: none;
+  z-index: 2;
+}
+
+.problem-card:hover .funnel-arrow {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .problem-card {
+    flex: 0 0 clamp(290px, 80vw, 340px);
+    width: clamp(290px, 80vw, 340px);
+    min-height: 380px;
+    padding: 1.6rem 1.4rem;
+    border-radius: 22px;
+  }
+
+  .problems-marquee-group {
+    gap: 1.15rem;
+    padding-right: 1.15rem;
+    animation-duration: 26s;
+  }
+
+  .problem-question {
+    font-size: 1.35rem;
+  }
+
+  .problem-desc {
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+
+  .problems-section {
+    padding-top: 4rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .problems-marquee-group {
+    animation: none !important;
+  }
+  .problems-marquee-viewport {
+    overflow-x: auto;
+  }
+}

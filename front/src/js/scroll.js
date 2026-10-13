@@ -9,44 +9,51 @@ export function initScrollEngine() {
 
   let lenis = null;
 
-  if (!isTouchDevice) {
-    // Initialize Lenis smooth scroll for Desktop (mouse wheel)
+  // Initialize Lenis strictly for programmatic smooth scrolling (anchors, transitions)
+  // Disable smoothWheel so mouse wheel & touch use 100% native GPU compositor scrolling (حذف کامل حالت آروم و تاخیردار، صفر درصد لگ)
+  try {
     lenis = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.95
+      smoothWheel: false,
+      syncTouch: false,
+      autoRaf: false
     });
 
-    // Synchronize Lenis with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
+    // Connect Lenis to GSAP ticker so programmatic scrollTo animations tick on every animation frame
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
+  } catch (err) {
+    console.warn('Lenis initialized in fallback mode', err);
   }
 
-  // Official GSAP + Lenis recommendation: disable lagSmoothing to avoid frame stutter/skips
-  gsap.ticker.lagSmoothing(0);
+  // Restore GSAP lagSmoothing so the engine smoothly recovers from any frame spikes
+  gsap.ticker.lagSmoothing(500, 33);
 
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
-      if (targetId && targetId !== '#') {
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          e.preventDefault();
-          if (lenis) {
-            lenis.scrollTo(targetElement, { offset: -40, duration: 1.0 });
-          } else {
-            targetElement.scrollIntoView({ behavior: 'smooth' });
-          }
+  // Synchronize ScrollTrigger with native high-performance passive scroll events
+  window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
+
+  // Universal smooth scroll handler for all anchor links (top navbar, mobile menu, buttons, CTA, etc.)
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const targetId = anchor.getAttribute('href');
+    if (targetId && targetId !== '#' && targetId.startsWith('#')) {
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        if (lenis && typeof lenis.scrollTo === 'function') {
+          lenis.scrollTo(targetElement, { offset: -70, duration: 1.1 });
+        } else {
+          const navOffset = 70;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - navOffset;
+          window.scrollTo({
+            top: Math.max(0, offsetPosition),
+            behavior: 'smooth'
+          });
         }
       }
-    });
+    }
   });
 
   // Setup ScrollTrigger Animations
@@ -57,11 +64,13 @@ export function initScrollEngine() {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
+      if (lenis) lenis.resize();
       ScrollTrigger.refresh();
     }, 250);
   });
   window.addEventListener('orientationchange', () => {
     setTimeout(() => {
+      if (lenis) lenis.resize();
       ScrollTrigger.refresh();
     }, 300);
   });
@@ -91,7 +100,7 @@ function setupScrollAnimations() {
     }
   });
 
-  // Transition bridge (Hero → Projects): scrubbed reveal
+  // Transition bridge (Hero → Projects): lightweight smooth trigger reveal
   const transitionReveals = document.querySelectorAll('.transition-reveal');
   if (transitionReveals.length > 0) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -102,84 +111,69 @@ function setupScrollAnimations() {
       gsap.to(transitionReveals, {
         opacity: 1,
         y: 0,
-        ease: 'none',
-        stagger: 0.1,
+        ease: 'power2.out',
+        duration: 0.75,
+        stagger: 0.12,
         scrollTrigger: {
           trigger: '.transition-section',
-          start: 'top 80%',
-          end: 'top 30%',
-          scrub: 0.6
-        }
-      });
-    }
-  }
-
-  // Choice CTA (before Contact): headline → panels from opposite sides → button.
-  // Each tween flips a .is-shown class on completion so the CSS reveal state
-  // (translate) is fully overridden and never leaves a residue.
-  const ctaChoiceSection = document.querySelector('.cta-choice-section');
-  if (ctaChoiceSection) {
-    const revealTargets = ctaChoiceSection.querySelectorAll('.cta-choice-reveal, .cta-choice-panel-reveal');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (reducedMotion) {
-      revealTargets.forEach(el => el.classList.add('is-shown'));
-    } else {
-      const ctaTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ctaChoiceSection,
-          start: 'top 70%',
+          start: 'top 75%',
           toggleActions: 'play none none none'
-        },
-        // Lock the final state via .is-shown, then drop GSAP's inline styles
-        // so panel hover transforms work again
-        onComplete: () => {
-          revealTargets.forEach(el => {
-            el.classList.add('is-shown');
-            gsap.set(el, { clearProps: 'all' });
-          });
         }
       });
-
-      const badgeEl = ctaChoiceSection.querySelector('.cta-choice-badge');
-      if (badgeEl) {
-        ctaTl.to(badgeEl, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out'
-        }, 0.05);
-      }
-
-      ctaTl
-        .to(ctaChoiceSection.querySelector('.cta-choice-headline'), {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power3.out'
-        }, 0.2)
-        .to(ctaChoiceSection.querySelectorAll('.cta-choice-panel-idea'), {
-          opacity: 1,
-          x: 0,
-          duration: 1.1,
-          ease: 'power3.out'
-        }, 0.55)
-        .to(ctaChoiceSection.querySelectorAll('.cta-choice-panel-product'), {
-          opacity: 1,
-          x: 0,
-          duration: 1.1,
-          ease: 'power3.out'
-        }, 0.75)
-        .to(ctaChoiceSection.querySelector('.cta-choice-action'), {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out'
-        }, 1.25);
     }
   }
 
-  // Section Headers & Titles
+  // Side Journey Pathway Animation (runs ONCE upon entering section):
+  // Traveling dot moves from confused top -> reaches bottom -> lights up lightbulb!
+  const journeySection = document.querySelector('.transition-section');
+  const pathTrack = document.getElementById('journeyTrackPath');
+  const progressLine = document.getElementById('journeyProgressPath');
+  const travelingDot = document.getElementById('journeyTravelingDot');
+  const bulbEnd = document.getElementById('sideJourneyEnd');
+
+  if (journeySection && pathTrack && travelingDot) {
+    let journeyHasRun = false;
+    const totalLength = pathTrack.getTotalLength ? pathTrack.getTotalLength() : 270;
+
+    if (progressLine) {
+      progressLine.style.strokeDasharray = `${totalLength}`;
+      progressLine.style.strokeDashoffset = `${totalLength}`;
+    }
+
+    ScrollTrigger.create({
+      trigger: journeySection,
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        if (journeyHasRun) return;
+        journeyHasRun = true;
+
+        const animObj = { progress: 0 };
+        gsap.to(animObj, {
+          progress: 1,
+          duration: 1.8,
+          ease: 'power2.inOut',
+          onUpdate: () => {
+            if (pathTrack.getPointAtLength) {
+              const pt = pathTrack.getPointAtLength(animObj.progress * totalLength);
+              travelingDot.setAttribute('cx', pt.x);
+              travelingDot.setAttribute('cy', pt.y);
+            } else {
+              travelingDot.setAttribute('cy', animObj.progress * 220);
+            }
+            if (progressLine) {
+              progressLine.style.strokeDashoffset = `${totalLength * (1 - animObj.progress)}`;
+            }
+          },
+          onComplete: () => {
+            if (bulbEnd) {
+              bulbEnd.classList.add('is-illuminated');
+            }
+          }
+        });
+      }
+    });
+  }
   const sectionHeaders = document.querySelectorAll('.anim-section-header');
   sectionHeaders.forEach(header => {
     gsap.from(header.children, {
@@ -210,44 +204,38 @@ function setupScrollAnimations() {
       gsap.set(gridCards, { clearProps: 'all' });
       gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'all' });
     } else {
-      // Lightweight 2D GPU translation and opacity — eliminates 3D rasterization bottlenecks
+      // Lightweight initial state — subtle vertical offset for a light entrance
       gsap.set(gridCards, {
-        y: isMobile ? 35 : 55,
+        y: isMobile ? 22 : 30,
         opacity: 0,
-        scale: 0.98
+        scale: 0.985
       });
 
       const workTl = gsap.timeline({
         scrollTrigger: {
           trigger: worksGrid,
-          start: 'top 85%',
+          start: 'top 82%',
           once: true
         },
         onComplete: () => {
           worksGrid.classList.add('is-animated');
-          gsap.set(gridCards, { clearProps: 'all' });
+          gsap.set(gridCards, { clearProps: 'transform,scale' });
           gsap.set(worksGrid.querySelectorAll('.work-card-line-inner'), { clearProps: 'all' });
         }
       });
 
+      // One-by-one sequential entrance with a light, crisp animation
       gridCards.forEach((card, idx) => {
         workTl.to(card, {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: isMobile ? 0.6 : 0.75,
-          ease: 'power3.out'
-        }, idx * 0.1);
-
-        const lines = card.querySelectorAll('.work-card-line-inner');
-        if (lines.length > 0) {
-          workTl.to(lines, {
-            y: '0%',
-            duration: 0.55,
-            ease: 'power3.out',
-            stagger: 0.06
-          }, idx * 0.1 + 0.08);
-        }
+          duration: 0.48,
+          ease: 'power2.out',
+          onComplete: () => {
+            gsap.set(card, { clearProps: 'transform,scale' });
+          }
+        }, idx * 0.18);
       });
     }
   }

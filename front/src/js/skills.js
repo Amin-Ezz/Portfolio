@@ -222,7 +222,7 @@ function initTitleScreenTransition(skillsSection) {
       trigger: skillsSection,
       start: 'top top',          // title screen is fully in view
       end: 'top -100%',          // runs until the title screen has fully scrolled off
-      scrub: 0.8
+      scrub: 0.25
     }
   });
 
@@ -270,7 +270,7 @@ function initSequentialSkillsShowcase(skillsSection) {
 
   // Mobile-aware scroll distance & horizontal progress rail handling
   const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
-  const pinDistance = isMobile ? '+=180%' : '+=320%';
+  const pinDistance = isMobile ? '+=140%' : '+=230%';
   const floatTweens = [];
   const panelFloatMap = new Map();
 
@@ -312,8 +312,8 @@ function initSequentialSkillsShowcase(skillsSection) {
       panel.classList.remove('active');
     }
 
-    // Set up continuous gentle floating loop on ALL panels' chips (Frontend, Backend, Creative Web, Tools & AI)
-    if (!isMobile) {
+    // Only start continuous gentle floating loop on the INITIAL visible panel (Panel 0)
+    if (idx === 0 && !isMobile) {
       startPanelFloat(panel);
     }
 
@@ -359,7 +359,7 @@ function initSequentialSkillsShowcase(skillsSection) {
     });
   }
 
-  // Master Pinning & Scrubbed Sequential Transitions
+  // Master Pinning & Snappy Scrubbed Sequential Transitions
   let currentActiveIdx = 0;
   const masterTl = gsap.timeline({
     scrollTrigger: {
@@ -367,14 +367,12 @@ function initSequentialSkillsShowcase(skillsSection) {
       pin: true,
       start: 'top top',
       end: pinDistance,
-      scrub: 0.8,
-      anticipatePin: 1,
+      scrub: 0.3,
       onUpdate: (self) => {
         const progress = self.progress;
         let activeIdx = 0;
-        if (progress >= 0.75) activeIdx = 3;
-        else if (progress >= 0.46) activeIdx = 2;
-        else if (progress >= 0.18) activeIdx = 1;
+        if (progress >= 0.58) activeIdx = 2;
+        else if (progress >= 0.22) activeIdx = 1;
         else activeIdx = 0;
 
         railNodes.forEach((node, idx) => {
@@ -386,6 +384,10 @@ function initSequentialSkillsShowcase(skillsSection) {
         });
 
         if (activeIdx !== currentActiveIdx) {
+          const prevPanel = panels[currentActiveIdx];
+          if (prevPanel && panelFloatMap.has(prevPanel)) {
+            panelFloatMap.get(prevPanel).forEach(t => t.pause());
+          }
           currentActiveIdx = activeIdx;
           startPanelFloat(panels[currentActiveIdx]);
         }
@@ -399,7 +401,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       e.preventDefault();
       const st = masterTl.scrollTrigger;
       if (!st) return;
-      const targetRatios = [0.01, 0.28, 0.58, 0.88];
+      const targetRatios = [0.01, 0.42, 0.88];
       const targetScroll = st.start + (st.end - st.start) * targetRatios[idx];
       if (window.lenis) {
         window.lenis.scrollTo(targetScroll, { duration: 1.2 });
@@ -409,11 +411,11 @@ function initSequentialSkillsShowcase(skillsSection) {
     });
   });
 
-  // Smoothly scrub the vertical rail fill across the 4 categories
+  // Smoothly scrub the vertical rail fill across the 3 categories
   if (railFill) {
     masterTl.fromTo(railFill,
       { scaleY: 0.08, transformOrigin: '50% 0%' },
-      { scaleY: 1, ease: 'none', duration: 3 },
+      { scaleY: 1, ease: 'none', duration: 2 },
       0
     );
   }
@@ -463,7 +465,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       }
     }, 0.82);
 
-  // --- Step 2 Transition: Panel 1 (BACKEND) -> Panel 2 (CREATIVE WEB) ---
+  // --- Step 2 Transition: Panel 1 (BACKEND) -> Panel 2 (TOOLS & AI) ---
   masterTl
     .to(panels[1], {
       y: isMobile ? -35 : -60,
@@ -507,51 +509,6 @@ function initSequentialSkillsShowcase(skillsSection) {
         }
       }
     }, 1.82);
-
-  // --- Step 3 Transition: Panel 2 (CREATIVE WEB) -> Panel 3 (TOOLS & AI) ---
-  masterTl
-    .to(panels[2], {
-      y: isMobile ? -35 : -60,
-      opacity: 0,
-      scale: 0.94,
-      duration: 0.35,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        panels[2].classList.remove('active');
-        gsap.set(panels[2], { visibility: 'hidden' });
-      },
-      onReverseComplete: () => {
-        panels[2].classList.add('active');
-        gsap.set(panels[2], { visibility: 'visible' });
-        startPanelFloat(panels[2]);
-      }
-    }, 2.65)
-    .set(panels[3], { visibility: 'visible' }, 2.82)
-    .to(panels[3], {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 0.35,
-      ease: 'power2.out',
-      onStart: () => {
-        panels[3].classList.add('active');
-        startPanelFloat(panels[3]);
-        if (!isMobile) {
-          const nodes3 = panels[3].querySelectorAll('.skill-node');
-          gsap.fromTo(nodes3,
-            { opacity: 0, scale: 0.8 },
-            {
-              opacity: 1,
-              scale: 1,
-              stagger: 0.04,
-              duration: 0.45,
-              ease: 'back.out(1.7)',
-              onComplete: () => startPanelFloat(panels[3])
-            }
-          );
-        }
-      }
-    }, 2.82);
 }
 
 /**
@@ -671,11 +628,19 @@ function initParticleCanvas(section) {
   const LINK_DIST = 130;
   const MOUSE_RADIUS = 180;
 
-  const resize = () => {
+  let sectionTop = 0;
+  let sectionLeft = 0;
+  const measureSection = () => {
     const rect = section.getBoundingClientRect();
+    sectionTop = rect.top + window.scrollY;
+    sectionLeft = rect.left + window.scrollX;
+  };
+
+  const resize = () => {
+    measureSection();
     dpr = 1; // High performance DPR 1 saves >100MB texture memory
-    width = rect.width;
-    height = rect.height;
+    width = section.offsetWidth;
+    height = section.offsetHeight;
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -683,7 +648,7 @@ function initParticleCanvas(section) {
   };
 
   const seed = () => {
-    const target = 36; // Lightweight particle count for butter-smooth 60+ FPS
+    const target = 22; // Ultra-lightweight particle count for rock-solid 120 FPS
     particles = Array.from({ length: target }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -697,9 +662,8 @@ function initParticleCanvas(section) {
 
 
   const onMove = (e) => {
-    const rect = section.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+    mouse.x = e.clientX - (sectionLeft - window.scrollX);
+    mouse.y = e.clientY - (sectionTop - window.scrollY);
     mouse.active = true;
   };
 
@@ -775,7 +739,13 @@ function initParticleCanvas(section) {
   resize();
   step();
 
-  window.addEventListener('resize', resize);
+  let resizeTimer = 0;
+  const onResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 200);
+  };
+
+  window.addEventListener('resize', onResize);
   section.addEventListener('mousemove', onMove);
   section.addEventListener('mouseleave', onLeave);
 
@@ -799,7 +769,8 @@ function initParticleCanvas(section) {
     state.running = false;
     cancelAnimationFrame(state.raf);
     visibilityTrigger.kill();
-    window.removeEventListener('resize', resize);
+    clearTimeout(resizeTimer);
+    window.removeEventListener('resize', onResize);
     section.removeEventListener('mousemove', onMove);
     section.removeEventListener('mouseleave', onLeave);
   };

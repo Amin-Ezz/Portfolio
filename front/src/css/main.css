@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@1,500&display=swap');
+
 :root {
   --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
@@ -52,6 +54,7 @@ html {
   color: var(--text-primary);
   scroll-behavior: auto; /* Handled via Lenis / Native Compositor */
   font-feature-settings: "ss01", "ss02", "cv01";
+  touch-action: pan-y;
 }
 
 body {
@@ -61,6 +64,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.7;
+  touch-action: pan-y;
 }
 
 
@@ -79,10 +83,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-title {
-  font-size: clamp(2.3rem, 4.8vw, 4.2rem);
+  font-size: clamp(2.1rem, 3.8vw, 3.35rem);
   font-weight: 900;
-  line-height: 1.22;
-  letter-spacing: -0.025em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .section-title {
@@ -126,21 +130,59 @@ button {
   outline: none;
 }
 
-/* Custom Scrollbar — light & wide */
+/* Custom Scrollbar — Tactile Embossed (برجسته) Pill Thumb on Deep Track */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: #FFFFFF #060608;
+}
+
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 18px;
+  height: 18px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg-tertiary);
+  background: #060608;
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset -1px 0 0 rgba(0, 0, 0, 0.8);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #0A0A0A;
+  background: linear-gradient(90deg, #DCDCE2 0%, #FFFFFF 28%, #FFFFFF 52%, #E8E8EE 74%, #BEBEC6 100%);
   border-radius: 9999px;
-  border: 3px solid var(--bg-tertiary);
+  border: 2px solid #060608;
   min-height: 90px;
+  box-shadow:
+    inset 0 2px 2px 0 #FFFFFF,
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.45),
+    inset 1px 0 2px 0 rgba(255, 255, 255, 0.8),
+    inset -1px 0 2px 0 rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.8),
+    0 0 12px rgba(255, 255, 255, 0.35);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #000000;
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 42%, #F5F5FA 80%, #D8D8E0 100%);
+  box-shadow:
+    inset 0 3px 3px 0 #FFFFFF,
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.3),
+    inset 1px 0 2px 0 #FFFFFF,
+    0 2px 10px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(255, 255, 255, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(90deg, #C8C8D2 0%, #E4E4EB 30%, #DCDCE2 70%, #B8B8C2 100%);
+  box-shadow:
+    inset 0 3px 5px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.6),
+    0 0 14px rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: #060608;
 }
 
 /* Layout Utilities */
@@ -166,24 +208,87 @@ button {
 }
 
 /* ==========================================================================
-   Selected Works — Two-Column Showcase Grid
+   Selected Works — Three-Column Showcase Grid
    ========================================================================== */
 .works-grid-container {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.65rem;
+  max-width: 1400px;
+  margin-inline: auto;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
+  .works-grid-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 900px;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
   .works-grid-container {
     grid-template-columns: 1fr;
+    max-width: 540px;
+    gap: 1.5rem;
+  }
+}
+
+/* Selected Works — "مشاهده بیشتر" Archive CTA Button */
+.projects-archive-cta-wrap {
+  margin-top: 2.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.projects-archive-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.84rem 1.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-size: 0.98rem;
+  font-weight: 700;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: auto;
+}
+
+.projects-archive-btn:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 255, 255, 0.25), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.6);
+}
+
+.projects-archive-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.projects-archive-btn:hover svg {
+  transform: translateX(-4px);
+}
+
+@media (max-width: 640px) {
+  .projects-archive-btn {
+    padding: 0.74rem 1.6rem;
+    font-size: 0.92rem;
   }
 }
 
 /* Tablet refinements (641px - 1024px) */
 @media (min-width: 641px) and (max-width: 1024px) {
   .hero-title {
-    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+    font-size: clamp(1.95rem, 4.4vw, 2.75rem);
   }
 
   .container-custom {
@@ -199,8 +304,8 @@ button {
 /* Mobile phone refinements (< 640px) */
 @media (max-width: 640px) {
   .hero-title {
-    font-size: clamp(1.8rem, 8.2vw, 2.5rem);
-    line-height: 1.3;
+    font-size: clamp(1.85rem, 8vw, 2.45rem);
+    line-height: 1.32;
   }
 
   .section-title {
@@ -258,7 +363,7 @@ button {
 
 .work-card-line .work-card-line-inner {
   display: block;
-  transform: translateY(110%);
+  transform: translateY(0);
 }
 
 .works-grid-container.is-animated .work-card-line .work-card-line-inner {
@@ -266,56 +371,260 @@ button {
 }
 
 /* ==========================================================================
-   Projects Section Header & Watermark
+   Selected Works Section — Black Luxury Matrix Canvas
+   ========================================================================== */
+#projects,
+.projects-section {
+  position: relative;
+  background-color: #060608;
+  /* Static Elegant Gray Halos (هاله‌های طوسی کاملاً ثابت و بدون انیمیشن بر روی زمینه مشکی مطابق تصویر) */
+  background-image:
+    /* Top & Center Luminous Gray Halo behind section header (مشابه عکس مرجع) */
+    radial-gradient(ellipse 70% 55% at 50% 16%, rgba(180, 180, 195, 0.16) 0%, rgba(100, 100, 115, 0.08) 45%, transparent 75%),
+    /* Left-side ambient gray halo */
+    radial-gradient(circle 600px at 8% 45%, rgba(150, 150, 165, 0.11) 0%, rgba(60, 60, 70, 0.04) 50%, transparent 75%),
+    /* Right-side ambient gray halo */
+    radial-gradient(circle 650px at 92% 60%, rgba(150, 150, 165, 0.11) 0%, rgba(60, 60, 70, 0.04) 50%, transparent 75%),
+    /* Bottom soft gray halo under project cards */
+    radial-gradient(ellipse 85% 45% at 50% 88%, rgba(140, 140, 155, 0.10) 0%, rgba(50, 50, 60, 0.03) 55%, transparent 80%);
+  background-size: 100% 100%;
+  color: #FFFFFF;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: clip;
+  z-index: 2;
+}
+
+#projects::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 90px;
+  background: linear-gradient(180deg, rgba(6, 6, 8, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#projects::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  height: 90px;
+  background: linear-gradient(0deg, rgba(6, 6, 8, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Projects Section Header & Calligraphic Subtitle (مرکزچین شده با زیرنویس خوش‌خط)
    ========================================================================== */
 .projects-header-wrap {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   margin-bottom: 3.5rem;
-  gap: 1.5rem;
+  gap: 0.15rem;
   position: relative;
   overflow: visible;
+  width: 100%;
 }
 
 .projects-title-cluster {
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 1.6vw, 1.35rem);
   overflow: visible;
   padding: 0.5rem 0;
+  margin-inline: auto;
 }
 
 .projects-bg-watermark {
-  position: absolute;
-  top: 50%;
-  right: -0.35rem;
-  transform: translateY(-50%);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
-  font-size: clamp(4.2rem, 10vw, 8.5rem);
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 0.85;
-  color: rgba(10, 10, 10, 0.038);
-  -webkit-text-stroke: 1.2px rgba(10, 10, 10, 0.09);
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  z-index: 0;
+  display: none !important;
 }
 
 .projects-main-title {
   position: relative;
   z-index: 1;
-  font-size: clamp(2.6rem, 5.2vw, 4.6rem) !important;
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem) !important;
   font-weight: 900 !important;
   line-height: 1.18;
-  color: var(--text-primary);
+  color: #FFFFFF !important;
   letter-spacing: -0.025em;
   margin: 0;
-  text-shadow: 0 0 24px var(--bg-primary), 0 0 12px var(--bg-primary);
+  text-shadow: 0 0 30px #000000, 0 0 16px #000000, 0 2px 4px #000000;
+}
+
+/* Calligraphic English Subtitle underneath the title and icon */
+.projects-script-subtitle {
+  display: block;
+  font-family: 'Alex Brush', 'Dancing Script', 'Playfair Display', cursive, serif;
+  font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+  font-weight: 400;
+  color: #E4E4E7;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-align: center;
+  margin: -0.2rem auto 0;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 0 2px 12px rgba(0, 0, 0, 0.85);
+  user-select: none;
+  pointer-events: none;
+  direction: ltr;
+}
+
+/* ==========================================================================
+   Selected Works — Interactive 3D Frosted Document Folder
+   Matches reference image: Dark folder, frosted glass pocket, and document
+   sheets that slide smoothly upwards when hovered (محتویاتش بالا می‌آید).
+   ========================================================================== */
+.projects-folder-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  margin-top: 0.1rem;
+}
+
+.projects-folder-icon:hover {
+  transform: translateY(-4px) scale(1.08);
+}
+
+.folder-wrap {
+  position: relative;
+  width: 74px;
+  height: 58px;
+}
+
+/* 1. Back folder shell (Dark rounded rectangle) */
+.folder-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(170deg, #26262B 0%, #131316 100%);
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.85), 0 3px 8px rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.folder-back-tab {
+  position: absolute;
+  top: -6px;
+  right: 8px;
+  width: 28px;
+  height: 9px;
+  background: #26262B;
+  border-radius: 5px 5px 0 0;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-inline: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 2. Inner Sliding Documents Stack */
+.folder-docs-stack {
+  position: absolute;
+  inset: 4px 7px 11px 7px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.folder-doc {
+  position: absolute;
+  inset: 0;
+  background: #FFFFFF;
+  border-radius: 7px 7px 4px 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.32);
+  display: flex;
+  flex-direction: column;
+  gap: 3.5px;
+  padding: 6px 5px;
+  box-sizing: border-box;
+  transform-origin: bottom center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+}
+
+.folder-doc-1 {
+  background: #E4E4E7;
+  transform: translateY(2px) scale(0.92) rotate(-4deg);
+  z-index: 1;
+}
+
+.folder-doc-2 {
+  background: #ECECF0;
+  transform: translateY(1px) scale(0.96) rotate(3deg);
+  z-index: 2;
+}
+
+.folder-doc-3 {
+  background: #FFFFFF;
+  transform: translateY(0) scale(1);
+  z-index: 3;
+}
+
+.doc-line {
+  display: block;
+  height: 2.5px;
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
+}
+
+.doc-line-wide { width: 90%; }
+.doc-line-mid  { width: 70%; }
+.doc-line-short { width: 45%; }
+
+/* When mouse hovers over folder: Documents slide UP! (محتویاتش بالا می‌آید) */
+.projects-folder-icon:hover .folder-doc-1,
+.projects-title-cluster:hover .projects-folder-icon .folder-doc-1 {
+  transform: translateY(-22px) scale(0.95) rotate(-8deg);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5);
+}
+
+.projects-folder-icon:hover .folder-doc-2,
+.projects-title-cluster:hover .projects-folder-icon .folder-doc-2 {
+  transform: translateY(-27px) scale(0.98) rotate(6deg);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55);
+}
+
+.projects-folder-icon:hover .folder-doc-3,
+.projects-title-cluster:hover .projects-folder-icon .folder-doc-3 {
+  transform: translateY(-20px) scale(1.02) rotate(-1deg);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* 3. Front Frosted Translucent Pocket with Tab Notch (Matches reference image) */
+.folder-front-pocket {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 41px;
+  background: linear-gradient(175deg, rgba(255, 255, 255, 0.24) 0%, rgba(160, 160, 175, 0.13) 100%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-radius: 0 0 12px 12px;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-inline: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.55), 0 -2px 12px rgba(0, 0, 0, 0.25);
+  z-index: 4;
+  clip-path: polygon(0% 28%, 42% 28%, 52% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.pocket-top-rim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.75) 60%, transparent 100%);
 }
 
 @media (max-width: 640px) {
@@ -326,39 +635,57 @@ button {
   .projects-main-title {
     font-size: clamp(1.9rem, 7.8vw, 2.6rem) !important;
   }
+  .folder-wrap {
+    width: 58px;
+    height: 46px;
+  }
+  .folder-front-pocket {
+    height: 32px;
+  }
 }
 
 /* ==========================================================================
-   Selected Works — image-focused cards
-   The screenshot keeps its intrinsic ratio and is never cropped. The copy sits
-   on a translucent frosted scrim: the blurred image reads through it, so the
-   card bottom is neither a solid black block nor a white panel.
+   Selected Works — Pure Frosted Glass Physical Cards
+   Mirroring the pure liquid glass slab aesthetic from the reference image with deep backdrop blur,
+   delicate specular rim highlights, and pristine typography.
    ========================================================================== */
 .works-grid-container .work-grid-card {
   contain: paint;
   overflow: hidden;
-  border-radius: 28px;
-  background-color: #101215;
-  border: none;
-  box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.4);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8),
+              0 0 0 1px rgba(255, 255, 255, 0.06),
+              inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+              inset 0 0 20px 0 rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: translateZ(0);
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.4s var(--ease-out-expo),
-              transform 0.4s var(--ease-out-expo),
-              background-color 0.4s ease;
+  transition: transform 0.35s var(--ease-out-expo),
+              box-shadow 0.35s var(--ease-out-expo),
+              border-color 0.35s ease,
+              background 0.35s ease;
 }
 
 .works-grid-container.is-animated .work-grid-card {
-  transition: transform 0.4s var(--ease-out-expo),
-              box-shadow 0.4s var(--ease-out-expo),
-              background-color 0.4s ease;
+  transition: transform 0.35s var(--ease-out-expo),
+              box-shadow 0.35s var(--ease-out-expo),
+              border-color 0.35s ease,
+              background 0.35s ease;
 }
 
+.works-grid-container .work-grid-card:hover,
 .works-grid-container.is-animated .work-grid-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 32px 62px -28px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px) translateZ(0);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
+  box-shadow: 0 35px 80px -18px rgba(0, 0, 0, 0.95),
+              0 0 35px rgba(255, 255, 255, 0.14),
+              inset 0 2px 2px 0 rgba(255, 255, 255, 0.7),
+              inset 0 0 25px 0 rgba(255, 255, 255, 0.06) !important;
 }
 
 .work-card-media {
@@ -369,14 +696,13 @@ button {
   flex-direction: column;
 }
 
-/* Frosted duplicate of the screenshot — the matte layer the copy sits on.
-   The real screenshot in front of it is never touched by this filter. */
+/* Frosted duplicate of the screenshot — diffuse colors through the glass slab */
 .work-card-fill {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background-color: #101215;
+  background-color: transparent;
 }
 
 .work-card-fill img {
@@ -384,16 +710,16 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transform: scale(1.4);
-  filter: blur(48px) saturate(1.3) brightness(0.95);
+  transform: scale(1.2);
+  filter: saturate(1.4) brightness(0.95);
 }
 
-/* The screenshot itself: full width, covers the frame completely from top down so no gaps remain */
+/* The screenshot itself */
 .work-card-shot {
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
-  aspect-ratio: 1888 / 917;
+  aspect-ratio: 1888 / 920;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -407,54 +733,73 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: translate 0.6s var(--ease-out-expo);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), translate 0.6s var(--ease-out-expo);
+  will-change: transform;
 }
 
-/* Hands the screenshot bottom over to the frosted scrim with no hard seam */
+/* Ensure Northwind mockup and dashboard buttons are fully visible without being cut off at bottom */
+.work-grid-card[data-slug="project-management"] .work-card-shot > img {
+  object-position: center 65%;
+}
+
+.works-grid-container .work-grid-card:hover .work-card-shot > img {
+  transform: scale(1.06);
+}
+
+/* Subtle glass seam connecting the shot down to the frosted card body */
 .work-card-shot::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 38%;
+  height: 20%;
   background: linear-gradient(to bottom,
-    rgba(6, 7, 9, 0) 0%,
-    rgba(6, 7, 9, 0.12) 55%,
-    rgba(6, 7, 9, 0.3) 100%);
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.45) 100%);
   pointer-events: none;
   z-index: 2;
 }
 
+/* Frosted glass index pill on screenshot corner */
 .work-card-index {
   position: absolute;
   top: 1.25rem;
   right: 1.25rem;
   z-index: 3;
   font-size: 0.78rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  font-weight: 600;
+  color: #FFFFFF !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  border-radius: 9999px;
 }
 
+/* Pure Frosted Glass Card Body */
 .work-card-body {
   position: relative;
   z-index: 2;
   flex: 1 1 0%;
   display: flex;
   flex-direction: column;
-  min-height: 13rem;
-  padding: 1.85rem 1.6rem 1.6rem;
+  min-height: 12.2rem;
+  padding: 1.7rem 1.6rem 1.6rem;
   color: #FFFFFF;
+  background: rgba(18, 22, 32, 0.48);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-/* Translucent dark veil — the blurred cover stays visible underneath */
+/* Atmospheric glass veil allowing background colors to diffuse through */
 .work-card-body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom,
-    rgba(6, 7, 9, 0.3) 0%,
-    rgba(6, 7, 9, 0.46) 45%,
-    rgba(6, 7, 9, 0.6) 100%);
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(15, 18, 26, 0.3) 38%,
+    rgba(5, 7, 10, 0.65) 100%);
   z-index: -1;
   pointer-events: none;
 }
@@ -462,57 +807,114 @@ button {
 .work-card-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
   margin-top: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
+/* Liquid Frosted Glass Pill Badges */
 .work-card-badges .liquid-glass-pill {
-  background: rgba(8, 9, 11, 0.45);
-  border-color: rgba(255, 255, 255, 0.28);
-  color: #FFFFFF;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  font-size: 0.75rem;
-  padding: 0.3rem 0.72rem;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.26rem 0.68rem;
+  letter-spacing: 0.02em;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Card-specific luminous frosted tints */
+.work-grid-card[data-slug="lumina"] .work-card-badges .liquid-glass-pill {
+  background: rgba(244, 114, 182, 0.12) !important;
+  border-color: rgba(244, 114, 182, 0.35) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(244, 114, 182, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.work-grid-card[data-slug="mod-style"] .work-card-badges .liquid-glass-pill {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(56, 189, 248, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.work-grid-card[data-slug="project-management"] .work-card-badges .liquid-glass-pill {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(245, 158, 11, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.work-grid-card[data-slug="trip-os"] .work-card-badges .liquid-glass-pill {
+  background: rgba(96, 165, 250, 0.12) !important;
+  border-color: rgba(96, 165, 250, 0.35) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(96, 165, 250, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .work-card-title {
-  font-size: 1.6rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  margin-bottom: 1.35rem;
-  color: #FFFFFF;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
+  margin-bottom: 0.42rem;
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+  letter-spacing: -0.015em;
 }
 
-/* Case-study button — white pill, matching the reference card CTA */
+.work-card-desc {
+  font-family: var(--font-vazir);
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.74;
+  color: rgba(255, 255, 255, 0.88) !important;
+  margin-top: 0.15rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Project action button — clean crisp white pill */
 .work-card-cta {
+  position: relative;
+  z-index: 5;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.65rem;
-  padding: 0.9rem 1.5rem;
+  padding: 0.8rem 1.55rem;
   border-radius: 9999px;
-  background: #FFFFFF;
-  color: #0A0A0A;
+  background: #FFFFFF !important;
+  color: #0A0A0A !important;
   font-weight: 700;
-  font-size: 0.92rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
-  transition: transform 0.35s var(--ease-out-expo),
-              box-shadow 0.35s var(--ease-out-expo);
+  font-size: 0.9rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.3s ease;
 }
 
-.work-card-cta svg {
-  flex-shrink: 0;
-  transition: translate 0.35s var(--ease-out-expo);
-}
-
-.works-grid-container .work-grid-card:hover .work-card-cta svg {
-  translate: -5px 0;
-}
-
+/* Card hover slight preview lift */
 .works-grid-container .work-grid-card:hover .work-card-cta {
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 255, 255, 0.25);
+}
+
+/* Direct hover on button — high-end 3D embossed lift */
+.work-card-cta:hover {
+  transform: translateY(-5px) scale(1.03) !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  box-shadow: 0 18px 36px -4px rgba(0, 0, 0, 0.6),
+              0 8px 16px -2px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(255, 255, 255, 0.8),
+              0 0 28px rgba(255, 255, 255, 0.55) !important;
+}
+
+.work-card-cta:active {
+  transform: translateY(-2px) scale(0.99) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
 .works-grid-container .work-grid-card:hover .card-sheen {
@@ -521,21 +923,37 @@ button {
 
 @media (max-width: 640px) {
   .works-grid-container .work-grid-card {
-    border-radius: 22px;
+    border-radius: 18px;
   }
 
   .work-card-body {
-    min-height: 11rem;
-    padding: 1.5rem 1.15rem 1.3rem;
+    min-height: 9.5rem;
+    padding: 1.25rem 1.05rem 1.15rem;
   }
 
   .work-card-title {
-    font-size: 1.3rem;
+    font-size: 1.18rem;
+  }
+
+  .work-card-desc {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    margin-bottom: 0.95rem;
+  }
+
+  .work-card-badges {
+    gap: 0.3rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .work-card-badges .liquid-glass-pill {
+    font-size: 0.66rem;
+    padding: 0.2rem 0.5rem;
   }
 
   .work-card-cta {
-    padding: 0.8rem 1.15rem;
-    font-size: 0.88rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.82rem;
   }
 
   .work-card-index {
@@ -545,3 +963,24 @@ button {
   }
 }
 
+/* ==========================================================================
+   Hardware Acceleration & Scroll Performance Boosters
+   ========================================================================== */
+.problems-section,
+.projects-section,
+.services-section,
+.expert-impact-section,
+.about-section {
+  contain: paint;
+}
+
+.hero-wave-video,
+.contact-bg-video,
+.site-header,
+.nav-3d-slab,
+.problem-card,
+.work-grid-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

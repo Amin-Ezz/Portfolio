@@ -317,16 +317,66 @@
   color: #FFFFFF;
 }
 
+.hero-section .hero-title {
+  font-size: clamp(2.1rem, 3.8vw, 3.35rem) !important;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
 .hero-section .hero-title .hero-heading-inner {
   color: #FFFFFF;
+}
+
+.hero-section .hero-title .hero-text-white {
+  color: #FFFFFF;
+}
+
+.hero-section .hero-title .hero-text-gray {
+  color: #A1A1AA;
+}
+
+.hero-section .hero-title .hero-text-gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #D8D8D8 45%, #9E9E9E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
 }
 
 .hero-section .hero-title .hero-heading-inner[style*="text-secondary"] {
   color: rgba(235, 235, 235, 0.72) !important;
 }
 
+.hero-subtext-line {
+  display: inline;
+}
+
 .hero-section .hero-description {
+  font-size: clamp(1.04rem, 1.28vw, 1.18rem) !important;
+  line-height: 2 !important;
   color: rgba(235, 235, 235, 0.78) !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section .hero-title {
+    white-space: normal !important;
+    font-size: clamp(1.85rem, 8vw, 2.45rem) !important;
+    line-height: 1.32 !important;
+  }
+  .hero-section .hero-title .hero-heading-inner {
+    white-space: normal !important;
+  }
+  .hero-section .hero-description {
+    font-size: clamp(0.75rem, 2.85vw, 0.92rem) !important;
+    line-height: 1.85 !important;
+    max-width: 96% !important;
+    margin-bottom: 1.75rem !important;
+    color: rgba(235, 235, 235, 0.72) !important;
+  }
+  .hero-subtext-line {
+    display: block;
+    white-space: nowrap;
+  }
 }
 
 .hero-section .hero-stats-grid {
@@ -373,22 +423,50 @@
 }
 
 .hero-section .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(235, 235, 235, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.92rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-section .btn-secondary:hover {
-  border-color: rgba(255, 255, 255, 0.45);
-  background-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
+/* Glowing Pill Button Harmonized with Hero Theme (Dark Liquid Glass & Radiant White Glow) */
 .hero-section .btn-primary {
-  background-color: #FFFFFF;
-  color: #050505;
-  box-shadow: 0 8px 28px rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #FFFFFF !important;
+  border: 1.5px solid #FFFFFF !important;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.45), 0 0 32px rgba(255, 255, 255, 0.2), inset 0 0 12px rgba(255, 255, 255, 0.12) !important;
+  padding: 0.78rem 2rem !important;
+  border-radius: 9999px !important;
+  font-weight: 600;
+  font-size: 0.94rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01em;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-section .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.75), 0 0 48px rgba(255, 255, 255, 0.4), inset 0 0 16px rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
 }
 
 
@@ -597,19 +675,21 @@
   display: none !important;
 }
 
-/* ==========================================================================
-   Header 3D Liquid Glass — Single Unified Slab
-   One glass bar containing logo, links and actions, leaning in 3D
-   ========================================================================== */
+.site-header {
+  transform: translateZ(0);
+  pointer-events: none;
+}
 
 .nav-3d-slab {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  padding: 0.65rem 1.15rem;
+  gap: 1.35rem;
+  padding: 0.55rem 0.95rem;
   border-radius: 22px;
   isolation: isolate;
+  transform: translateZ(0);
+  contain: layout style;
 
   /* Clear Liquid Glass body — translucent, not white */
   background: linear-gradient(
@@ -690,9 +770,9 @@
 .nav-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
   text-decoration: none;
-  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
+  padding: 0.25rem 0.65rem 0.25rem 0.4rem;
   border-radius: 9999px;
   transition: all 0.3s ease;
 }
@@ -718,6 +798,23 @@
   display: block;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   border-radius: 6px;
+}
+
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 38px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  filter: brightness(0) contrast(1.2);
+  transition: transform 0.3s ease, filter 0.35s ease, opacity 0.35s ease;
+}
+
+.nav-logo:hover .nav-logo-img {
+  transform: scale(1.08);
 }
 
 .nav-logo-emblem .emblem-bg,
@@ -764,6 +861,13 @@
 /* Dark-surface variant: Inverted B&W contrast over the dark hero */
 .nav-3d-slab.is-dark .nav-logo:hover {
   background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-3d-slab.is-dark .nav-logo-img {
+  filter: brightness(1) contrast(1.1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .nav-3d-slab.is-dark .nav-logo-emblem .emblem-bg {
@@ -885,207 +989,199 @@
   transform: scale(0.92);
 }
 
-/* Mobile Navigation Drawer Overlay */
+/* Mobile Navigation Drawer / Dropdown
+   Sits below header so the top bar and hamburger toggle stay visible.
+   Compact floating liquid-glass panel anchored on the left side of the navbar. */
 .mobile-nav-drawer {
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 1.5rem 1rem;
-  opacity: 0;
+  z-index: 48;
+  display: block;
+  padding: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+  transition: visibility 0s linear 0.35s;
 }
 
 .mobile-nav-drawer.is-open {
-  opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: visibility 0s linear 0s;
 }
 
 .mobile-nav-backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgba(5, 7, 10, 0.42);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.32s ease;
 }
 
+.mobile-nav-drawer.is-open .mobile-nav-backdrop {
+  opacity: 1;
+}
+
+/* Compact Floating Transparent Glass Panel (Centered directly below top navbar) */
 .mobile-nav-panel {
-  position: relative;
+  position: fixed;
+  top: calc(1.5rem + 54px + 8px);
+  left: 50%;
+  right: auto;
   z-index: 2;
-  width: 100%;
-  max-width: 440px;
-  max-height: calc(100dvh - 2.5rem);
+  width: min(320px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 5.5rem);
   overflow-y: auto;
-  background: linear-gradient(145deg, rgba(24, 27, 34, 0.62) 0%, rgba(12, 14, 18, 0.72) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 26px;
-  padding: 1.6rem 1.4rem;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.55), 
-              0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-              0 1px 0 0 rgba(255, 255, 255, 0.22) inset;
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
-  transform: translateY(-20px) scale(0.97);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  background: linear-gradient(145deg, rgba(22, 24, 30, 0.75) 0%, rgba(10, 12, 16, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 22px;
+  padding: 1.15rem 1rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 24px 60px -10px rgba(0, 0, 0, 0.65),
+    0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  opacity: 0;
+  transform: translate(-50%, -10px) scale(0.96);
+  transform-origin: top center;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.15rem;
+  will-change: transform, opacity;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-panel {
-  transform: translateY(0) scale(1);
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
 }
 
-/* Staggered top-to-bottom entrance animation for drawer sections */
-.mobile-nav-header,
+/* Hamburger → X while the menu is open (mirrors the reference) */
+.mobile-nav-toggle.is-active .bar-1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-nav-toggle.is-active .bar-2 {
+  opacity: 0;
+  transform: scaleX(0.2);
+}
+
+.mobile-nav-toggle.is-active .bar-3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Staggered entrance for drawer sections */
 .mobile-nav-link,
 .mobile-nav-cta,
 .mobile-nav-socials {
   opacity: 0;
-  transform: translateY(-16px);
-  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-8px);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-}
-
-.mobile-nav-drawer.is-open .mobile-nav-header {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.08s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-link:nth-child(1) {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.15s;
+  transition-delay: 0.06s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-link:nth-child(2) {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.21s;
+  transition-delay: 0.1s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-link:nth-child(3) {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.27s;
+  transition-delay: 0.14s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-link:nth-child(4) {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.33s;
+  transition-delay: 0.18s;
+}
+
+.mobile-nav-drawer.is-open .mobile-nav-link:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.22s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-cta {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.39s;
+  transition-delay: 0.26s;
 }
 
 .mobile-nav-drawer.is-open .mobile-nav-socials {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.45s;
-}
-
-.mobile-nav-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.mobile-nav-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-}
-
-.mobile-nav-close {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.mobile-nav-close:active {
-  transform: scale(0.9);
-  background: rgba(255, 255, 255, 0.2);
+  transition-delay: 0.3s;
 }
 
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .mobile-nav-link {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.85rem 1.15rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.85rem;
+  padding: 0.72rem 1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #FFFFFF;
   text-decoration: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.25s ease,
-              border-color 0.25s ease;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s ease,
+              border-color 0.2s ease;
 }
 
+.mobile-nav-link:hover,
 .mobile-nav-link:active {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateX(-4px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .mobile-link-num {
   font-family: monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.4);
 }
 
 .mobile-link-text {
-  font-size: 1.12rem;
+  font-size: 0.98rem;
   font-weight: 700;
   flex-grow: 1;
 }
 
 .mobile-link-arrow {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   transition: transform 0.2s ease;
 }
 
 .mobile-nav-footer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding-top: 0.5rem;
+  gap: 0.85rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .mobile-nav-cta {
@@ -1093,23 +1189,23 @@
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: 14px;
+  padding: 0.72rem 1.25rem;
+  border-radius: 12px;
   background: #FFFFFF;
   color: #0A0A0A;
   font-weight: 800;
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
 }
 
 .mobile-nav-socials {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.85rem;
-  font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.55);
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .mobile-nav-socials a {

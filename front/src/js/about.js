@@ -11,6 +11,9 @@ export function initAboutSection() {
   const aboutSection = document.querySelector('#about');
   if (!aboutSection) return;
 
+  // Interactive Read More Toggle
+  setupAboutReadMore();
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
@@ -22,10 +25,7 @@ export function initAboutSection() {
   // 1. Zone 1: Hero Profile Card Entrance
   setupHeroAnimations();
 
-  // 2. Zone 2: 4 Feature Cards Staggered Entrance & Micro-Interactions
-  setupFeatureCardAnimations();
-
-  // 3. Zone 3: Dark Stats Bar & Live Numeric Counters
+  // 2. Zone 3: Dark Stats Bar & Live Numeric Counters
   setupStatsCounters();
 }
 
@@ -36,28 +36,8 @@ function setupHeroAnimations() {
   const heroCard = document.querySelector('.about-hero-card');
   if (!heroCard) return;
 
-  // Headline Mask Reveal
-  const headingInners = document.querySelectorAll('.about-hero-heading-inner');
-  if (headingInners.length > 0) {
-    gsap.set(headingInners, { y: '110%', opacity: 0 });
-
-    ScrollTrigger.create({
-      trigger: heroCard,
-      start: 'top 82%',
-      once: true,
-      onEnter: () => {
-        gsap.to(headingInners, {
-          y: '0%',
-          opacity: 1,
-          duration: 1.1,
-          ease: 'power3.out',
-          stagger: 0.12
-        });
-      }
-    });
-  }
-
-  // Bio & Meta Pills & Actions Staggered Entrance
+  // Title Cluster, Bio & Meta Pills & Actions Staggered Entrance
+  const titleCluster = document.querySelector('.about-title-cluster');
   const bio = document.querySelector('.about-hero-bio');
   const metaPills = document.querySelectorAll('.about-meta-pill');
   const actionBtns = document.querySelectorAll('.about-actions-row > *');
@@ -70,13 +50,22 @@ function setupHeroAnimations() {
     }
   });
 
-  if (bio) {
-    heroTimeline.from(bio, {
+  if (titleCluster) {
+    heroTimeline.from(titleCluster, {
       y: 25,
       opacity: 0,
-      duration: 0.9,
+      duration: 0.85,
       ease: 'power3.out'
-    }, '-=0.6');
+    });
+  }
+
+  if (bio) {
+    heroTimeline.from(bio, {
+      y: 20,
+      opacity: 0,
+      duration: 0.85,
+      ease: 'power3.out'
+    }, '-=0.55');
   }
 
   if (metaPills.length > 0) {
@@ -139,18 +128,22 @@ function setupHeroAnimations() {
     });
 
     if (window.matchMedia('(pointer: fine)').matches) {
+      let rect = portraitHolder.getBoundingClientRect();
+      const refreshRect = () => {
+        rect = portraitHolder.getBoundingClientRect();
+      };
+      window.addEventListener('resize', refreshRect, { passive: true });
+      portraitHolder.addEventListener('mouseenter', refreshRect, { passive: true });
+
+      const rotYTo = gsap.quickTo(portraitHolder, 'rotationY', { duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+      const rotXTo = gsap.quickTo(portraitHolder, 'rotationX', { duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+
       portraitHolder.addEventListener('mousemove', (e) => {
-        const rect = portraitHolder.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-        gsap.to(portraitHolder, {
-          rotationY: x * 8,
-          rotationX: -y * 8,
-          transformPerspective: 900,
-          duration: 0.4,
-          ease: 'power2.out'
-        });
+        gsap.set(portraitHolder, { transformPerspective: 900 });
+        rotYTo(x * 8);
+        rotXTo(-y * 8);
       });
 
       portraitHolder.addEventListener('mouseleave', () => {
@@ -158,7 +151,8 @@ function setupHeroAnimations() {
           rotationY: 0,
           rotationX: 0,
           duration: 0.7,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          overwrite: 'auto'
         });
       });
     }
@@ -182,27 +176,7 @@ function setupHeroAnimations() {
   }
 }
 
-/**
- * 2. 4 Feature Cards Staggered Entrance
- */
-function setupFeatureCardAnimations() {
-  const featurePanel = document.querySelector('.about-features-panel');
-  const cards = document.querySelectorAll('.about-feature-item');
-  if (!featurePanel || cards.length === 0) return;
 
-  gsap.from(cards, {
-    y: 35,
-    opacity: 0,
-    stagger: 0.12,
-    duration: 0.95,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: featurePanel,
-      start: 'top 82%',
-      once: true
-    }
-  });
-}
 
 /**
  * 3. Dark Stats Bar Live Counters
@@ -259,4 +233,39 @@ function setupStatsCounters() {
 function toPersianNumber(num) {
   const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
   return num.toString().replace(/\d/g, (d) => persianDigits[parseInt(d, 10)]);
+}
+
+/**
+ * Expandable Read More toggle for About Hero Bio
+ */
+function setupAboutReadMore() {
+  const btn = document.getElementById('aboutReadMoreBtn');
+  const textWrap = document.getElementById('aboutBioTextWrap');
+  const readMoreWrap = document.querySelector('.about-read-more-wrap');
+  if (!btn || !textWrap) return;
+
+  const textSpan = btn.querySelector('.about-read-more-text');
+
+  btn.addEventListener('click', () => {
+    const isExpanded = btn.classList.contains('is-expanded');
+
+    if (isExpanded) {
+      btn.classList.remove('is-expanded');
+      textWrap.classList.remove('is-expanded');
+      if (readMoreWrap) readMoreWrap.classList.remove('is-expanded');
+      btn.setAttribute('aria-expanded', 'false');
+      if (textSpan) textSpan.textContent = 'بیشتر بخون';
+    } else {
+      btn.classList.add('is-expanded');
+      textWrap.classList.add('is-expanded');
+      if (readMoreWrap) readMoreWrap.classList.add('is-expanded');
+      btn.setAttribute('aria-expanded', 'true');
+      if (textSpan) textSpan.textContent = 'کمتر بخون';
+    }
+
+    // Refresh ScrollTrigger to recalculate layout dimensions smoothly
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 450);
+  });
 }
