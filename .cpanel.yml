@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/aminezir/public_html/
+    - /bin/cp -rf front/dist/* $DEPLOYPATH
