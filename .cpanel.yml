@@ -1,5 +1,11 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/aminezir/public_html/
-    - /bin/cp -rf front/dist/* $DEPLOYPATH
+    - export APPPATH=/home/aminezir/Portfolio
+    - export PUBLICPATH=/home/aminezir/public_html
+    - /bin/mkdir -p $APPPATH/front/dist
+    - /bin/cp -rf front/dist/* $APPPATH/front/dist/
+    - /bin/cp -rf front/dist/* $PUBLICPATH/
+    - /bin/cp -rf backend/* $APPPATH/backend/
+    - /bin/mkdir -p $APPPATH/tmp
+    - /bin/touch $APPPATH/tmp/restart.txt
