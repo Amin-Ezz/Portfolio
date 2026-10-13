@@ -129,7 +129,7 @@ function initSkillsEntrance(skillsSection) {
       trigger: skillsSection,
       start: 'top 95%',
       end: 'top 6%',
-      scrub: 0.7
+      scrub: isMobile ? true : 0.7
     }
   });
 
@@ -217,16 +217,16 @@ function initTitleScreenTransition(skillsSection) {
   // place as the title screen exits.
   gsap.set(universe.querySelector('.skills-content'), { y: 90, opacity: 0 });
 
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: skillsSection,
       start: 'top top',          // title screen is fully in view
       end: 'top -100%',          // runs until the title screen has fully scrolled off
-      scrub: 0.25
+      scrub: isMobile ? true : 0.25
     }
   });
 
-  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const dissolveTargets = [title, hint, tag, glow].filter(Boolean);
 
   timeline
@@ -336,7 +336,7 @@ function initSequentialSkillsShowcase(skillsSection) {
           trigger: universe,
           start: 'top top',
           end: '+=320%',
-          scrub: 1
+          scrub: isMobile ? true : 1
         }
       });
     }
@@ -376,7 +376,7 @@ function initSequentialSkillsShowcase(skillsSection) {
       pin: true,
       start: 'top top',
       end: pinDistance,
-      scrub: 0.3,
+      scrub: isMobile ? true : 0.3,
       onUpdate: (self) => {
         const progress = self.progress;
         let activeIdx = 0;
@@ -542,17 +542,16 @@ function initSkillsExit(skillsSection) {
 
   if (!universe || !stage) return;
 
+  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
   const exitTl = gsap.timeline({
     scrollTrigger: {
       trigger: universe,
       start: 'bottom 90%',
       endTrigger: skillsSection,
       end: 'bottom 5%',
-      scrub: 0.8
+      scrub: isMobile ? true : 0.8
     }
   });
-
-  const isMobile = window.innerWidth <= 991 || window.matchMedia('(pointer: coarse)').matches;
 
   // Gracefully dissolve, scale down, and lift the skills stage
   exitTl.to(stage, {

@@ -9,28 +9,33 @@ export function initScrollEngine() {
 
   let lenis = null;
 
-  // Initialize Lenis strictly for programmatic smooth scrolling (anchors, transitions)
-  // Disable smoothWheel so mouse wheel & touch use 100% native GPU compositor scrolling (حذف کامل حالت آروم و تاخیردار، صفر درصد لگ)
-  try {
-    lenis = new Lenis({
-      smoothWheel: false,
-      syncTouch: false,
-      autoRaf: false
-    });
+  // Configure ScrollTrigger to ignore mobile address bar height fluctuations and avoid post-scroll jumps
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+    autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load'
+  });
 
-    // Connect Lenis to GSAP ticker so programmatic scrollTo animations tick on every animation frame
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-  } catch (err) {
-    console.warn('Lenis initialized in fallback mode', err);
+  // On touch/mobile devices, rely 100% on the native 120Hz GPU compositor.
+  // Lenis is only initialized for fine pointers/desktop to avoid touch friction and post-scroll momentum mismatch.
+  if (!isTouchDevice) {
+    try {
+      lenis = new Lenis({
+        smoothWheel: false,
+        syncTouch: false,
+        autoRaf: false
+      });
+
+      // Connect Lenis to GSAP ticker so programmatic scrollTo animations tick on every animation frame
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+    } catch (err) {
+      console.warn('Lenis initialized in fallback mode', err);
+    }
   }
 
   // Restore GSAP lagSmoothing so the engine smoothly recovers from any frame spikes
   gsap.ticker.lagSmoothing(500, 33);
-
-  // Synchronize ScrollTrigger with native high-performance passive scroll events
-  window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
 
   // Universal smooth scroll handler for all anchor links (top navbar, mobile menu, buttons, CTA, etc.)
   document.addEventListener('click', (e) => {
@@ -59,9 +64,13 @@ export function initScrollEngine() {
   // Setup ScrollTrigger Animations
   setupScrollAnimations();
 
-  // Recalculate ScrollTrigger on mobile orientation or resize
+  // Recalculate ScrollTrigger on window width resize or orientation change ONLY.
+  // Crucial: Ignore vertical resize caused by the mobile browser's address bar expanding/collapsing!
   let resizeTimer;
+  let lastWidth = window.innerWidth;
   window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       if (lenis) lenis.resize();
@@ -70,6 +79,7 @@ export function initScrollEngine() {
   });
   window.addEventListener('orientationchange', () => {
     setTimeout(() => {
+      lastWidth = window.innerWidth;
       if (lenis) lenis.resize();
       ScrollTrigger.refresh();
     }, 300);

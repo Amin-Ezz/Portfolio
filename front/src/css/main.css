@@ -968,6 +968,7 @@ html {
 /* ==========================================================================
    Hardware Acceleration & Scroll Performance Boosters
    ========================================================================== */
+.transition-section,
 .problems-section,
 .projects-section,
 .services-section,
@@ -986,4 +987,10 @@ html {
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 860px) {
+  html, body {
+    -webkit-overflow-scrolling: touch;
+  }
 }
