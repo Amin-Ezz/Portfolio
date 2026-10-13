@@ -60,12 +60,12 @@
   border-radius: 32px;
   /* Thicker crisp black border (کادر نوار ضخیم‌تر) */
   border: 3px solid #000000;
-  /* 3D Elevated Embossed Shadow (حالت برجسته و شناور روی بک گراند کل صفحه) */
+  /* 3D Elevated Embossed Shadow — high performance */
   box-shadow: 
-    0 24px 64px -8px rgba(0, 0, 0, 0.18),
-    0 12px 28px -4px rgba(0, 0, 0, 0.11),
-    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 20px 48px -10px rgba(0, 0, 0, 0.15),
     inset 0 1.5px 0 rgba(255, 255, 255, 0.95);
+  transform: translateZ(0);
+  will-change: transform;
   padding: clamp(2rem, 4.5vw, 4.25rem);
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;

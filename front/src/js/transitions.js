@@ -189,20 +189,20 @@ export function executeProjectExit(targetUrl = '/') {
   if (!sessionStorage.getItem('amin_project_origin')) {
     let slug = 'lumina';
     let title = 'LUMINA';
-    let imageSrc = '/images/lumina-hero.png';
+    let imageSrc = '/images/lumina-hero.webp';
     const path = window.location.pathname;
     if (path.includes('mod-style')) {
       slug = 'mod-style';
       title = 'MODSTYLE';
-      imageSrc = '/images/modstyle-hero.png?v=2';
+      imageSrc = '/images/modstyle-hero.webp?v=3';
     } else if (path.includes('project-management')) {
       slug = 'project-management';
       title = 'NORTHWIND';
-      imageSrc = '/images/northwind-hero.png';
+      imageSrc = '/images/northwind-hero.webp';
     } else if (path.includes('trip-os')) {
       slug = 'trip-os';
       title = 'TRIP OS';
-      imageSrc = '/images/tripos-hero.png';
+      imageSrc = '/images/tripos-hero.webp';
     }
     sessionStorage.setItem('amin_project_origin', JSON.stringify({
       source: 'works',

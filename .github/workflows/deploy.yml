@@ -33,6 +33,8 @@ jobs:
           npx vite build
 
       - name: 🌐 Deploy front/dist to cPanel via FTP
+        continue-on-error: true
+        if: ${{ secrets.FTP_SERVER != '' }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}

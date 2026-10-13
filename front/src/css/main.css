@@ -208,29 +208,21 @@ html {
 }
 
 /* ==========================================================================
-   Selected Works — Three-Column Showcase Grid
+   Selected Works — Two-Column Balanced Showcase Grid (4 Projects)
    ========================================================================== */
 .works-grid-container {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.65rem;
-  max-width: 1400px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.85rem;
+  max-width: 1240px;
   margin-inline: auto;
 }
 
-@media (max-width: 1120px) {
-  .works-grid-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 900px;
-    gap: 1.75rem;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .works-grid-container {
     grid-template-columns: 1fr;
-    max-width: 540px;
-    gap: 1.5rem;
+    max-width: 580px;
+    gap: 1.6rem;
   }
 }
 
@@ -653,15 +645,13 @@ html {
   contain: paint;
   overflow: hidden;
   border-radius: 24px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8),
-              0 0 0 1px rgba(255, 255, 255, 0.06),
-              inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
-              inset 0 0 20px 0 rgba(255, 255, 255, 0.03) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(18, 22, 32, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 18px 45px -10px rgba(0, 0, 0, 0.75),
+              0 0 0 1px rgba(255, 255, 255, 0.05),
+              inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.35) !important;
   transform: translateZ(0);
+  will-change: transform;
   display: flex;
   flex-direction: column;
   transition: transform 0.35s var(--ease-out-expo),
@@ -710,8 +700,8 @@ html {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transform: scale(1.2);
-  filter: saturate(1.4) brightness(0.95);
+  transform: scale(1.08);
+  opacity: 0.65;
 }
 
 /* The screenshot itself */
@@ -771,10 +761,12 @@ html {
   font-size: 0.78rem;
   font-weight: 600;
   color: #FFFFFF !important;
-  background: rgba(0, 0, 0, 0.45) !important;
+  background: rgba(0, 0, 0, 0.55) !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
   border-radius: 9999px;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 /* Pure Frosted Glass Card Body */
@@ -823,6 +815,8 @@ html {
   letter-spacing: 0.02em;
   border-radius: 9999px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -970,7 +964,8 @@ html {
 .projects-section,
 .services-section,
 .expert-impact-section,
-.about-section {
+.about-section,
+.about-mockup-section {
   contain: paint;
 }
 

@@ -138,15 +138,26 @@ function setupHeroAnimations() {
       const rotYTo = gsap.quickTo(portraitHolder, 'rotationY', { duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
       const rotXTo = gsap.quickTo(portraitHolder, 'rotationX', { duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
 
+      let tiltRaf = 0;
       portraitHolder.addEventListener('mousemove', (e) => {
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        gsap.set(portraitHolder, { transformPerspective: 900 });
-        rotYTo(x * 8);
-        rotXTo(-y * 8);
-      });
+        if (tiltRaf) return;
+        const clientX = e.clientX;
+        const clientY = e.clientY;
+        tiltRaf = requestAnimationFrame(() => {
+          tiltRaf = 0;
+          const x = (clientX - rect.left) / rect.width - 0.5;
+          const y = (clientY - rect.top) / rect.height - 0.5;
+          gsap.set(portraitHolder, { transformPerspective: 900 });
+          rotYTo(x * 8);
+          rotXTo(-y * 8);
+        });
+      }, { passive: true });
 
       portraitHolder.addEventListener('mouseleave', () => {
+        if (tiltRaf) {
+          cancelAnimationFrame(tiltRaf);
+          tiltRaf = 0;
+        }
         gsap.to(portraitHolder, {
           rotationY: 0,
           rotationX: 0,

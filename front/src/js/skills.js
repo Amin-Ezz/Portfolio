@@ -302,6 +302,15 @@ function initSequentialSkillsShowcase(skillsSection) {
     panelFloatMap.set(panel, tweens);
   }
 
+  // Helper: pause floating loop on an inactive panel to eliminate background CPU work
+  function pausePanelFloat(panel) {
+    if (!panel) return;
+    const existing = panelFloatMap.get(panel);
+    if (existing && existing.length > 0) {
+      existing.forEach(t => t.pause());
+    }
+  }
+
   // Initialize panels: Panel 0 is visible, panels 1..3 are hidden
   panels.forEach((panel, idx) => {
     if (idx === 0) {
@@ -431,11 +440,13 @@ function initSequentialSkillsShowcase(skillsSection) {
       onComplete: () => {
         panels[0].classList.remove('active');
         gsap.set(panels[0], { visibility: 'hidden' });
+        pausePanelFloat(panels[0]);
       },
       onReverseComplete: () => {
         panels[0].classList.add('active');
         gsap.set(panels[0], { visibility: 'visible' });
         startPanelFloat(panels[0]);
+        pausePanelFloat(panels[1]);
       }
     }, 0.65)
     .set(panels[1], { visibility: 'visible' }, 0.82)
@@ -476,11 +487,13 @@ function initSequentialSkillsShowcase(skillsSection) {
       onComplete: () => {
         panels[1].classList.remove('active');
         gsap.set(panels[1], { visibility: 'hidden' });
+        pausePanelFloat(panels[1]);
       },
       onReverseComplete: () => {
         panels[1].classList.add('active');
         gsap.set(panels[1], { visibility: 'visible' });
         startPanelFloat(panels[1]);
+        pausePanelFloat(panels[2]);
       }
     }, 1.65)
     .set(panels[2], { visibility: 'visible' }, 1.82)
@@ -590,13 +603,12 @@ function initSkillsExit(skillsSection) {
 
   // Seamless handover into #about section
   if (aboutSection) {
-    const aboutContainer = aboutSection.querySelector('.container-custom');
+    const aboutContainer = aboutSection.querySelector('.about-mockup-container') || aboutSection.querySelector('.container-custom');
     if (aboutContainer) {
       gsap.from(aboutContainer, {
-        y: 55,
-        opacity: 0.25,
-        filter: 'blur(8px)',
-        duration: 1.2,
+        y: 35,
+        opacity: 0,
+        duration: 0.9,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: aboutSection,

@@ -36,7 +36,8 @@
   position: absolute;
   border-radius: 50%;
   opacity: 0.22;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
   pointer-events: none;
 }
 

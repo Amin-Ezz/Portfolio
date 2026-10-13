@@ -7,5 +7,7 @@ deployment:
     - /bin/cp -rf front/dist/* $APPPATH/front/dist/
     - /bin/cp -rf front/dist/* $PUBLICPATH/
     - /bin/cp -rf backend/* $APPPATH/backend/
+    - /bin/cp -f passenger_wsgi.py $APPPATH/
+    - /bin/cp -f passenger_wsgi.py $PUBLICPATH/
     - /bin/mkdir -p $APPPATH/tmp
     - /bin/touch $APPPATH/tmp/restart.txt
