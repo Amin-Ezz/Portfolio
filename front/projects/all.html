@@ -8,97 +8,162 @@
   <meta http-equiv="Expires" content="0" />
   <title>تمامی پروژه‌ها — آرشیو جامع پروژه‌های منتخب | امین اسماعیل زاده</title>
   <meta name="description" content="آرشیو کامل ۴ پروژه فول‌استک و تعاملی امین اسماعیل زاده شامل Lumina، ModStyle، Northwind و Trip OS به همراه جزئیات معماری، سورس‌کد و دموی آنلاین." />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000000'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='22' fill='%23FFFFFF'%3E.EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
 
   <!-- Google Fonts: Vazirmatn (Persian Primary) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- Base & Dedicated Black & White Stylesheets -->
+  <!-- Base & Dedicated Stylesheets -->
   <link rel="stylesheet" href="/src/css/main.css?v=5" />
+  <link rel="stylesheet" href="/src/css/liquid-glass.css?v=5" />
+  <link rel="stylesheet" href="/src/css/lumina-redesign.css?v=5" />
   <link rel="stylesheet" href="/src/css/projects-archive.css?v=5" />
 </head>
-<body class="archive-body projects-archive-page">
+<body class="lumina-showcase-page projects-archive-page">
+
+  <!-- Transition Overlay Layer -->
+  <div class="transition-overlay"></div>
+
+  <!-- Fixed Liquid Glass Return to Home Button (ثابت در بالای صفحه در حین اسکرول با حالت شیشه‌ای) -->
+  <a href="/#projects" class="nav-back-glass-btn" data-cursor="link" aria-label="بازگشت به پروژه‌های منتخب">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 19 12 12 5"></polyline>
+    </svg>
+    <span>بازگشت به صفحه اصلی</span>
+  </a>
 
   <!-- ========================================================================
-       01. STICKY MINIMAL NAVIGATION BAR (تم سیاه و سفید مینیمال)
+       TOP NAVIGATION BAR — EXACT HOME PAGE 3D LIQUID GLASS SLAB NAVBAR
        ======================================================================== -->
-  <header class="archive-nav-header">
-    <div class="archive-container">
-      <div class="archive-nav-inner">
+  <header class="fixed top-6 inset-x-0 z-50 pointer-events-none site-header"
+    style="position: fixed; top: 1.5rem; left: 0; right: 0; z-index: 50;">
+    <div class="container-custom" style="display: flex; justify-content: center; position: relative;">
 
-        <!-- Right Side: Brand & Return Home Button -->
-        <div class="archive-nav-right">
-          <a href="/" class="archive-back-btn" title="بازگشت به صفحه اصلی پورتفولیو">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-            <span>بازگشت به صفحه اصلی</span>
+      <div class="nav-3d-slab pointer-events-auto" style="pointer-events: auto;">
+
+        <!-- Glass slab surface layers -->
+        <span class="nav-slab-edge" aria-hidden="true"></span>
+
+        <!-- Slab content: B&W Logo | Links | Actions -->
+        <a href="/" class="nav-logo" data-cursor="link" aria-label="لوگوی AMIN.EZ">
+          <span class="nav-logo-emblem">
+            <img src="/images/logo-transparent.png" alt="لوگوی AMIN.EZ" class="nav-logo-img" width="38" height="38" />
+          </span>
+          <span class="nav-logo-name">
+            <span class="logo-txt-main">AMIN.EZ</span>
+          </span>
+        </a>
+
+        <nav class="nav-slab-links" aria-label="ناوبری اصلی">
+          <a href="/#projects" class="nav-link-item" data-cursor="link">پروژه‌ها</a>
+          <a href="/#services" class="nav-link-item" data-cursor="link">خدمات</a>
+          <a href="/#skills" class="nav-link-item" data-cursor="link">مهارت‌ها</a>
+          <a href="/#about" class="nav-link-item" data-cursor="link">درباره من</a>
+          <a href="/#contact" class="nav-link-item" data-cursor="link">تماس</a>
+        </nav>
+
+        <div class="nav-slab-actions">
+          <a href="/#contact" class="nav-slab-cta" data-cursor="link">
+            <span class="pulse-dot"></span>
+            <span>همکاری</span>
           </a>
-
-          <a href="/" class="archive-brand">
-            <span class="archive-brand-badge">.EZ</span>
-            <span class="archive-brand-name">AMIN.DEV</span>
-          </a>
-        </div>
-
-        <!-- Left Side: Nav Meta & Contact CTA -->
-        <div class="archive-nav-left">
-          <span class="archive-nav-meta">آرشیو جامع پروژه‌ها (۴ پروژه)</span>
-          <a href="/#contact" class="archive-contact-link">شروع همکاری</a>
+          <button id="mobileNavToggle" class="mobile-nav-toggle" aria-label="منوی ناوبری سایت" aria-expanded="false">
+            <span class="hamburger-bar bar-1"></span>
+            <span class="hamburger-bar bar-2"></span>
+            <span class="hamburger-bar bar-3"></span>
+          </button>
         </div>
 
       </div>
+
     </div>
   </header>
 
-  <main>
-    <!-- ========================================================================
-         02. EDITORIAL HERO SECTION
-         ======================================================================== -->
-    <section class="archive-hero">
-      <div class="archive-container">
+  <!-- Mobile Glass Navigation Drawer (Displays for Mobile & Tablet screens) -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <nav class="mobile-nav-links" aria-label="منوی موبایل">
+        <a href="/#projects" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۱</span>
+          <span class="mobile-link-text">پروژه‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#services" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۲</span>
+          <span class="mobile-link-text">خدمات</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#skills" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۳</span>
+          <span class="mobile-link-text">مهارت‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#about" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۴</span>
+          <span class="mobile-link-text">درباره من</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#contact" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۵</span>
+          <span class="mobile-link-text">تماس و ارتباط</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a href="/#contact" class="mobile-nav-cta">
+          <span class="pulse-dot"></span>
+          <span>شروع همکاری و سفارش</span>
+        </a>
+        <div class="mobile-nav-socials">
+          <a href="https://t.me/AminOmade" target="_blank" rel="noopener noreferrer">تلگرام</a>
+          <span>•</span>
+          <a href="https://github.com/Amin-Ezz" target="_blank" rel="noopener noreferrer">گیت‌هاب</a>
+          <span>•</span>
+          <a href="https://www.linkedin.com/in/amin-esmaeil-zadeh-a99503431" target="_blank" rel="noopener noreferrer">لینکدین</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <main class="lumina-showcase-main archive-main">
+    <div class="lumina-showcase-container archive-container">
+
+      <!-- Top Subnav: Breadcrumbs (دقیقا مثل صفحات پروژه) -->
+      <div class="lumina-top-subnav">
+        <div class="lumina-breadcrumbs">
+          <a href="/">صفحه اصلی</a>
+          <span>/</span>
+          <a href="/#projects">پروژه‌ها</a>
+          <span>/</span>
+          <span class="active">تمامی پروژه‌ها</span>
+        </div>
+      </div>
+
+      <!-- ========================================================================
+           02. EDITORIAL HERO SECTION
+           ======================================================================== -->
+      <section class="archive-hero">
         <div class="archive-hero-tag">ARCHIVE // FULL-STACK & EDITORIAL</div>
 
         <h1 class="archive-hero-title">
-          تمامی پروژه‌ها و کیس‌استادی‌ها
+          تمامی پروژه‌ها
         </h1>
 
         <p class="archive-hero-sub">
           مجموعه محصولات دیجیتال و وب‌اپلیکیشن‌های توسعه داده شده با تمرکز بر پرفورمنس ۱۲۰ هرتز، معماری ماژولار فول‌استک Django و رابط‌های کاربری چشم‌نواز. در این بخش می‌توانید جزئیات فنی، کیس‌استادی کامل و دموی آنلاین هر ۴ پروژه را بررسی کنید.
         </p>
+      </section>
 
-        <!-- Stats Bar -->
-        <div class="archive-stats-row">
-          <div class="archive-stat-item">
-            <span class="archive-stat-num">۰۴</span>
-            <span class="archive-stat-label">پروژه فول‌استک تکمیل‌شده</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num">۱۰۰٪</span>
-            <span class="archive-stat-label">طراحی و کدنویسی اختصاصی</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num">۱۲۰ FPS</span>
-            <span class="archive-stat-label">نرخ فریم و روان‌سازی انیمیشن</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num">REST API</span>
-            <span class="archive-stat-label">معماری مقیاس‌پذیر جنگو</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================================
-         03. FILTER & TOOLBAR
-         ======================================================================== -->
-    <section>
-      <div class="archive-container">
+      <!-- ========================================================================
+           03. FILTER & TOOLBAR
+           ======================================================================== -->
+      <section>
         <div class="archive-toolbar">
           <div class="archive-filter-pills" id="filterPills">
             <button class="archive-filter-btn active" data-filter="all">همه پروژه‌ها (۴)</button>
@@ -110,215 +175,142 @@
         </div>
 
         <!-- ========================================================================
-             04. PROJECTS GRID (SHOWCASING ALL 4 PROJECTS)
+             04. PROJECTS GRID (EXACT CARDS AS IN FEATURED PROJECTS SECTION)
              ======================================================================== -->
-        <div class="archive-projects-grid" id="projectsGrid">
+        <div class="works-grid-container" id="projectsGrid">
 
           <!-- PROJECT 01: LUMINA -->
-          <article class="archive-card" data-category="platform">
-            <div class="archive-card-media">
-              <span class="archive-card-index">پروژه ۰۱</span>
-              <span class="archive-card-cat-pill">کتابخانه دیجیتال</span>
-              <img src="/images/lumina-hero.webp" alt="LUMINA کتابخانه آنلاین" loading="lazy" decoding="async" />
-            </div>
-            <div class="archive-card-body">
-              <div class="archive-card-badges">
-                <span class="archive-tech-pill">HTML5</span>
-                <span class="archive-tech-pill">CSS3</span>
-                <span class="archive-tech-pill">JavaScript</span>
-                <span class="archive-tech-pill">Django</span>
-                <span class="archive-tech-pill">DRF</span>
-                <span class="archive-tech-pill">GSAP</span>
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="lumina" data-cursor="project"
+            data-cursor-label="مشاهده لومینا" data-transition-target data-href="/projects/lumina.html?v=5"
+            data-project-title="LUMINA" data-project-image="/images/lumina-hero.webp"
+            style="overflow: hidden; cursor: pointer;"
+            data-category="platform">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/lumina-hero-fill.webp" alt="" loading="lazy" decoding="async" />
               </div>
-              <div class="archive-card-title-group">
-                <h2 class="archive-card-title">LUMINA — کتابخانه آنلاین</h2>
-                <p class="archive-card-sub">پلتفرم ادیتوریال مطالعه و مدیریت هوشمند کتاب‌ها</p>
+              <div class="work-card-shot">
+                <img src="/images/lumina-hero.webp" alt="LUMINA کتابخانه آنلاین" loading="lazy" decoding="async"
+                  width="1888" height="917" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۱</span>
               </div>
-              <p class="archive-card-desc">
-                پروژه لومینا با هدف بازتعریف تجربه مطالعه دیجیتال خلق شد. رابط کاربری سوئیسی با تمرکز صددرصدی بر خوانش‌پذیری تایپوگرافی فارسی، انیمیشن‌های روان ۱۲۰ فریم و کلاینت فوق‌العاده سبک با لود زیر ۵۰۰ میلی‌ثانیه.
-              </p>
-              <div class="archive-card-meta-list">
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">نقش در پروژه</span>
-                  <span class="archive-meta-val">Full-Stack Developer</span>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
                 </div>
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">سال ساخت</span>
-                  <span class="archive-meta-val">۲۰۲۶</span>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">LUMINA — کتابخانه آنلاین</span></h3>
+                <p class="work-card-desc">پلتفرم مدرن معرفی و مطالعه کتاب با رابط کاربری ادیتوریال و مدیریت جامع دسته‌بندی‌ها.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
                 </div>
-              </div>
-              <div class="archive-card-actions">
-                <a href="/projects/lumina.html?v=5" class="archive-btn-primary">
-                  <span>مشاهده کیس‌استادی کامل</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 19 12 12 5"></polyline>
-                  </svg>
-                </a>
-                <a href="https://luumina.vercel.app" target="_blank" rel="noopener noreferrer" class="archive-btn-secondary">
-                  <span>دموی آنلاین</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
               </div>
             </div>
           </article>
 
           <!-- PROJECT 02: MODSTYLE -->
-          <article class="archive-card" data-category="ecommerce">
-            <div class="archive-card-media">
-              <span class="archive-card-index">پروژه ۰۲</span>
-              <span class="archive-card-cat-pill">فروشگاه آنلاین</span>
-              <img src="/images/modstyle-hero.webp?v=3" alt="MODSTYLE فروشگاه آنلاین مد و لباس" loading="lazy" decoding="async" />
-            </div>
-            <div class="archive-card-body">
-              <div class="archive-card-badges">
-                <span class="archive-tech-pill">HTML5</span>
-                <span class="archive-tech-pill">Tailwind CSS</span>
-                <span class="archive-tech-pill">JavaScript ES6+</span>
-                <span class="archive-tech-pill">Django REST</span>
-                <span class="archive-tech-pill">Lenis Smooth</span>
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="mod-style"
+            data-cursor="project" data-cursor-label="مشاهده مد استایل" data-transition-target
+            data-href="/projects/mod-style.html?v=5" data-project-title="MODSTYLE"
+            data-project-image="/images/modstyle-hero.webp?v=3" style="overflow: hidden; cursor: pointer;"
+            data-category="ecommerce">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/modstyle-hero-fill.webp" alt="" loading="lazy" decoding="async" />
               </div>
-              <div class="archive-card-title-group">
-                <h2 class="archive-card-title">MODSTYLE — فروشگاه آنلاین مد و لباس</h2>
-                <p class="archive-card-sub">تجربه خرید بدون اصطکاک با فیلتر هوشمند و سبد خرید تعاملی</p>
+              <div class="work-card-shot">
+                <img src="/images/modstyle-hero.webp?v=3" alt="MODSTYLE فروشگاه آنلاین مد و لباس" loading="lazy"
+                  decoding="async" width="1024" height="445" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۲</span>
               </div>
-              <p class="archive-card-desc">
-                پلتفرم فول‌استک فروشگاهی با کاتالوگ ساختاریافته، فیلترهای آنی سایز و رنگ، سبد خرید بلادرنگ و جریان پرداخت یکپارچه که مسیر کشف محصول تا خرید را با کمترین اصطکاک فراهم می‌سازد.
-              </p>
-              <div class="archive-card-meta-list">
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">تعداد محصولات</span>
-                  <span class="archive-meta-val">۲۶+ محصول با دیتابیس کامل</span>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
                 </div>
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">معماری بک‌اند</span>
-                  <span class="archive-meta-val">Django REST Framework</span>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">MODSTYLE — فروشگاه آنلاین مد و لباس</span></h3>
+                <p class="work-card-desc">فروشگاه مدرن پوشاک با تجربه خرید آنی، سبد خرید تعاملی و فیلتر پیشرفته محصولات.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
                 </div>
-              </div>
-              <div class="archive-card-actions">
-                <a href="/projects/mod-style.html?v=5" class="archive-btn-primary">
-                  <span>مشاهده کیس‌استادی کامل</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 19 12 12 5"></polyline>
-                  </svg>
-                </a>
-                <a href="https://modstyle.vercel.app/" target="_blank" rel="noopener noreferrer" class="archive-btn-secondary">
-                  <span>دموی آنلاین</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
               </div>
             </div>
           </article>
 
           <!-- PROJECT 03: NORTHWIND -->
-          <article class="archive-card" data-category="productivity">
-            <div class="archive-card-media">
-              <span class="archive-card-index">پروژه ۰۳</span>
-              <span class="archive-card-cat-pill">مدیریت پروژه</span>
-              <img src="/images/northwind-hero.webp" alt="NORTHWIND پلتفرم مدیریت پروژه" loading="lazy" decoding="async" />
-            </div>
-            <div class="archive-card-body">
-              <div class="archive-card-badges">
-                <span class="archive-tech-pill">HTML5</span>
-                <span class="archive-tech-pill">Tailwind CSS</span>
-                <span class="archive-tech-pill">JavaScript ES6+</span>
-                <span class="archive-tech-pill">REST API</span>
-                <span class="archive-tech-pill">PostgreSQL</span>
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="project-management"
+            data-cursor="project" data-cursor-label="مشاهده نورث‌ویند" data-transition-target
+            data-href="/projects/project-management.html?v=5" data-project-title="NORTHWIND"
+            data-project-image="/images/northwind-hero.webp" style="overflow: hidden; cursor: pointer;"
+            data-category="productivity">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/northwind-hero-fill.webp" alt="" loading="lazy" decoding="async" />
               </div>
-              <div class="archive-card-title-group">
-                <h2 class="archive-card-title">NORTHWIND — مدیریت پروژه و تسک‌ها</h2>
-                <p class="archive-card-sub">ورک‌اسپیس مشارکتی متمرکز برای برنامه‌ریزی و پیشبرد تیم‌ها</p>
+              <div class="work-card-shot">
+                <img src="/images/northwind-hero.webp" alt="NORTHWIND پلتفرم مدیریت پروژه" loading="lazy"
+                  decoding="async" width="1910" height="925" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۳</span>
               </div>
-              <p class="archive-card-desc">
-                محیط کاری ساختاریافته برای ایجاد پروژه‌ها، سازمان‌دهی تسک‌ها، تخصیص مسئولیت‌ها و پیگیری ددلاین‌ها در یک محیط متمرکز، بدون نیاز به جابه‌جایی میان ابزارهای پراکنده.
-              </p>
-              <div class="archive-card-meta-list">
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">قابلیت‌های کلیدی</span>
-                  <span class="archive-meta-val">۶ ماژول اصلی مدیریت تسک</span>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
                 </div>
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">هماهنگی تیمی</span>
-                  <span class="archive-meta-val">داشبورد بلادرنگ اعضا</span>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">NORTHWIND — مدیریت پروژه</span></h3>
+                <p class="work-card-desc">سیستم چابک مدیریت تسک‌ها و همکاری تیمی با کنترل دسترسی و پیگیری بلادرنگ پروژه‌ها.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
                 </div>
-              </div>
-              <div class="archive-card-actions">
-                <a href="/projects/project-management.html?v=5" class="archive-btn-primary">
-                  <span>مشاهده کیس‌استادی کامل</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 19 12 12 5"></polyline>
-                  </svg>
-                </a>
-                <a href="https://north-windd.vercel.app/" target="_blank" rel="noopener noreferrer" class="archive-btn-secondary">
-                  <span>دموی آنلاین</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
               </div>
             </div>
           </article>
 
           <!-- PROJECT 04: TRIP OS -->
-          <article class="archive-card" data-category="productivity">
-            <div class="archive-card-media">
-              <span class="archive-card-index">پروژه ۰۴</span>
-              <span class="archive-card-cat-pill">برنامه‌ریزی سفر</span>
-              <img src="/images/tripos-hero.webp" alt="TRIP OS سیستم مدیریت و برنامه‌ریزی سفر" loading="lazy" decoding="async" />
-            </div>
-            <div class="archive-card-body">
-              <div class="archive-card-badges">
-                <span class="archive-tech-pill">HTML5</span>
-                <span class="archive-tech-pill">Tailwind CSS</span>
-                <span class="archive-tech-pill">JavaScript ES6+</span>
-                <span class="archive-tech-pill">Django REST</span>
-                <span class="archive-tech-pill">PostgreSQL</span>
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="trip-os"
+            data-cursor="project" data-cursor-label="مشاهده تریپ او اس" data-transition-target
+            data-href="/projects/trip-os.html?v=5" data-project-title="TRIP OS"
+            data-project-image="/images/tripos-hero.webp" style="overflow: hidden; cursor: pointer;"
+            data-category="productivity">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/tripos-hero-fill.webp" alt="" loading="lazy" decoding="async" />
               </div>
-              <div class="archive-card-title-group">
-                <h2 class="archive-card-title">TRIP OS — سیستم مدیریت و برنامه‌ریزی سفر</h2>
-                <p class="archive-card-sub">ورک‌اسپیس هوشمند برای مدیریت مقصدها، برنامه‌ریزی روزانه و فعالیت‌ها</p>
+              <div class="work-card-shot">
+                <img src="/images/tripos-hero.webp" alt="TRIP OS سیستم مدیریت و برنامه‌ریزی سفر" loading="lazy"
+                  decoding="async" width="1888" height="917" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۴</span>
               </div>
-              <p class="archive-card-desc">
-                وب‌اپلیکیشن جامع برنامه‌ریزی سفر که تمام اطلاعات پراکنده یادداشت‌ها، مقاصد، بودجه‌بندی و زمان‌بندی روزانه گشت‌وگذار را در یک محیط ساده، منظم و ساختاریافته گرد هم آورده است.
-              </p>
-              <div class="archive-card-meta-list">
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">ماژول‌های سفر</span>
-                  <span class="archive-meta-val">برنامه روزانه، بودجه و مقصدها</span>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
                 </div>
-                <div class="archive-meta-row">
-                  <span class="archive-meta-label">کیس‌استادی اختصاصی</span>
-                  <span class="archive-meta-val">داکیومنت معماری و مهندسی</span>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">TRIP OS — سیستم مدیریت و برنامه‌ریزی سفر</span></h3>
+                <p class="work-card-desc">ورک‌اسپیس هوشمند برای مدیریت مقصدها، برنامه‌ریزی روزانه، بودجه‌بندی و فعالیت‌های سفر.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
                 </div>
-              </div>
-              <div class="archive-card-actions">
-                <a href="/projects/trip-os.html?v=5" class="archive-btn-primary">
-                  <span>مشاهده کیس‌استادی کامل</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 19 12 12 5"></polyline>
-                  </svg>
-                </a>
-                <a href="https://trip-os-fawn.vercel.app/" target="_blank" rel="noopener noreferrer" class="archive-btn-secondary">
-                  <span>دموی آنلاین</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
               </div>
             </div>
           </article>
@@ -370,7 +362,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const filterBtns = document.querySelectorAll('.archive-filter-btn');
-      const cards = document.querySelectorAll('.archive-card');
+      const cards = document.querySelectorAll('.work-grid-card');
       const countIndicator = document.getElementById('filterCount');
 
       filterBtns.forEach(btn => {
@@ -384,7 +376,7 @@
           cards.forEach(card => {
             const category = card.getAttribute('data-category');
             if (filter === 'all' || category === filter) {
-              card.style.display = 'flex';
+              card.style.display = '';
               visibleCount++;
             } else {
               card.style.display = 'none';
@@ -401,5 +393,30 @@
 
   <!-- Global Main JavaScript Module -->
   <script type="module" src="/src/js/main.js"></script>
+
+  <!-- Explicit Hash Navigation Handler for Cross-Page Anchors -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a[href="/"], a[href*="/#"], a[href^="/index.html"]').forEach(link => {
+        link.addEventListener('click', () => {
+          const href = link.getAttribute('href');
+          if (href && href.includes('#')) {
+            const hash = href.split('#')[1];
+            if (hash && hash !== 'projects') {
+              sessionStorage.setItem('amin_return_hash', hash);
+              sessionStorage.removeItem('amin_project_origin');
+              sessionStorage.removeItem('amin_trigger_reverse_transition');
+            } else {
+              sessionStorage.setItem('amin_return_hash', 'projects');
+            }
+          } else if (href === '/' || href === '/index.html') {
+            sessionStorage.removeItem('amin_return_hash');
+            sessionStorage.removeItem('amin_project_origin');
+            sessionStorage.removeItem('amin_trigger_reverse_transition');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
