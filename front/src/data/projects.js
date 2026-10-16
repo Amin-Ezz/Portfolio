@@ -63,7 +63,7 @@ export const projects = [
     id: "02",
     slug: "mod-style",
     title: "MODSTYLE",
-    subtitle: "فروشگاه آنلاین مد و لباس",
+    subtitle: "فروشگاه آنلاین لباس",
     tagline: "تجربه‌ای مدرن برای کشف، انتخاب و ساختن استایل شخصی",
     category: "پلتفرم فول‌استک فروشگاهی / مد و پوشاک",
     year: "۲۰۲۶",
@@ -269,8 +269,6 @@ export const personalInfo = {
         "Python",
         "Django",
         "Django REST Framework",
-        "REST API",
-        "JWT Authentication",
         "PostgreSQL",
         "Database Design"
       ]
@@ -301,7 +299,7 @@ export const personalInfo = {
         "Neon",
         "AI-Assisted Development",
         "Prompt Engineering",
-        "AI Coding",
+        "Vibe Coding",
         "AI Workflow"
       ]
     }

@@ -6,22 +6,55 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>تمامی پروژه‌ها — آرشیو جامع پروژه‌های منتخب | امین اسماعیل زاده</title>
-  <meta name="description" content="آرشیو کامل ۴ پروژه فول‌استک و تعاملی امین اسماعیل زاده شامل Lumina، ModStyle، Northwind و Trip OS به همراه جزئیات معماری، سورس‌کد و دموی آنلاین." />
+  <title>همه پروژه‌ها — آرشیو جامع پروژه‌های منتخب | امین اسماعیل زاده</title>
+  <meta name="description" content="آرشیو کامل پروژه‌های فول‌استک و تعاملی امین اسماعیل زاده شامل Lumina، ModStyle، Northwind و Trip OS به همراه جزئیات معماری، سورس‌کد و دموی آنلاین." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/favicon.png" />
 
-  <!-- Google Fonts: Vazirmatn (Persian Primary) -->
+  <!-- Google Fonts: Vazirmatn & English Script Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@1,500&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Base & Dedicated Stylesheets -->
-  <script type="module" crossorigin src="/assets/main-AmseKgKZ.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-DoTZhWYj.css">
-  <link rel="stylesheet" crossorigin href="/assets/allProjects-Di_wTRMm.css">
-  <link rel="stylesheet" crossorigin href="/assets/lumina-redesign-CabPhsTl.css">
+
+  <!-- Anti-flicker return transition style & script -->
+  <script>
+    (function () {
+      try {
+        var isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
+        var originStr = sessionStorage.getItem('amin_project_origin');
+        if (isReturning && originStr) {
+          document.documentElement.classList.add('is-returning-from-project');
+          if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+          }
+          var origin = JSON.parse(originStr);
+          if (typeof origin.scrollY === 'number' && origin.scrollY > 0) {
+            window.scrollTo(0, origin.scrollY);
+          }
+          setTimeout(function () {
+            document.documentElement.classList.remove('is-returning-from-project');
+          }, 1000);
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <style>
+    html.is-returning-from-project body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: #FFFFFF;
+      z-index: 99998;
+      pointer-events: none;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/main-BtOM26TV.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-BKC-WVpX.css">
+  <link rel="stylesheet" crossorigin href="/assets/allProjects-CzJUbY9F.css">
+  <link rel="stylesheet" crossorigin href="/assets/lumina-redesign-oytmo-5T.css">
 </head>
 <body class="lumina-showcase-page projects-archive-page">
 
@@ -141,255 +174,249 @@
           <span>/</span>
           <a href="/#projects">پروژه‌ها</a>
           <span>/</span>
-          <span class="active">تمامی پروژه‌ها</span>
+          <span class="active">همه پروژه‌ها</span>
         </div>
       </div>
 
       <!-- ========================================================================
-           02. EDITORIAL HERO SECTION
+           02. EDITORIAL HERO SECTION (CENTERED TITLE & ENGLISH CALLIGRAPHIC SUBTITLE)
            ======================================================================== -->
       <section class="archive-hero">
-        <div class="archive-hero-tag">ARCHIVE // FULL-STACK & EDITORIAL</div>
-
-        <h1 class="archive-hero-title">
-          تمامی پروژه‌ها
-        </h1>
-
-        <p class="archive-hero-sub">
-          مجموعه محصولات دیجیتال و وب‌اپلیکیشن‌های توسعه داده شده با تمرکز بر پرفورمنس ۱۲۰ هرتز، معماری ماژولار فول‌استک Django و رابط‌های کاربری چشم‌نواز. در این بخش می‌توانید جزئیات فنی، کیس‌استادی کامل و دموی آنلاین هر ۴ پروژه را بررسی کنید.
-        </p>
+        <div class="archive-hero-header">
+          <h1 class="archive-hero-title">همه پروژه‌ها</h1>
+          <span class="projects-script-subtitle" aria-hidden="true">All projects</span>
+        </div>
       </section>
 
       <!-- ========================================================================
-           03. FILTER & TOOLBAR
+           03. PROJECTS GRID (EXACT CARDS AS IN FEATURED PROJECTS SECTION)
            ======================================================================== -->
-      <section>
-        <div class="archive-toolbar">
-          <div class="archive-filter-pills" id="filterPills">
-            <button class="archive-filter-btn active" data-filter="all">همه پروژه‌ها (۴)</button>
-            <button class="archive-filter-btn" data-filter="platform">پلتفرم‌های وب</button>
-            <button class="archive-filter-btn" data-filter="productivity">مدیریت و برنامه‌ریزی</button>
-            <button class="archive-filter-btn" data-filter="ecommerce">فروشگاه آنلاین</button>
+      <div class="works-grid-container" id="projectsGrid">
+
+        <!-- PROJECT 01: LUMINA -->
+        <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="lumina" data-cursor="project"
+          data-cursor-label="مشاهده لومینا" data-transition-target data-href="/projects/lumina.html?v=5"
+          data-project-title="LUMINA" data-project-image="/images/lumina-hero.webp"
+          style="overflow: hidden; cursor: pointer;">
+          <div class="work-card-media">
+            <div class="work-card-fill" aria-hidden="true">
+              <img src="/images/lumina-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="work-card-shot">
+              <img src="/images/lumina-hero.webp" alt="LUMINA کتابخانه آنلاین" loading="lazy" decoding="async"
+                width="1888" height="917" />
+              <div class="card-sheen"></div>
+              <span class="liquid-glass-pill work-card-index">پروژه ۰۱</span>
+            </div>
+            <div class="work-card-body">
+              <div class="work-card-badges">
+                <span class="liquid-glass-pill">HTML</span>
+                <span class="liquid-glass-pill">CSS</span>
+                <span class="liquid-glass-pill">JavaScript</span>
+                <span class="liquid-glass-pill">Django</span>
+                <span class="liquid-glass-pill">DRF</span>
+              </div>
+              <h3 class="work-card-line work-card-title"><span
+                  class="work-card-line-inner">LUMINA — کتابخانه آنلاین</span></h3>
+              <p class="work-card-desc">پروژه کتابخانه آنلاین دارای داشبورد شخصی، صفحه نویسندگان و دسته‌بندی موضوعی عناوین همراه با حالت مطالعه.</p>
+              <div class="work-card-cta">
+                <span>مشاهده پروژه</span>
+              </div>
+            </div>
           </div>
-          <div class="archive-count-indicator" id="filterCount">نمایش ۴ از ۴ پروژه</div>
+        </article>
+
+        <!-- PROJECT 02: MODSTYLE -->
+        <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="mod-style"
+          data-cursor="project" data-cursor-label="مشاهده مد استایل" data-transition-target
+          data-href="/projects/mod-style.html?v=5" data-project-title="MODSTYLE"
+          data-project-image="/images/modstyle-hero.webp?v=3" style="overflow: hidden; cursor: pointer;">
+          <div class="work-card-media">
+            <div class="work-card-fill" aria-hidden="true">
+              <img src="/images/modstyle-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="work-card-shot">
+              <img src="/images/modstyle-hero.webp?v=3" alt="MODSTYLE فروشگاه آنلاین لباس" loading="lazy"
+                decoding="async" width="1024" height="445" />
+              <div class="card-sheen"></div>
+              <span class="liquid-glass-pill work-card-index">پروژه ۰۲</span>
+            </div>
+            <div class="work-card-body">
+              <div class="work-card-badges">
+                <span class="liquid-glass-pill">HTML</span>
+                <span class="liquid-glass-pill">CSS</span>
+                <span class="liquid-glass-pill">JavaScript</span>
+                <span class="liquid-glass-pill">Django</span>
+                <span class="liquid-glass-pill">DRF</span>
+              </div>
+              <h3 class="work-card-line work-card-title"><span
+                  class="work-card-line-inner">MODSTYLE — فروشگاه آنلاین لباس</span></h3>
+              <p class="work-card-desc">پروژه فروشگاه آنلاین لباس با پنل کاربری، سبد خرید، صفحه اختصاصی مشخصات محصول و فیلترهای دقیق پوشاک.</p>
+              <div class="work-card-cta">
+                <span>مشاهده پروژه</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 03: NORTHWIND -->
+        <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="project-management"
+          data-cursor="project" data-cursor-label="مشاهده نورث‌ویند" data-transition-target
+          data-href="/projects/project-management.html?v=5" data-project-title="NORTHWIND"
+          data-project-image="/images/northwind-hero.webp" style="overflow: hidden; cursor: pointer;">
+          <div class="work-card-media">
+            <div class="work-card-fill" aria-hidden="true">
+              <img src="/images/northwind-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="work-card-shot">
+              <img src="/images/northwind-hero.webp" alt="NORTHWIND پلتفرم مدیریت پروژه" loading="lazy"
+                decoding="async" width="1910" height="925" />
+              <div class="card-sheen"></div>
+              <span class="liquid-glass-pill work-card-index">پروژه ۰۳</span>
+            </div>
+            <div class="work-card-body">
+              <div class="work-card-badges">
+                <span class="liquid-glass-pill">HTML</span>
+                <span class="liquid-glass-pill">CSS</span>
+                <span class="liquid-glass-pill">JavaScript</span>
+                <span class="liquid-glass-pill">Django</span>
+                <span class="liquid-glass-pill">DRF</span>
+              </div>
+              <h3 class="work-card-line work-card-title"><span
+                  class="work-card-line-inner">NORTHWIND — مدیریت پروژه</span></h3>
+              <p class="work-card-desc">سیستم مدیریت پروژه و تیم دارای نمای کلی تسک‌ها، اولویت‌بندی کارها، تعیین مسئول و رصد وضعیت پیشرفت.</p>
+              <div class="work-card-cta">
+                <span>مشاهده پروژه</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 04: TRIP OS -->
+        <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="trip-os"
+          data-cursor="project" data-cursor-label="مشاهده تریپ او اس" data-transition-target
+          data-href="/projects/trip-os.html?v=5" data-project-title="TRIP OS"
+          data-project-image="/images/tripos-hero.webp" style="overflow: hidden; cursor: pointer;">
+          <div class="work-card-media">
+            <div class="work-card-fill" aria-hidden="true">
+              <img src="/images/tripos-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="work-card-shot">
+              <img src="/images/tripos-hero.webp" alt="TRIP OS سیستم مدیریت و برنامه‌ریزی سفر" loading="lazy"
+                decoding="async" width="1888" height="917" />
+              <div class="card-sheen"></div>
+              <span class="liquid-glass-pill work-card-index">پروژه ۰۴</span>
+            </div>
+            <div class="work-card-body">
+              <div class="work-card-badges">
+                <span class="liquid-glass-pill">HTML</span>
+                <span class="liquid-glass-pill">CSS</span>
+                <span class="liquid-glass-pill">JavaScript</span>
+                <span class="liquid-glass-pill">Django</span>
+                <span class="liquid-glass-pill">DRF</span>
+              </div>
+              <h3 class="work-card-line work-card-title"><span
+                  class="work-card-line-inner">TRIP OS — سیستم مدیریت و برنامه‌ریزی سفر</span></h3>
+              <p class="work-card-desc">سامانه برنامه‌ریزی و مدیریت سفر دارای داشبورد اختصاصی، تفکیک مقاصد، جدول زمان‌بندی و پیگیری هزینه‌ها.</p>
+              <div class="work-card-cta">
+                <span>مشاهده پروژه</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       MASTER SITE FOOTER (کادر دسترسی سریع، راه‌های ارتباطی و اطلاعات برند)
+       ======================================================================== -->
+  <footer class="site-master-footer">
+    <div class="site-footer-container">
+      
+      <div class="site-footer-grid">
+        
+        <!-- Column 1: Brand, Bio & Socials -->
+        <div class="site-footer-brand-wrap">
+          <a href="/" class="site-footer-logo-row" aria-label="صفحه اصلی امین اسماعیل زاده">
+            <img src="/images/logo-transparent.png" alt="AMIN.EZ" class="site-footer-logo-img" width="44" height="44" />
+            <span class="site-footer-brand-name">امین اسماعیل زاده</span>
+          </a>
+          <p class="site-footer-bio" style="color: #ffffff;">
+            برنامه نویس و توسعه دهنده وب که با طراحی و توسعه وب سایت به کسب و کارها و برندها کمک میکنم تا بهتر دیده بشن
+          </p>
+          <div class="site-footer-socials">
+            <a href="https://www.linkedin.com/in/amin-esmaeil-zadeh-a99503431" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="لینکدین">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            <a href="https://t.me/AminOmade" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="تلگرام">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/Amin-Ezz" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="گیت‌هاب">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+              </svg>
+            </a>
+            <a href="mailto:amin.esmaeilzadehh@gmail.com" class="site-footer-social-btn" aria-label="ایمیل مستقیم">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
+          </div>
         </div>
 
-        <!-- ========================================================================
-             04. PROJECTS GRID (EXACT CARDS AS IN FEATURED PROJECTS SECTION)
-             ======================================================================== -->
-        <div class="works-grid-container" id="projectsGrid">
-
-          <!-- PROJECT 01: LUMINA -->
-          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="lumina" data-cursor="project"
-            data-cursor-label="مشاهده لومینا" data-transition-target data-href="/projects/lumina.html?v=5"
-            data-project-title="LUMINA" data-project-image="/images/lumina-hero.webp"
-            style="overflow: hidden; cursor: pointer;"
-            data-category="platform">
-            <div class="work-card-media">
-              <div class="work-card-fill" aria-hidden="true">
-                <img src="/images/lumina-hero-fill.webp" alt="" loading="lazy" decoding="async" />
-              </div>
-              <div class="work-card-shot">
-                <img src="/images/lumina-hero.webp" alt="LUMINA کتابخانه آنلاین" loading="lazy" decoding="async"
-                  width="1888" height="917" />
-                <div class="card-sheen"></div>
-                <span class="liquid-glass-pill work-card-index">پروژه ۰۱</span>
-              </div>
-              <div class="work-card-body">
-                <div class="work-card-badges">
-                  <span class="liquid-glass-pill">HTML</span>
-                  <span class="liquid-glass-pill">CSS</span>
-                  <span class="liquid-glass-pill">JavaScript</span>
-                  <span class="liquid-glass-pill">Django</span>
-                  <span class="liquid-glass-pill">DRF</span>
-                </div>
-                <h3 class="work-card-line work-card-title"><span
-                    class="work-card-line-inner">LUMINA — کتابخانه آنلاین</span></h3>
-                <p class="work-card-desc">پلتفرم مدرن معرفی و مطالعه کتاب با رابط کاربری ادیتوریال و مدیریت جامع دسته‌بندی‌ها.</p>
-                <div class="work-card-cta">
-                  <span>مشاهده پروژه</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 02: MODSTYLE -->
-          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="mod-style"
-            data-cursor="project" data-cursor-label="مشاهده مد استایل" data-transition-target
-            data-href="/projects/mod-style.html?v=5" data-project-title="MODSTYLE"
-            data-project-image="/images/modstyle-hero.webp?v=3" style="overflow: hidden; cursor: pointer;"
-            data-category="ecommerce">
-            <div class="work-card-media">
-              <div class="work-card-fill" aria-hidden="true">
-                <img src="/images/modstyle-hero-fill.webp" alt="" loading="lazy" decoding="async" />
-              </div>
-              <div class="work-card-shot">
-                <img src="/images/modstyle-hero.webp?v=3" alt="MODSTYLE فروشگاه آنلاین مد و لباس" loading="lazy"
-                  decoding="async" width="1024" height="445" />
-                <div class="card-sheen"></div>
-                <span class="liquid-glass-pill work-card-index">پروژه ۰۲</span>
-              </div>
-              <div class="work-card-body">
-                <div class="work-card-badges">
-                  <span class="liquid-glass-pill">HTML</span>
-                  <span class="liquid-glass-pill">CSS</span>
-                  <span class="liquid-glass-pill">JavaScript</span>
-                  <span class="liquid-glass-pill">Django</span>
-                  <span class="liquid-glass-pill">DRF</span>
-                </div>
-                <h3 class="work-card-line work-card-title"><span
-                    class="work-card-line-inner">MODSTYLE — فروشگاه آنلاین مد و لباس</span></h3>
-                <p class="work-card-desc">فروشگاه مدرن پوشاک با تجربه خرید آنی، سبد خرید تعاملی و فیلتر پیشرفته محصولات.</p>
-                <div class="work-card-cta">
-                  <span>مشاهده پروژه</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 03: NORTHWIND -->
-          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="project-management"
-            data-cursor="project" data-cursor-label="مشاهده نورث‌ویند" data-transition-target
-            data-href="/projects/project-management.html?v=5" data-project-title="NORTHWIND"
-            data-project-image="/images/northwind-hero.webp" style="overflow: hidden; cursor: pointer;"
-            data-category="productivity">
-            <div class="work-card-media">
-              <div class="work-card-fill" aria-hidden="true">
-                <img src="/images/northwind-hero-fill.webp" alt="" loading="lazy" decoding="async" />
-              </div>
-              <div class="work-card-shot">
-                <img src="/images/northwind-hero.webp" alt="NORTHWIND پلتفرم مدیریت پروژه" loading="lazy"
-                  decoding="async" width="1910" height="925" />
-                <div class="card-sheen"></div>
-                <span class="liquid-glass-pill work-card-index">پروژه ۰۳</span>
-              </div>
-              <div class="work-card-body">
-                <div class="work-card-badges">
-                  <span class="liquid-glass-pill">HTML</span>
-                  <span class="liquid-glass-pill">CSS</span>
-                  <span class="liquid-glass-pill">JavaScript</span>
-                  <span class="liquid-glass-pill">Django</span>
-                  <span class="liquid-glass-pill">DRF</span>
-                </div>
-                <h3 class="work-card-line work-card-title"><span
-                    class="work-card-line-inner">NORTHWIND — مدیریت پروژه</span></h3>
-                <p class="work-card-desc">سیستم چابک مدیریت تسک‌ها و همکاری تیمی با کنترل دسترسی و پیگیری بلادرنگ پروژه‌ها.</p>
-                <div class="work-card-cta">
-                  <span>مشاهده پروژه</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- PROJECT 04: TRIP OS -->
-          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="trip-os"
-            data-cursor="project" data-cursor-label="مشاهده تریپ او اس" data-transition-target
-            data-href="/projects/trip-os.html?v=5" data-project-title="TRIP OS"
-            data-project-image="/images/tripos-hero.webp" style="overflow: hidden; cursor: pointer;"
-            data-category="productivity">
-            <div class="work-card-media">
-              <div class="work-card-fill" aria-hidden="true">
-                <img src="/images/tripos-hero-fill.webp" alt="" loading="lazy" decoding="async" />
-              </div>
-              <div class="work-card-shot">
-                <img src="/images/tripos-hero.webp" alt="TRIP OS سیستم مدیریت و برنامه‌ریزی سفر" loading="lazy"
-                  decoding="async" width="1888" height="917" />
-                <div class="card-sheen"></div>
-                <span class="liquid-glass-pill work-card-index">پروژه ۰۴</span>
-              </div>
-              <div class="work-card-body">
-                <div class="work-card-badges">
-                  <span class="liquid-glass-pill">HTML</span>
-                  <span class="liquid-glass-pill">CSS</span>
-                  <span class="liquid-glass-pill">JavaScript</span>
-                  <span class="liquid-glass-pill">Django</span>
-                  <span class="liquid-glass-pill">DRF</span>
-                </div>
-                <h3 class="work-card-line work-card-title"><span
-                    class="work-card-line-inner">TRIP OS — سیستم مدیریت و برنامه‌ریزی سفر</span></h3>
-                <p class="work-card-desc">ورک‌اسپیس هوشمند برای مدیریت مقصدها، برنامه‌ریزی روزانه، بودجه‌بندی و فعالیت‌های سفر.</p>
-                <div class="work-card-cta">
-                  <span>مشاهده پروژه</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
+        <!-- Column 2: Quick Links (دسترسی سریع) -->
+        <div class="site-footer-links-wrap">
+          <h3 class="site-footer-col-title">دسترسی سریع</h3>
+          <ul class="site-footer-links-list">
+            <li><a href="/" class="site-footer-link">صفحه اصلی</a></li>
+            <li><a href="/projects/all.html" class="site-footer-link">همه پروژه‌ها</a></li>
+            <li><a href="/#services" class="site-footer-link">خدمات و همکاری</a></li>
+            <li><a href="/#skills" class="site-footer-link">مهارت‌های فنی</a></li>
+            <li><a href="/#about" class="site-footer-link">درباره من</a></li>
+            <li><a href="/#contact" class="site-footer-link">ارتباط با من</a></li>
+          </ul>
         </div>
 
-        <!-- ========================================================================
-             05. BOTTOM HERO BANNER
-             ======================================================================== -->
-        <div class="archive-bottom-banner">
-          <div class="archive-bottom-text">
-            <h3>آماده‌اید پروژه بعدی شما را بسازیم؟</h3>
-            <p>
-              از بازطراحی و رفع کندی وب‌سایت‌های موجود تا پیاده‌سازی کامل پلتفرم‌های فول‌استک مدرن، آماده همکاری برای خلق تجربه‌ای متمایز هستم.
-            </p>
+        <!-- Column 3: Contact Ways (راه‌های ارتباطی) -->
+        <div class="site-footer-contact-wrap">
+          <h3 class="site-footer-col-title">راه‌های ارتباطی</h3>
+          <div class="site-footer-contact-list">
+            <a href="tel:09011312210" class="site-footer-contact-item" dir="ltr">+98 901 131 2210</a>
+            <a href="mailto:amin.esmaeilzadehh@gmail.com" class="site-footer-contact-item" dir="ltr">amin.esmaeilzadehh@gmail.com</a>
           </div>
-          <a href="/#contact" class="archive-bottom-btn">
-            <span>گفتگو درباره پروژه جدید</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 19 12 12 5"></polyline>
+          <a href="/#contact" class="site-footer-send-btn">
+            <span>ارسال پیام</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
             </svg>
           </a>
         </div>
 
       </div>
-    </section>
-  </main>
 
-  <!-- ========================================================================
-       06. MINIMAL FOOTER
-       ======================================================================== -->
-  <footer class="archive-footer">
-    <div class="archive-container">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; width: 100%;">
-        <span>© ۲۰۲۶ امین اسماعیل زاده — مهندس فول‌استک و توسعه‌دهنده فرانت‌اند مدرن.</span>
-        <div>
-          <a href="/">صفحه اصلی</a>
-          <span style="margin: 0 0.5rem;">•</span>
-          <a href="/#about">درباره من</a>
-          <span style="margin: 0 0.5rem;">•</span>
-          <a href="/#contact">ارتباط مستقیم</a>
-        </div>
+      <!-- Bottom Bar -->
+      <div class="site-footer-bottom-row">
+        <span>© ۲۰۲۶ امین اسماعیل زاده — تمامی حقوق محفوظ است.</span>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="site-footer-top-btn" aria-label="بازگشت به بالای صفحه">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </a>
       </div>
+
     </div>
   </footer>
-
-  <!-- Filter & Interaction Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const filterBtns = document.querySelectorAll('.archive-filter-btn');
-      const cards = document.querySelectorAll('.work-grid-card');
-      const countIndicator = document.getElementById('filterCount');
-
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          const filter = btn.getAttribute('data-filter');
-          let visibleCount = 0;
-
-          cards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            if (filter === 'all' || category === filter) {
-              card.style.display = '';
-              visibleCount++;
-            } else {
-              card.style.display = 'none';
-            }
-          });
-
-          if (countIndicator) {
-            countIndicator.textContent = `نمایش ${visibleCount} از ۴ پروژه`;
-          }
-        });
-      });
-    });
-  </script>
 
   <!-- Global Main JavaScript Module -->
 

@@ -812,8 +812,10 @@ html {
   margin-bottom: 0.85rem;
 }
 
-/* Liquid Frosted Glass Pill Badges */
-.work-card-badges .liquid-glass-pill {
+/* Liquid Frosted Glass Pill Badges — Uniform luxury monochrome glass across all project cards (matching Lumina card design) */
+.work-card-badges .liquid-glass-pill,
+.work-grid-card .work-card-badges .liquid-glass-pill,
+#projects .work-grid-card .work-card-badges .liquid-glass-pill {
   background: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
   color: #FFFFFF !important;
@@ -822,39 +824,19 @@ html {
   padding: 0.26rem 0.68rem;
   letter-spacing: 0.02em;
   border-radius: 9999px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Card-specific luminous frosted tints */
-.work-grid-card[data-slug="lumina"] .work-card-badges .liquid-glass-pill {
-  background: rgba(244, 114, 182, 0.12) !important;
-  border-color: rgba(244, 114, 182, 0.35) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(244, 114, 182, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-.work-grid-card[data-slug="mod-style"] .work-card-badges .liquid-glass-pill {
-  background: rgba(56, 189, 248, 0.12) !important;
-  border-color: rgba(56, 189, 248, 0.35) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(56, 189, 248, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-.work-grid-card[data-slug="project-management"] .work-card-badges .liquid-glass-pill {
-  background: rgba(245, 158, 11, 0.12) !important;
-  border-color: rgba(245, 158, 11, 0.35) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(245, 158, 11, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-.work-grid-card[data-slug="trip-os"] .work-card-badges .liquid-glass-pill {
-  background: rgba(96, 165, 250, 0.12) !important;
-  border-color: rgba(96, 165, 250, 0.35) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), 0 0 10px rgba(96, 165, 250, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+.work-card-badges .liquid-glass-pill:hover,
+.work-grid-card .work-card-badges .liquid-glass-pill:hover,
+#projects .work-grid-card .work-card-badges .liquid-glass-pill:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-1px);
 }
 
 .work-card-title {

@@ -23,6 +23,67 @@ export function isProjectDetailPage() {
   );
 }
 
+/**
+ * Helper to check if current page is the all projects archive page
+ */
+export function isArchivePage() {
+  return window.location.pathname.includes('/projects/all') || !!document.querySelector('.projects-archive-page');
+}
+
+/**
+ * Dynamically configures project detail back buttons and breadcrumbs based on entry origin
+ */
+export function updateProjectDetailBackButtons() {
+  if (!isProjectDetailPage()) return;
+
+  let originData = null;
+  try {
+    const saved = sessionStorage.getItem('amin_project_origin');
+    if (saved) originData = JSON.parse(saved);
+  } catch (e) {}
+
+  const isFromArchive = originData && (originData.source === 'archive' || (originData.returnUrl && originData.returnUrl.includes('/projects/all')));
+
+  const backBtns = document.querySelectorAll('.nav-back-glass-btn, [data-return-home]');
+  backBtns.forEach(btn => {
+    if (isFromArchive) {
+      btn.setAttribute('href', '/projects/all.html');
+      btn.setAttribute('aria-label', 'بازگشت به همه پروژه‌ها');
+      const span = btn.querySelector('span');
+      if (span) span.textContent = 'بازگشت به همه پروژه‌ها';
+    } else {
+      btn.setAttribute('href', '/#projects');
+      btn.setAttribute('aria-label', 'بازگشت به پروژه‌های منتخب');
+      const span = btn.querySelector('span');
+      if (span) span.textContent = 'بازگشت به صفحه اصلی';
+    }
+  });
+
+  const breadcrumbLinks = document.querySelectorAll('.lumina-breadcrumbs a');
+  breadcrumbLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (href.includes('projects') || href === '/#projects') {
+      if (isFromArchive) {
+        link.setAttribute('href', '/projects/all.html');
+        link.textContent = 'همه پروژه‌ها';
+      } else {
+        link.setAttribute('href', '/#projects');
+        link.textContent = 'پروژه‌ها';
+      }
+    }
+  });
+
+  const navProjectsLink = document.querySelector('.nav-slab-links a[href*="projects"]');
+  if (navProjectsLink && isFromArchive) {
+    navProjectsLink.setAttribute('href', '/projects/all.html');
+  }
+
+  const mobileProjectsLink = document.querySelector('.mobile-nav-link[href*="projects"]');
+  if (mobileProjectsLink && isFromArchive) {
+    mobileProjectsLink.setAttribute('href', '/projects/all.html');
+  }
+}
+
 export function initTransitions() {
   // Ensure transition overlay exists
   let overlay = document.querySelector('.transition-overlay');
@@ -54,13 +115,37 @@ export function initTransitions() {
 
   // Intercept clicks on return-to-home, section anchor buttons, and archive links on project detail pages
   document.addEventListener('click', (e) => {
-    const returnBtn = e.target.closest('a[href="/"], a[href^="/#"], a[href="/index.html"], a[href^="/index.html#"], [data-return-home], a[href="/projects/all.html"]');
+    const returnBtn = e.target.closest('a[href="/"], a[href^="/#"], a[href="/index.html"], a[href^="/index.html#"], [data-return-home], a[href="/projects/all.html"], a[href^="/projects/all"], .nav-back-glass-btn');
     if (!returnBtn) return;
 
     // Only intercept if we are on a project detail page
     if (isProjectDetailPage()) {
+      const isLogo = returnBtn.classList.contains('nav-logo') || returnBtn.closest('.nav-logo');
+      const isBackBtn = returnBtn.classList.contains('nav-back-glass-btn') || returnBtn.closest('.nav-back-glass-btn') || returnBtn.hasAttribute('data-return-home');
+      const isBreadcrumbProjects = returnBtn.closest('.lumina-breadcrumbs') && ((returnBtn.getAttribute('href') || '').includes('projects') || (returnBtn.getAttribute('href') || '').includes('/projects/all'));
+
+      let originData = null;
+      try {
+        const saved = sessionStorage.getItem('amin_project_origin');
+        if (saved) originData = JSON.parse(saved);
+      } catch (err) {}
+
+      const isFromArchive = originData && (originData.source === 'archive' || (originData.returnUrl && originData.returnUrl.includes('/projects/all')));
+
+      let targetUrl = returnBtn.getAttribute('href') || '/';
+
+      if (isLogo) {
+        targetUrl = '/';
+      } else if (isBackBtn || isBreadcrumbProjects) {
+        if (isFromArchive) {
+          targetUrl = '/projects/all.html';
+        } else {
+          targetUrl = '/#projects';
+        }
+      }
+
       e.preventDefault();
-      executeProjectExit(returnBtn.getAttribute('href') || '/');
+      executeProjectExit(targetUrl);
     }
   });
 
@@ -71,11 +156,12 @@ export function initTransitions() {
     }
   });
 
-  // Check if we are on a project detail page -> trigger entrance animation
+  // Check if we are on a project detail page -> trigger entrance animation and configure back buttons
   if (isProjectDetailPage()) {
+    updateProjectDetailBackButtons();
     handlePageEntrance();
   } else {
-    // We are on homepage -> check if we are returning from a project
+    // We are on homepage or archive page -> check if we are returning from a project
     handlePageReturn();
   }
 }
@@ -86,6 +172,9 @@ export function initTransitions() {
 function executeCardExpansion(sourceElement, targetUrl, title, imageSrc) {
   const rect = sourceElement.getBoundingClientRect();
   const isHero = !!sourceElement.closest('.hero-3d-scene') || sourceElement.classList.contains('hero-project-card');
+  const isArchive = !!sourceElement.closest('.projects-archive-page') || 
+                    window.location.pathname.includes('/projects/all') ||
+                    !!document.querySelector('.projects-archive-page');
   const slug = sourceElement.getAttribute('data-slug') || 
     targetUrl.split('?')[0].replace('/projects/', '').replace('.html', '').replace('/', '');
 
@@ -97,18 +186,36 @@ function executeCardExpansion(sourceElement, targetUrl, title, imageSrc) {
     if (targetIndex < 0) targetIndex = 0;
   }
 
-  // Preserve existing origin section if moving from one project to another via "Next Project"
+  // Preserve existing origin section if moving from one project to another via "Next Project" / "Other Projects"
   let existingOrigin = null;
   try {
     const saved = sessionStorage.getItem('amin_project_origin');
     if (saved) existingOrigin = JSON.parse(saved);
   } catch (e) {}
 
+  let originSource = 'works';
+  let returnUrl = '/#projects';
+
+  if (isHero) {
+    originSource = 'hero';
+    returnUrl = '/';
+  } else if (isArchive) {
+    originSource = 'archive';
+    returnUrl = '/projects/all.html';
+  } else if (existingOrigin && existingOrigin.source) {
+    originSource = existingOrigin.source;
+    returnUrl = existingOrigin.returnUrl || (existingOrigin.source === 'archive' ? '/projects/all.html' : '/#projects');
+  } else {
+    originSource = 'works';
+    returnUrl = '/#projects';
+  }
+
   const originData = {
-    source: isHero ? 'hero' : (existingOrigin ? existingOrigin.source : 'works'),
+    source: originSource,
+    returnUrl: returnUrl,
     slug: slug,
     targetIndex: isHero ? targetIndex : (existingOrigin ? existingOrigin.targetIndex : 0),
-    scrollY: isHero ? 0 : (existingOrigin && existingOrigin.scrollY ? existingOrigin.scrollY : window.scrollY),
+    scrollY: (isArchive || !existingOrigin) ? window.scrollY : (existingOrigin && existingOrigin.scrollY ? existingOrigin.scrollY : window.scrollY),
     title: title,
     imageSrc: imageSrc,
     timestamp: Date.now()
@@ -187,7 +294,15 @@ export function executeProjectExit(targetUrl = '/') {
   sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
 
   // Fallback origin data if user refreshed directly on a project detail page
-  if (!sessionStorage.getItem('amin_project_origin')) {
+  let originData = null;
+  const originStr = sessionStorage.getItem('amin_project_origin');
+  if (originStr) {
+    try {
+      originData = JSON.parse(originStr);
+    } catch (e) {}
+  }
+
+  if (!originData) {
     let slug = 'lumina';
     let title = 'LUMINA';
     let imageSrc = '/images/lumina-hero.webp';
@@ -205,33 +320,53 @@ export function executeProjectExit(targetUrl = '/') {
       title = 'TRIP OS';
       imageSrc = '/images/tripos-hero.webp';
     }
-    sessionStorage.setItem('amin_project_origin', JSON.stringify({
+    originData = {
       source: 'works',
       slug,
       targetIndex: 0,
       title,
       imageSrc,
+      returnUrl: '/#projects',
       timestamp: Date.now()
-    }));
+    };
+    sessionStorage.setItem('amin_project_origin', JSON.stringify(originData));
   }
 
-  // When returning to home root or /#projects, normalize targetUrl to /
-  // so that handlePageReturn executes the exact reverse card shrinking animation
+  const isFromArchive = originData && (originData.source === 'archive' || (originData.returnUrl && originData.returnUrl.includes('/projects/all')));
+
+  // Normalize targetUrl
   let finalTargetUrl = targetUrl;
-  if (targetUrl === '/#projects' || targetUrl.endsWith('/#projects')) {
-    finalTargetUrl = '/';
-    sessionStorage.setItem('amin_return_hash', 'projects');
+  if (targetUrl.includes('/projects/all')) {
+    finalTargetUrl = '/projects/all.html';
+    sessionStorage.removeItem('amin_return_hash');
+    sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    originData.source = 'archive';
+    originData.returnUrl = '/projects/all.html';
+    sessionStorage.setItem('amin_project_origin', JSON.stringify(originData));
+  } else if (targetUrl === '/#projects' || targetUrl.endsWith('/#projects')) {
+    if (isFromArchive) {
+      finalTargetUrl = '/projects/all.html';
+      sessionStorage.removeItem('amin_return_hash');
+      sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    } else {
+      finalTargetUrl = '/';
+      sessionStorage.setItem('amin_return_hash', 'projects');
+      sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    }
+  } else if (targetUrl === '/' || targetUrl === '/index.html') {
+    if (isFromArchive) {
+      finalTargetUrl = '/projects/all.html';
+      sessionStorage.removeItem('amin_return_hash');
+      sessionStorage.setItem('amin_trigger_reverse_transition', 'true');
+    } else {
+      finalTargetUrl = '/';
+      sessionStorage.removeItem('amin_return_hash');
+      sessionStorage.removeItem('amin_project_origin');
+      sessionStorage.removeItem('amin_trigger_reverse_transition');
+    }
   } else if (targetUrl.includes('#')) {
     const hash = targetUrl.split('#')[1];
     sessionStorage.setItem('amin_return_hash', hash);
-    sessionStorage.removeItem('amin_project_origin');
-    sessionStorage.removeItem('amin_trigger_reverse_transition');
-  } else if (targetUrl === '/' || targetUrl === '/index.html') {
-    sessionStorage.removeItem('amin_return_hash');
-    sessionStorage.removeItem('amin_project_origin');
-    sessionStorage.removeItem('amin_trigger_reverse_transition');
-  } else if (targetUrl.includes('/projects/all')) {
-    sessionStorage.removeItem('amin_return_hash');
     sessionStorage.removeItem('amin_project_origin');
     sessionStorage.removeItem('amin_trigger_reverse_transition');
   }
@@ -292,7 +427,7 @@ export function executeProjectExit(targetUrl = '/') {
 }
 
 /**
- * Handles reverse animation when returning from a project back to homepage
+ * Handles reverse animation when returning from a project back to homepage or archive page
  */
 function handlePageReturn() {
   const clearReturnCover = () => {
@@ -302,8 +437,10 @@ function handlePageReturn() {
   const hashFromUrl = window.location.hash ? window.location.hash.replace('#', '') : null;
   const returnHash = sessionStorage.getItem('amin_return_hash') || hashFromUrl;
 
+  const isArchive = window.location.pathname.includes('/projects/all') || !!document.querySelector('.projects-archive-page');
+
   // If returning to a specific section (e.g. contact, services, skills, about)
-  if (returnHash && returnHash !== 'projects') {
+  if (!isArchive && returnHash && returnHash !== 'projects') {
     sessionStorage.removeItem('amin_return_hash');
     sessionStorage.removeItem('amin_project_origin');
     sessionStorage.removeItem('amin_trigger_reverse_transition');
@@ -315,7 +452,7 @@ function handlePageReturn() {
   const originStr = sessionStorage.getItem('amin_project_origin');
   if (!originStr) {
     clearReturnCover();
-    if (returnHash === 'projects') {
+    if (!isArchive && returnHash === 'projects') {
       scrollToHomeSection('projects');
     }
     return;
@@ -329,7 +466,7 @@ function handlePageReturn() {
     const isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
     if (!isReturning) {
       clearReturnCover();
-      if (returnHash === 'projects') {
+      if (!isArchive && returnHash === 'projects') {
         scrollToHomeSection('projects');
       }
       return;
@@ -341,40 +478,48 @@ function handlePageReturn() {
       originData = JSON.parse(originStr);
     } catch (e) {
       clearReturnCover();
-      scrollToHomeSection('projects');
+      if (!isArchive) scrollToHomeSection('projects');
       return;
     }
 
-  // Disable browser automatic scroll restoration to avoid jumping
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-
-  // Restore scroll position immediately — if returning to projects, target the selected works section («پروژه‌های منتخب»)
-  let targetScrollY = originData.scrollY;
-  const cardEl = document.querySelector(`.work-grid-card[data-slug="${originData.slug || 'lumina'}"]`);
-  const projectsSec = document.getElementById('projects');
-
-  if (returnHash === 'projects') {
-    if (cardEl) {
-      targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 120;
-    } else if (projectsSec) {
-      targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
+    // Disable browser automatic scroll restoration to avoid jumping
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
-  } else if (typeof targetScrollY !== 'number' || targetScrollY <= 0) {
-    if (cardEl) {
-      targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 140;
-    } else if (projectsSec) {
-      targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
-    } else {
-      targetScrollY = 0;
-    }
-  }
 
-  window.scrollTo({ top: targetScrollY, behavior: 'instant' });
-  if (window.lenis) {
-    window.lenis.scrollTo(targetScrollY, { immediate: true });
-  }
+    // Restore scroll position immediately — if returning to projects, target the selected works section («پروژه‌های منتخب»)
+    let targetScrollY = originData.scrollY;
+    const cardEl = document.querySelector(`.work-grid-card[data-slug="${originData.slug || 'lumina'}"]`);
+    const projectsSec = document.getElementById('projects');
+
+    if (isArchive) {
+      if (typeof targetScrollY === 'number' && targetScrollY > 0) {
+        // use originData.scrollY
+      } else if (cardEl) {
+        targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 140;
+      } else {
+        targetScrollY = 0;
+      }
+    } else if (returnHash === 'projects' || originData.source === 'works') {
+      if (cardEl) {
+        targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 120;
+      } else if (projectsSec) {
+        targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
+      }
+    } else if (typeof targetScrollY !== 'number' || targetScrollY <= 0) {
+      if (cardEl) {
+        targetScrollY = cardEl.getBoundingClientRect().top + window.scrollY - 140;
+      } else if (projectsSec) {
+        targetScrollY = projectsSec.getBoundingClientRect().top + window.scrollY - 60;
+      } else {
+        targetScrollY = 0;
+      }
+    }
+
+    window.scrollTo({ top: targetScrollY, behavior: 'instant' });
+    if (window.lenis) {
+      window.lenis.scrollTo(targetScrollY, { immediate: true });
+    }
 
   // Synchronously create and attach fullscreen clone to instantly cover the viewport before any repaint,
   // preventing the underlying page or black hero canvas from flashing for a single frame.
