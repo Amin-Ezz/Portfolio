@@ -40,15 +40,20 @@
           }
           setTimeout(function () {
             document.documentElement.classList.remove('is-returning-from-project');
-          }, 800);
+          }, 1800);
         }
       } catch (e) { }
 
       window.addEventListener('pageshow', function (e) {
-        document.documentElement.classList.remove('is-returning-from-project');
-        var clones = document.querySelectorAll('.transition-clone-card');
-        for (var i = 0; i < clones.length; i++) {
-          clones[i].remove();
+        if (e.persisted) {
+          var isRet = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
+          if (!isRet) {
+            document.documentElement.classList.remove('is-returning-from-project');
+            var clones = document.querySelectorAll('.transition-clone-card');
+            for (var i = 0; i < clones.length; i++) {
+              clones[i].remove();
+            }
+          }
         }
       });
     })();

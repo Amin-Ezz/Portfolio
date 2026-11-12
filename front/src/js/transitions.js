@@ -151,32 +151,29 @@ export function initTransitions() {
 
   // Global pageshow listener to handle BFCache restorations (e.g. mobile phone native back button / gestures)
   window.addEventListener('pageshow', (event) => {
-    // Purge any lingering transition clones immediately
-    document.querySelectorAll('.transition-clone-card').forEach(c => c.remove());
-
-    // Reset overlay
-    const overlay = document.querySelector('.transition-overlay');
-    if (overlay) {
-      gsap.killTweensOf(overlay);
-      overlay.style.opacity = '0';
-      overlay.style.clipPath = '';
-      overlay.style.pointerEvents = 'none';
-    }
-
-    // Remove anti-flicker cover class
-    document.documentElement.classList.remove('is-returning-from-project');
-
-    // Restore visibility and opacity of all cards
-    document.querySelectorAll('.work-grid-card, .hero-project-card').forEach(card => {
-      card.style.opacity = '';
-      card.style.visibility = '';
-    });
-
     if (event.persisted) {
-      sessionStorage.removeItem('amin_trigger_reverse_transition');
-      sessionStorage.removeItem('amin_project_origin');
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh();
+      const isReturning = sessionStorage.getItem('amin_trigger_reverse_transition') === 'true';
+      if (isReturning && !isProjectDetailPage()) {
+        handlePageReturn();
+      } else {
+        document.querySelectorAll('.transition-clone-card').forEach(c => c.remove());
+        const overlay = document.querySelector('.transition-overlay');
+        if (overlay) {
+          gsap.killTweensOf(overlay);
+          overlay.style.opacity = '0';
+          overlay.style.clipPath = '';
+          overlay.style.pointerEvents = 'none';
+        }
+        document.documentElement.classList.remove('is-returning-from-project');
+        document.querySelectorAll('.work-grid-card, .hero-project-card').forEach(card => {
+          card.style.opacity = '';
+          card.style.visibility = '';
+        });
+        sessionStorage.removeItem('amin_trigger_reverse_transition');
+        sessionStorage.removeItem('amin_project_origin');
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.refresh();
+        }
       }
     }
   });
@@ -289,24 +286,6 @@ function executeCardExpansion(sourceElement, targetUrl, title, imageSrc) {
 
   // Hide source card while clone expands
   sourceElement.style.opacity = '0';
-
-  // Ensure that if the page is saved in BFCache on navigation, the clone and styles are cleaned up
-  const cleanupCloneOnHide = () => {
-    if (clone && clone.parentNode) {
-      clone.remove();
-    }
-    if (sourceElement) {
-      sourceElement.style.opacity = '';
-      sourceElement.style.visibility = '';
-    }
-    const ov = document.querySelector('.transition-overlay');
-    if (ov) {
-      ov.style.opacity = '0';
-      ov.style.clipPath = '';
-      ov.style.pointerEvents = 'none';
-    }
-  };
-  window.addEventListener('pagehide', cleanupCloneOnHide, { once: true });
 
   const tl = gsap.timeline({
     onComplete: () => {
@@ -619,7 +598,7 @@ function handlePageReturn() {
     });
     sessionStorage.removeItem('amin_project_origin');
     sessionStorage.removeItem('amin_trigger_reverse_transition');
-  }, 1000);
+  }, 2200);
 
   // Hide transition overlay now that returnClone covers the screen
   const overlay = document.querySelector('.transition-overlay');
