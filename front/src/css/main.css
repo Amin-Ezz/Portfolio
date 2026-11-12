@@ -846,6 +846,9 @@ html {
   color: #FFFFFF !important;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
   letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .work-card-desc {
@@ -856,6 +859,11 @@ html {
   color: rgba(255, 255, 255, 0.88) !important;
   margin-top: 0.15rem;
   margin-bottom: 1.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(0.88rem * 1.74 * 2);
 }
 
 /* Project action button — clean crisp white pill */
