@@ -125,7 +125,7 @@ export const projects = [
     category: "پلتفرم هوش مصنوعی / یادگیری ماشین و HealthTech",
     year: "۲۰۲۶",
     role: "Full-Stack & ML Developer",
-    technologies: ["Python", "Machine Learning", "Deep Neural Networks", "ONNX Runtime", "JavaScript (ES6+)", "Tailwind CSS", "Vite"],
+    technologies: ["HTML5", "Modern CSS", "JavaScript (ES6+)", "Machine Learning", "Deep Neural Networks", "Vite"],
     liveUrl: "https://fitpredict.vercel.app/",
     githubUrl: "https://github.com/Amin-Ezz/Fit-Predict",
     heroImage: "/images/fitpredict-hero.png",

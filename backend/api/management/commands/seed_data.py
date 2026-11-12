@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 "category": "پلتفرم هوش مصنوعی / یادگیری ماشین و HealthTech",
                 "year": "۲۰۲۶",
                 "role": "Full-Stack & ML Developer",
-                "technologies": ["Python", "Machine Learning", "Deep Neural Networks", "ONNX Runtime", "JavaScript (ES6+)", "Tailwind CSS", "Vite"],
+                "technologies": ["HTML5", "Modern CSS", "JavaScript (ES6+)", "Machine Learning", "Deep Neural Networks", "Vite"],
                 "live_url": "https://fitpredict.vercel.app/",
                 "github_url": "https://github.com/Amin-Ezz/Fit-Predict",
                 "hero_image": "/images/fitpredict-hero.png",
