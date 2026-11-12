@@ -54,7 +54,6 @@ html {
   color: var(--text-primary);
   scroll-behavior: auto; /* Handled via Lenis / Native Compositor */
   font-feature-settings: "ss01", "ss02", "cv01";
-  touch-action: pan-y;
 }
 
 body {
@@ -64,7 +63,6 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.7;
-  touch-action: pan-y;
 }
 
 
@@ -913,6 +911,33 @@ html {
   opacity: 1;
 }
 
+@media (max-width: 768px) {
+  .work-card-badges {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0.28rem;
+    margin-bottom: 0.65rem;
+    max-width: 100%;
+  }
+
+  .work-card-badges::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-card-badges .liquid-glass-pill,
+  .work-grid-card .work-card-badges .liquid-glass-pill,
+  #projects .work-grid-card .work-card-badges .liquid-glass-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.62rem;
+    padding: 0.18rem 0.44rem;
+    letter-spacing: 0.01em;
+  }
+}
+
 @media (max-width: 640px) {
   .works-grid-container .work-grid-card {
     border-radius: 18px;
@@ -934,13 +959,28 @@ html {
   }
 
   .work-card-badges {
-    gap: 0.3rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0.26rem;
     margin-bottom: 0.65rem;
+    max-width: 100%;
   }
 
-  .work-card-badges .liquid-glass-pill {
-    font-size: 0.66rem;
-    padding: 0.2rem 0.5rem;
+  .work-card-badges::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-card-badges .liquid-glass-pill,
+  .work-grid-card .work-card-badges .liquid-glass-pill,
+  #projects .work-grid-card .work-card-badges .liquid-glass-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.62rem;
+    padding: 0.18rem 0.44rem;
+    letter-spacing: 0.01em;
   }
 
   .work-card-cta {
@@ -977,10 +1017,4 @@ html {
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-}
-
-@media (max-width: 860px) {
-  html, body {
-    -webkit-overflow-scrolling: touch;
-  }
 }

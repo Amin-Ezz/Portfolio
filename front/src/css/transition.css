@@ -6,7 +6,7 @@
 .transition-section {
   position: relative;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -298,7 +298,7 @@
 @media (max-width: 860px) {
   .transition-section {
     min-height: 100vh !important;
-    min-height: 100dvh !important;
+    min-height: 100svh !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;

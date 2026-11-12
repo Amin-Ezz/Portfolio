@@ -36,9 +36,17 @@
           }
           setTimeout(function () {
             document.documentElement.classList.remove('is-returning-from-project');
-          }, 1000);
+          }, 800);
         }
       } catch (e) { }
+
+      window.addEventListener('pageshow', function (e) {
+        document.documentElement.classList.remove('is-returning-from-project');
+        var clones = document.querySelectorAll('.transition-clone-card');
+        for (var i = 0; i < clones.length; i++) {
+          clones[i].remove();
+        }
+      });
     })();
   </script>
   <style>
@@ -51,10 +59,10 @@
       pointer-events: none;
     }
   </style>
-  <script type="module" crossorigin src="/assets/main-CKIvGMpF.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-D-s0iRW7.css">
+  <script type="module" crossorigin src="/assets/main-DLXcmxnx.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-BVE48S-q.css">
   <link rel="stylesheet" crossorigin href="/assets/allProjects-BEz32E-h.css">
-  <link rel="stylesheet" crossorigin href="/assets/lumina-redesign-CILBg0Bw.css">
+  <link rel="stylesheet" crossorigin href="/assets/lumina-redesign-CI9176Nw.css">
 </head>
 <body class="lumina-showcase-page projects-archive-page">
 

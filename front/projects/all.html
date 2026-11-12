@@ -40,9 +40,17 @@
           }
           setTimeout(function () {
             document.documentElement.classList.remove('is-returning-from-project');
-          }, 1000);
+          }, 800);
         }
       } catch (e) { }
+
+      window.addEventListener('pageshow', function (e) {
+        document.documentElement.classList.remove('is-returning-from-project');
+        var clones = document.querySelectorAll('.transition-clone-card');
+        for (var i = 0; i < clones.length; i++) {
+          clones[i].remove();
+        }
+      });
     })();
   </script>
   <style>

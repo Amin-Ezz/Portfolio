@@ -49,9 +49,17 @@
           }
           setTimeout(function () {
             document.documentElement.classList.remove('is-returning-from-project');
-          }, 1000);
+          }, 800);
         }
       } catch (e) { }
+
+      window.addEventListener('pageshow', function (e) {
+        document.documentElement.classList.remove('is-returning-from-project');
+        var clones = document.querySelectorAll('.transition-clone-card');
+        for (var i = 0; i < clones.length; i++) {
+          clones[i].remove();
+        }
+      });
     })();
   </script>
   <style>
@@ -69,8 +77,8 @@
       pointer-events: none;
     }
   </style>
-  <script type="module" crossorigin src="/assets/main-CKIvGMpF.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-D-s0iRW7.css">
+  <script type="module" crossorigin src="/assets/main-DLXcmxnx.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-BVE48S-q.css">
 </head>
 
 <body>
@@ -172,9 +180,9 @@
   <!-- MAIN VIEWPORT CONTENT -->
   <main>
 
-    <!-- 01: HERO SECTION (100vh / 100dvh, pure black canvas with B&W video background) -->
+    <!-- 01: HERO SECTION (100vh / 100svh, pure black canvas with B&W video background) -->
     <section id="hero" class="hero-section" data-theme="dark"
-      style="min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; position: relative; padding-top: clamp(6.5rem, 14vh, 10rem); padding-bottom: clamp(2.5rem, 6vh, 4rem); background-color: #000000; overflow: hidden;">
+      style="min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; position: relative; padding-top: clamp(6.5rem, 14vh, 10rem); padding-bottom: clamp(2.5rem, 6vh, 4rem); background-color: #000000; overflow: hidden;">
 
       <!-- Hero background: looping monochrome wave clip, framed like the source
            composition. Playback is started by hero.js so reduced-motion users get
