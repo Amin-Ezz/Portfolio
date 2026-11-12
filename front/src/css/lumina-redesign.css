@@ -232,10 +232,14 @@ body.lumina-showcase-page .nav-3d-slab.is-dark .logo-txt-main {
 }
 
 body.lumina-showcase-page .nav-3d-slab .nav-logo-img,
-body.lumina-showcase-page .nav-3d-slab.is-dark .nav-logo-img,
 body.lumina-showcase-page .nav-logo-img,
 body.lumina-showcase-page .nav-logo:hover .nav-logo-img {
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12)) !important;
+  filter: brightness(0) contrast(1.2) !important;
+  opacity: 1 !important;
+}
+
+body.lumina-showcase-page .nav-3d-slab.is-dark .nav-logo-img {
+  filter: brightness(1) contrast(1.1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.45)) !important;
   opacity: 1 !important;
 }
 
@@ -1399,7 +1403,7 @@ body.lumina-showcase-page .nav-3d-slab.is-dark .mobile-nav-toggle span {
   width: 44px;
   height: 44px;
   object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.55)) drop-shadow(0 0 24px rgba(139, 92, 246, 0.3));
+  filter: brightness(1) contrast(1.1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
 }
 
 .site-footer-brand-name {

@@ -36,10 +36,14 @@ body.projects-archive-page {
 
 /* Ensure the navbar logo emblem and text are crisp black on this page */
 .projects-archive-page .nav-3d-slab .nav-logo-img,
-.projects-archive-page .nav-3d-slab.is-dark .nav-logo-img,
 .projects-archive-page .nav-logo-img,
 .projects-archive-page .nav-logo:hover .nav-logo-img {
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12)) !important;
+  filter: brightness(0) contrast(1.2) !important;
+  opacity: 1 !important;
+}
+
+.projects-archive-page .nav-3d-slab.is-dark .nav-logo-img {
+  filter: brightness(1) contrast(1.1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.45)) !important;
   opacity: 1 !important;
 }
 
