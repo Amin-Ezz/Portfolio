@@ -808,12 +808,13 @@
   background: transparent;
   border: none;
   box-shadow: none;
-  filter: brightness(0) contrast(1.2);
-  transition: transform 0.3s ease, filter 0.35s ease, opacity 0.35s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease, opacity 0.35s ease;
 }
 
 .nav-logo:hover .nav-logo-img {
   transform: scale(1.08);
+  filter: drop-shadow(0 4px 14px rgba(99, 102, 241, 0.45));
 }
 
 .nav-logo-emblem .emblem-bg,
@@ -863,10 +864,14 @@
 }
 
 .nav-3d-slab.is-dark .nav-logo-img {
-  filter: brightness(1) contrast(1.1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.55)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.3));
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+.nav-3d-slab.is-dark .nav-logo:hover .nav-logo-img {
+  filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.75)) drop-shadow(0 0 25px rgba(139, 92, 246, 0.45));
 }
 
 .nav-3d-slab.is-dark .nav-logo-emblem .emblem-bg {
