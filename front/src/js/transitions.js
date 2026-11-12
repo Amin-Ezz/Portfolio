@@ -311,6 +311,10 @@ export function executeProjectExit(targetUrl = '/') {
       slug = 'mod-style';
       title = 'MODSTYLE';
       imageSrc = '/images/modstyle-hero.webp?v=3';
+    } else if (path.includes('fit-predict')) {
+      slug = 'fit-predict';
+      title = 'FITPREDICT';
+      imageSrc = '/images/fitpredict-hero.webp';
     } else if (path.includes('project-management')) {
       slug = 'project-management';
       title = 'NORTHWIND';

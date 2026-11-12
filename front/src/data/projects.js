@@ -111,13 +111,69 @@ export const projects = [
       { value: "۱۰۰٪", label: "واکنش‌گرایی در تمام صفحات" },
       { value: "۱", label: "تجربه خرید یکپارچه از کشف تا پرداخت" }
     ],
-    nextSlug: "project-management",
-    nextTitle: "NORTHWIND",
+    nextSlug: "fit-predict",
+    nextTitle: "FITPREDICT",
     prevSlug: "lumina",
     prevTitle: "LUMINA"
   },
   {
     id: "03",
+    slug: "fit-predict",
+    title: "FITPREDICT",
+    subtitle: "پلتفرم هوش مصنوعی پیش‌بینی بیومتریک و تناسب اندام",
+    tagline: "تحلیل بلادرنگ داده‌های فیزیولوژیک و تجویز دقیق تغذیه و تمرین با شبکه‌های عصبی",
+    category: "پلتفرم هوش مصنوعی / یادگیری ماشین و HealthTech",
+    year: "۲۰۲۶",
+    role: "Full-Stack & ML Developer",
+    technologies: ["Python", "Machine Learning", "Deep Neural Networks", "ONNX Runtime", "JavaScript (ES6+)", "Tailwind CSS", "Vite"],
+    liveUrl: "https://fitpredict.vercel.app/",
+    githubUrl: "https://github.com/Amin-Ezz/Fit-Predict",
+    heroImage: "/images/fitpredict-hero.png",
+    detailImages: [
+      "/images/fitpredict-hero.png",
+      "/images/fitpredict-plan.webp",
+      "/images/fitpredict-archetypes.webp",
+      "/images/fitpredict-neural.webp"
+    ],
+    accentColor: "#10B981",
+    overview: "پروژه FitPredict یک پلتفرم هوشمند مبتنی بر هوش مصنوعی و شبکه‌های عصبی عمیق است که داده‌های بیومتریک و فیزیولوژیک کاربران را دریافت کرده و برنامه‌های کاملاً شخصی‌سازی‌شده و دقیق تغذیه، هیدراتاسیون و تمرینات ورزشی را در لحظه تولید می‌کند.",
+    problem: "برنامه‌های سنتی ورزشی و تناسب اندام عموماً الگوهایی کلیشه‌ای و ثابت دارند که بدون توجه به شاخص‌های فردی فیزیولوژیک تجویز می‌شوند؛ عدم دسترسی به تحلیل‌های بلادرنگ و بالینی بر پایه هوش مصنوعی باعث سردرگمی و عدم دستیابی به حداکثر پتانسیل بدنی کاربران می‌گردد.",
+    solution: "با پیگیری معماری شبکه عصبی عمیق چندوظیفه‌ای (Multi-Task MLP-ResNet)، سیستم داده‌های بیومتریک شامل وزن، قد، سن، ساعات خواب و شاخص فشار تمرین را دریافت کرده و از طریق موتور بهینه‌شده ONNX در کمتر از ۱۲ میلی‌ثانیه مستقیماً در مرورگر کلاینت پردازش می‌کند و اهداف تغذیه‌ای و تمرینی دقیق را ارائه می‌دهد.",
+    process: [
+      {
+        step: "۰۱",
+        title: "نرمال‌سازی و نگاشت تانسورهای بیومتریک",
+        desc: "تبدیل داده‌های فیزیکی کاربر به بردارهای تعبیه‌شده با Z-Score Normalization برای مدلسازی دقیق روابط غیرخطی فیزیولوژی."
+      },
+      {
+        step: "۰۲",
+        title: "معماری شبکه عصبی چندوظیفه‌ای (MLP-ResNet)",
+        desc: "لایه‌های عصبی عمیق با اتصالات باقیمانده و تابع فعال‌ساز GELU برای انجام پیش‌بینی‌های همزمان چندهدفه."
+      },
+      {
+        step: "۰۳",
+        title: "موتور استنتاج کلاینت ONNX Runtime",
+        desc: "اجرای مدل در مرورگر در زمان فوق‌سریع زیر ۱۲ میلی‌ثانیه بدون بار اضافی سرور و تضمین امنیت کامل داده‌های فردی."
+      },
+      {
+        step: "۰۴",
+        title: "الگوهای کالیبره‌شده تیپ‌های ورزشی",
+        desc: "تنظیم پیش‌فرض‌های دقیق بر مبنای علوم ورزشی برای اهداف هایپرتروفی، چربی‌سوزی متابولیک و استقامت هوازی."
+      }
+    ],
+    metrics: [
+      { value: "< ۱۲ms", label: "زمان استنتاج مدل عصبی در کلاینت" },
+      { value: "۱۰,۰۰۰+", label: "داده کالیبراسیون برای تضمین دقت" },
+      { value: "۱۰۰٪", label: "پردازش آنی بدون تاخیر شبکه" },
+      { value: "۳", label: "الگوی اصلی اهداف تمرینی و متابولیک" }
+    ],
+    nextSlug: "project-management",
+    nextTitle: "NORTHWIND",
+    prevSlug: "mod-style",
+    prevTitle: "MODSTYLE"
+  },
+  {
+    id: "04",
     slug: "project-management",
     title: "NORTHWIND",
     subtitle: "ورک‌اسپیس مدرن برای مدیریت هوشمندانه پروژه‌ها",
@@ -170,11 +226,11 @@ export const projects = [
     ],
     nextSlug: "trip-os",
     nextTitle: "TRIP OS",
-    prevSlug: "lumina",
-    prevTitle: "LUMINA"
+    prevSlug: "fit-predict",
+    prevTitle: "FITPREDICT"
   },
   {
-    id: "04",
+    id: "05",
     slug: "trip-os",
     title: "TRIP OS",
     subtitle: "سیستم مدیریت و برنامه‌ریزی سفر",

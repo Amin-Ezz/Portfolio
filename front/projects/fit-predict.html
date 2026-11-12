@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>FitPredict | پلتفرم هوش مصنوعی پیش‌بینی بیومتریک و تناسب اندام — امین اسماعیل زاده</title>
+  <meta name="description" content="کیس‌استادی و نمایش کامل پروژه FitPredict — پلتفرم پیش‌بینی و تجویز هوشمند تغذیه و تمرین با شبکه‌های عصبی عمیق، استنتاج زیر ۱۲ میلی‌ثانیه ONNX و مدل چندوظیفه‌ای." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+
+  <!-- Google Fonts: Vazirmatn & English Script Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@1,500&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/src/css/main.css?v=5" />
+  <link rel="stylesheet" href="/src/css/liquid-glass.css?v=5" />
+  <link rel="stylesheet" href="/src/css/lumina-redesign.css?v=5" />
+</head>
+<body class="lumina-showcase-page">
+
+  <!-- Transition Overlay Layer -->
+  <div class="transition-overlay"></div>
+
+  <!-- Fixed Liquid Glass Return to Home Button -->
+  <a href="/#projects" class="nav-back-glass-btn" data-cursor="link" aria-label="بازگشت به پروژه‌های منتخب">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 19 12 12 5"></polyline>
+    </svg>
+    <span>بازگشت به صفحه اصلی</span>
+  </a>
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR — EXACT HOME PAGE 3D LIQUID GLASS SLAB NAVBAR
+       ======================================================================== -->
+  <header class="fixed top-6 inset-x-0 z-50 pointer-events-none site-header"
+    style="position: fixed; top: 1.5rem; left: 0; right: 0; z-index: 50;">
+    <div class="container-custom" style="display: flex; justify-content: center; position: relative;">
+
+      <div class="nav-3d-slab pointer-events-auto" style="pointer-events: auto;">
+
+        <!-- Glass slab surface layers -->
+        <span class="nav-slab-edge" aria-hidden="true"></span>
+
+        <!-- Slab content: B&W Logo | Links | Actions -->
+        <a href="/" class="nav-logo" data-cursor="link" aria-label="لوگوی AMIN.EZ">
+          <span class="nav-logo-emblem">
+            <img src="/images/logo-transparent.png" alt="لوگوی AMIN.EZ" class="nav-logo-img" width="38" height="38" />
+          </span>
+          <span class="nav-logo-name">
+            <span class="logo-txt-main">AMIN.EZ</span>
+          </span>
+        </a>
+
+        <nav class="nav-slab-links" aria-label="ناوبری اصلی">
+          <a href="/#projects" class="nav-link-item" data-cursor="link">پروژه‌ها</a>
+          <a href="/#services" class="nav-link-item" data-cursor="link">خدمات</a>
+          <a href="/#skills" class="nav-link-item" data-cursor="link">مهارت‌ها</a>
+          <a href="/#about" class="nav-link-item" data-cursor="link">درباره من</a>
+          <a href="/#contact" class="nav-link-item" data-cursor="link">تماس</a>
+        </nav>
+
+        <div class="nav-slab-actions">
+          <a href="/#contact" class="nav-slab-cta" data-cursor="link">
+            <span class="pulse-dot"></span>
+            <span>همکاری</span>
+          </a>
+          <button id="mobileNavToggle" class="mobile-nav-toggle" aria-label="منوی ناوبری سایت" aria-expanded="false">
+            <span class="hamburger-bar bar-1"></span>
+            <span class="hamburger-bar bar-2"></span>
+            <span class="hamburger-bar bar-3"></span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Glass Navigation Drawer -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <nav class="mobile-nav-links" aria-label="منوی موبایل">
+        <a href="/#projects" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۱</span>
+          <span class="mobile-link-text">پروژه‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#services" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۲</span>
+          <span class="mobile-link-text">خدمات</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#skills" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۳</span>
+          <span class="mobile-link-text">مهارت‌ها</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#about" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۴</span>
+          <span class="mobile-link-text">درباره من</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="/#contact" class="mobile-nav-link">
+          <span class="mobile-link-num">۰۵</span>
+          <span class="mobile-link-text">تماس و ارتباط</span>
+          <span class="mobile-link-arrow" aria-hidden="true">←</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a href="/#contact" class="mobile-nav-cta">
+          <span class="pulse-dot"></span>
+          <span>شروع همکاری و سفارش</span>
+        </a>
+        <div class="mobile-nav-socials">
+          <a href="https://t.me/AminOmade" target="_blank" rel="noopener noreferrer">تلگرام</a>
+          <span>•</span>
+          <a href="https://github.com/Amin-Ezz" target="_blank" rel="noopener noreferrer">گیت‌هاب</a>
+          <span>•</span>
+          <a href="https://www.linkedin.com/in/amin-esmaeil-zadeh-a99503431" target="_blank" rel="noopener noreferrer">لینکدین</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MAIN PROJECT SHOWCASE
+       ======================================================================== -->
+  <main class="lumina-showcase-main">
+    <div class="lumina-showcase-container">
+
+      <!-- Top Subnav: Breadcrumbs -->
+      <div class="lumina-top-subnav">
+        <div class="lumina-breadcrumbs">
+          <a href="/">صفحه اصلی</a>
+          <span>/</span>
+          <a href="/#projects">پروژه‌ها</a>
+          <span>/</span>
+          <span class="active">FitPredict</span>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           TWO-COLUMN MASTER LAYOUT:
+           RTL Column 1 (Right): Main Showcase Stream
+           RTL Column 2 (Left): Compact Sticky Project Info Card
+           ==================================================================== -->
+      <div class="lumina-master-layout" id="fitPredictProjectStage">
+
+        <!-- RIGHT COLUMN: MAIN CONTENT STREAM -->
+        <div class="lumina-main-stream">
+
+          <!-- 01. HERO VISUAL STAGE CARD (WITH DARK STUDIO FRAME) -->
+          <section class="lumina-stage-card">
+            <div class="lumina-stage-frame">
+              <div class="lumina-stage-topbar">
+                <div class="lumina-stage-dots">
+                  <span class="lumina-stage-dot"></span>
+                  <span class="lumina-stage-dot"></span>
+                  <span class="lumina-stage-dot"></span>
+                </div>
+                <span class="lumina-stage-url">fitpredict.vercel.app</span>
+              </div>
+              <img
+                src="/images/fitpredict-hero.webp"
+                alt="نمای دسکتاپ و لندینگ پلتفرم هوش مصنوعی FitPredict"
+                class="lumina-stage-img"
+                data-zoom-src="/images/fitpredict-hero.webp"
+                data-zoom-alt="نمای اصلی پلتفرم FitPredict"
+              />
+            </div>
+          </section>
+
+          <!-- 02. "درباره پروژه" (ABOUT PROJECT SECTION) -->
+          <section class="lumina-about-section">
+            <h2 class="lumina-section-title">درباره پروژه</h2>
+
+            <div class="lumina-about-content">
+              <p>
+                پروژه FitPredict یک پلتفرم هوشمند سلامت و تناسب اندام مبتنی بر یادگیری ماشین و شبکه‌های عصبی عمیق است که با هدف تبدیل آنی داده‌های فیزیولوژیک کاربران به برنامه‌های دقیق تغذیه، هیدراتاسیون و الگوهای تمرینی ورزشی توسعه یافته است. هدف اصلی این محصول، ایجاد راهکاری داده‌محور، بدون حاشیه و کاملاً شخصی‌سازی‌شده برای ورزشکاران و علاقه‌مندان به تناسب اندام است.
+              </p>
+              <p>
+                هسته پردازشی این پلتفرم از یک شبکه عصبی عمیق چندوظیفه‌ای (Multi-Task Deep Neural Network با معماری ترکیبی MLP-ResNet) بهره می‌برد. ورودی‌های سیستم شامل تله‌متری فیزیولوژیک فردی (وزن، قد، سن، جنسیت، ساعات خواب، تعداد جلسات تمرینی در هفته و نرخ درک فشار تمرین یا RPE) پس از نرمال‌سازی با Z-Score و نگاشت به فضای پنهان (Latent Space)، به خروجی‌های همزمان رگرسیون چندهدفه تبدیل می‌شوند.
+              </p>
+              <p>
+                یکی از کلیدی‌ترین مزیت‌های مهندسی FitPredict، اجرای فوق‌سریع مدل یادگیری عمیق مستقیماً در سمت کلاینت (In-Browser) با زمان پاسخگویی زیر ۱۲ میلی‌ثانیه از طریق موتور ONNX Runtime است. این معماری نه‌تنها تاخیر رفت‌وبرگشت به سرور را به صفر رسانده، بلکه با کالیبراسیون روی بیش از ۱۰,۰۰۰ دیتاست بالینی، حداکثر ایمنی و حفظ محرمانگی داده‌های بیومتریک کاربران را تضمین می‌کند.
+              </p>
+
+              <!-- Dark Accent Tech Summary Box -->
+              <div class="lumina-tech-summary-box">
+                <span>تکنولوژی‌ها:</span>
+                <strong>Python, Deep Neural Networks (MLP-ResNet), ONNX Runtime, JavaScript (ES6+), Tailwind CSS, Vite, HTML5</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- 03. INTERACTIVE SCREENSHOT CAROUSEL / SLIDER (اسلایدر اسکرین‌شات‌ها) -->
+          <section class="lumina-carousel-section">
+            <div class="lumina-carousel-header">
+              <div class="lumina-carousel-heading-wrap">
+                <span class="lumina-carousel-tag">VISUAL ARCHIVE // GALLERY</span>
+                <h2 class="lumina-carousel-title">اسکرین‌شات‌ها و نماهای پلتفرم</h2>
+              </div>
+            </div>
+
+            <!-- Carousel Viewport -->
+            <div class="lumina-carousel-viewport" id="luminaCarouselViewport" tabindex="0" aria-label="اسلایدر اسکرین‌شات‌های FitPredict">
+              <div class="lumina-carousel-track">
+
+                <!-- Slide 01: Personalized Precision Plan -->
+                <article class="lumina-carousel-slide">
+                  <div class="lumina-slide-media">
+                    <img
+                      src="/images/fitpredict-plan.webp"
+                      alt="برنامه شخصی‌سازی‌شده و تنظیم بیومتریک در FitPredict"
+                      class="lumina-slide-img"
+                      data-zoom-src="/images/fitpredict-plan.webp"
+                      data-zoom-alt="تنظیم پارامترهای بدنی و اهداف تمرینی در FitPredict"
+                    />
+                    <button class="lumina-slide-zoom-btn" data-zoom-src="/images/fitpredict-plan.webp" data-zoom-alt="تنظیم پارامترهای بدنی و اهداف تمرینی در FitPredict" aria-label="بزرگ‌نمایی تصویر">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    </button>
+                  </div>
+                  <div class="lumina-slide-body">
+                    <span class="lumina-slide-badge">SCREEN 01 // METRICS & TARGETS</span>
+                    <h3 class="lumina-slide-title">برنامه شخصی‌سازی‌شده و تنظیم بیومتریک</h3>
+                    <p class="lumina-slide-desc">
+                      پنل تعاملی تنظیم متریک‌های بدنی، ساعات خواب، تعداد جلسات و شدت تمرین هفتگی به همراه تعیین اهداف هایپرتروفی، متابولیک و هوازی.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Slide 02: Calibrated Athlete Archetypes -->
+                <article class="lumina-carousel-slide">
+                  <div class="lumina-slide-media">
+                    <img
+                      src="/images/fitpredict-archetypes.webp"
+                      alt="الگوهای تیپ‌های ورزشی کالیبره‌شده در FitPredict"
+                      class="lumina-slide-img"
+                      data-zoom-src="/images/fitpredict-archetypes.webp"
+                      data-zoom-alt="الگوهای ورزشی کالیبره‌شده در FitPredict"
+                    />
+                    <button class="lumina-slide-zoom-btn" data-zoom-src="/images/fitpredict-archetypes.webp" data-zoom-alt="الگوهای ورزشی کالیبره‌شده در FitPredict" aria-label="بزرگ‌نمایی تصویر">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    </button>
+                  </div>
+                  <div class="lumina-slide-body">
+                    <span class="lumina-slide-badge">SCREEN 02 // ARCHETYPES & PRESETS</span>
+                    <h3 class="lumina-slide-title">الگوهای تیپ‌های ورزشی کالیبره‌شده</h3>
+                    <p class="lumina-slide-desc">
+                      کارت‌های تعاملی رشته‌های ورزشی کالیبره‌شده با فیزیولوژی ورزشی شامل چربی‌سوزی متابولیک، دویدن ماراتن و استقامت، و بدن‌سازی.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Slide 03: Neural Network Engine -->
+                <article class="lumina-carousel-slide">
+                  <div class="lumina-slide-media">
+                    <img
+                      src="/images/fitpredict-neural.webp"
+                      alt="موتور شبکه عصبی عمیق و اجرای ONNX در FitPredict"
+                      class="lumina-slide-img"
+                      data-zoom-src="/images/fitpredict-neural.webp"
+                      data-zoom-alt="معماری شبکه عصبی MLP-ResNet و موتور ONNX در FitPredict"
+                    />
+                    <button class="lumina-slide-zoom-btn" data-zoom-src="/images/fitpredict-neural.webp" data-zoom-alt="معماری شبکه عصبی MLP-ResNet و موتور ONNX در FitPredict" aria-label="بزرگ‌نمایی تصویر">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    </button>
+                  </div>
+                  <div class="lumina-slide-body">
+                    <span class="lumina-slide-badge">SCREEN 03 // NEURAL ENGINE</span>
+                    <h3 class="lumina-slide-title">موتور شبکه عصبی عمیق و اجرای ONNX</h3>
+                    <p class="lumina-slide-desc">
+                      معماری چندوظیفه‌ای MLP-ResNet با اتصالات باقیمانده، نرمال‌سازی تانسورها و استنتاج کلاینت در زیر ۱۲ میلی‌ثانیه برای تجویزهای فوری.
+                    </p>
+                  </div>
+                </article>
+
+              </div>
+            </div>
+
+            <!-- Carousel Navigation Controls -->
+            <div class="lumina-carousel-nav">
+              <button class="lumina-carousel-arrow prev" id="carouselPrev" aria-label="اسلاید قبلی">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+
+              <div class="lumina-carousel-dots" id="carouselDots">
+                <!-- Dynamic Dots -->
+              </div>
+
+              <button class="lumina-carousel-arrow next" id="carouselNext" aria-label="اسلاید بعدی">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- LEFT COLUMN: COMPACT STICKY PROJECT INFO CARD -->
+        <aside class="lumina-sticky-aside">
+          <div class="lumina-info-card">
+
+            <div class="lumina-info-header">
+              <h1 class="lumina-info-title">FitPredict | بیومتریک و هوش مصنوعی</h1>
+              <p class="lumina-info-desc">
+                پلتفرم پیش‌بینی و تحلیل عملکرد ورزشی با شبکه‌های عصبی عمیق برای تبدیل داده‌های بیومتریک به برنامه‌های تمرینی و تغذیه دقیق.
+              </p>
+            </div>
+
+            <!-- 2x2 Meta Grid -->
+            <div class="lumina-meta-grid">
+              <div class="lumina-meta-item">
+                <span class="lumina-meta-label">کارفرما</span>
+                <span class="lumina-meta-value">پروژه شخصی</span>
+              </div>
+              <div class="lumina-meta-item">
+                <span class="lumina-meta-label">سال</span>
+                <span class="lumina-meta-value">۲۰۲۶</span>
+              </div>
+              <div class="lumina-meta-item">
+                <span class="lumina-meta-label">دسته‌بندی</span>
+                <span class="lumina-meta-value">هوش مصنوعی و سلامت</span>
+              </div>
+              <div class="lumina-meta-item">
+                <span class="lumina-meta-label">نقش</span>
+                <span class="lumina-meta-value">Full-Stack & ML Dev</span>
+              </div>
+            </div>
+
+            <!-- Technologies Pills -->
+            <div class="lumina-pills-row">
+              <span class="lumina-pill">Python</span>
+              <span class="lumina-pill">Machine Learning</span>
+              <span class="lumina-pill">Neural Networks</span>
+              <span class="lumina-pill">ONNX Runtime</span>
+              <span class="lumina-pill">JavaScript</span>
+              <span class="lumina-pill">Tailwind</span>
+            </div>
+
+            <!-- Action Buttons Stack -->
+            <div class="lumina-cta-stack">
+              <a href="https://fitpredict.vercel.app/" target="_blank" rel="noopener noreferrer" class="lumina-btn-primary">
+                <span>مشاهده نسخه آنلاین</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </a>
+
+              <a href="https://github.com/Amin-Ezz/Fit-Predict" target="_blank" rel="noopener noreferrer" class="lumina-btn-secondary">
+                <span>مشاهده گیت هاب</span>
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- ====================================================================
+           OTHER PROJECTS (بقیه پروژه‌ها) — OTHER PORTFOLIO WORKS
+           ==================================================================== -->
+      <section class="project-other-works-section">
+        <div class="project-other-header">
+          <h2 class="project-other-title">بقیه پروژه‌ها</h2>
+          <span class="project-other-subtitle" aria-hidden="true">Other projects</span>
+        </div>
+
+        <div class="works-grid-container project-other-grid">
+
+          <!-- PROJECT: LUMINA -->
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="lumina"
+            data-cursor="project" data-cursor-label="مشاهده لومینا" data-transition-target
+            data-href="/projects/lumina.html?v=5" data-project-title="LUMINA"
+            data-project-image="/images/lumina-hero.webp" style="overflow: hidden; cursor: pointer;">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/lumina-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+              </div>
+              <div class="work-card-shot">
+                <img src="/images/lumina-hero.webp" alt="Lumina پلتفرم کتابخانه آنلاین" loading="lazy"
+                  decoding="async" width="1920" height="920" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۱</span>
+              </div>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
+                </div>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">LUMINA — کتابخانه آنلاین</span></h3>
+                <p class="work-card-desc">پروژه کتابخانه آنلاین دارای داشبورد شخصی، صفحه نویسندگان و دسته‌بندی موضوعی عناوین همراه با حالت مطالعه.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT: MODSTYLE -->
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="mod-style"
+            data-cursor="project" data-cursor-label="مشاهده مد استایل" data-transition-target
+            data-href="/projects/mod-style.html?v=5" data-project-title="MODSTYLE"
+            data-project-image="/images/modstyle-hero.webp?v=3" style="overflow: hidden; cursor: pointer;">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/modstyle-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+              </div>
+              <div class="work-card-shot">
+                <img src="/images/modstyle-hero.webp?v=3" alt="MODSTYLE فروشگاه آنلاین لباس" loading="lazy"
+                  decoding="async" width="1024" height="445" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۲</span>
+              </div>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
+                </div>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">MODSTYLE — فروشگاه آنلاین لباس</span></h3>
+                <p class="work-card-desc">پروژه فروشگاه آنلاین لباس با پنل کاربری، سبد خرید، صفحه اختصاصی مشخصات محصول و فیلترهای دقیق پوشاک.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT: NORTHWIND -->
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="project-management"
+            data-cursor="project" data-cursor-label="مشاهده نورث‌ویند" data-transition-target
+            data-href="/projects/project-management.html?v=5" data-project-title="NORTHWIND"
+            data-project-image="/images/northwind-hero.webp" style="overflow: hidden; cursor: pointer;">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/northwind-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+              </div>
+              <div class="work-card-shot">
+                <img src="/images/northwind-hero.webp" alt="NORTHWIND پلتفرم مدیریت پروژه" loading="lazy"
+                  decoding="async" width="1910" height="925" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۴</span>
+              </div>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
+                </div>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">NORTHWIND — مدیریت پروژه</span></h3>
+                <p class="work-card-desc">سیستم مدیریت پروژه و تیم دارای نمای کلی تسک‌ها، اولویت‌بندی کارها، تعیین مسئول و رصد وضعیت پیشرفت.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT: TRIP OS -->
+          <article class="work-grid-card liquid-glass liquid-glass-interactive" data-slug="trip-os"
+            data-cursor="project" data-cursor-label="مشاهده تریپ او اس" data-transition-target
+            data-href="/projects/trip-os.html?v=5" data-project-title="TRIP OS"
+            data-project-image="/images/tripos-hero.webp" style="overflow: hidden; cursor: pointer;">
+            <div class="work-card-media">
+              <div class="work-card-fill" aria-hidden="true">
+                <img src="/images/tripos-hero-fill.webp" alt="" loading="lazy" decoding="async" />
+              </div>
+              <div class="work-card-shot">
+                <img src="/images/tripos-hero.webp" alt="TRIP OS سیستم مدیریت و برنامه‌ریزی سفر" loading="lazy"
+                  decoding="async" width="1888" height="917" />
+                <div class="card-sheen"></div>
+                <span class="liquid-glass-pill work-card-index">پروژه ۰۵</span>
+              </div>
+              <div class="work-card-body">
+                <div class="work-card-badges">
+                  <span class="liquid-glass-pill">HTML</span>
+                  <span class="liquid-glass-pill">CSS</span>
+                  <span class="liquid-glass-pill">JavaScript</span>
+                  <span class="liquid-glass-pill">Django</span>
+                  <span class="liquid-glass-pill">DRF</span>
+                </div>
+                <h3 class="work-card-line work-card-title"><span
+                    class="work-card-line-inner">TRIP OS — سیستم مدیریت و برنامه‌ریزی سفر</span></h3>
+                <p class="work-card-desc">سامانه برنامه‌ریزی و مدیریت سفر دارای داشبورد اختصاصی، تفکیک مقاصد، جدول زمان‌بندی و پیگیری هزینه‌ها.</p>
+                <div class="work-card-cta">
+                  <span>مشاهده پروژه</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       MASTER SITE FOOTER
+       ======================================================================== -->
+  <footer class="site-master-footer">
+    <div class="site-footer-container">
+      
+      <div class="site-footer-grid">
+        
+        <!-- Column 1: Brand, Bio & Socials -->
+        <div class="site-footer-brand-wrap">
+          <a href="/" class="site-footer-logo-row" aria-label="صفحه اصلی امین اسماعیل زاده">
+            <img src="/images/logo-transparent.png" alt="AMIN.EZ" class="site-footer-logo-img" width="44" height="44" />
+            <span class="site-footer-brand-name">امین اسماعیل زاده</span>
+          </a>
+          <p class="site-footer-bio" style="color: #ffffff;">
+            برنامه نویس و توسعه دهنده وب که با طراحی و توسعه وب سایت به کسب و کارها و برندها کمک میکنم تا بهتر دیده بشن
+          </p>
+          <div class="site-footer-socials">
+            <a href="https://www.linkedin.com/in/amin-esmaeil-zadeh-a99503431" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="لینکدین">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            <a href="https://t.me/AminOmade" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="تلگرام">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/Amin-Ezz" target="_blank" rel="noopener noreferrer" class="site-footer-social-btn" aria-label="گیت‌هاب">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+              </svg>
+            </a>
+            <a href="mailto:amin.esmaeilzadehh@gmail.com" class="site-footer-social-btn" aria-label="ایمیل مستقیم">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="site-footer-links-wrap">
+          <h3 class="site-footer-col-title">دسترسی سریع</h3>
+          <ul class="site-footer-links-list">
+            <li><a href="/" class="site-footer-link">صفحه اصلی</a></li>
+            <li><a href="/projects/all.html" class="site-footer-link">همه پروژه‌ها</a></li>
+            <li><a href="/#services" class="site-footer-link">خدمات و همکاری</a></li>
+            <li><a href="/#skills" class="site-footer-link">مهارت‌های فنی</a></li>
+            <li><a href="/#about" class="site-footer-link">درباره من</a></li>
+            <li><a href="/#contact" class="site-footer-link">ارتباط با من</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Contact Ways -->
+        <div class="site-footer-contact-wrap">
+          <h3 class="site-footer-col-title">راه‌های ارتباطی</h3>
+          <div class="site-footer-contact-list">
+            <a href="tel:09011312210" class="site-footer-contact-item" dir="ltr">+98 901 131 2210</a>
+            <a href="mailto:amin.esmaeilzadehh@gmail.com" class="site-footer-contact-item" dir="ltr">amin.esmaeilzadehh@gmail.com</a>
+          </div>
+          <a href="/#contact" class="site-footer-send-btn">
+            <span>ارسال پیام</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="site-footer-bottom-row">
+        <span>© ۲۰۲۶ امین اسماعیل زاده — تمامی حقوق محفوظ است.</span>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="site-footer-top-btn" aria-label="بازگشت به بالای صفحه">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LIGHTBOX MODAL FOR SCREENSHOTS
+       ======================================================================== -->
+  <div class="lumina-lightbox-modal" id="luminaLightboxModal" aria-hidden="true" role="dialog">
+    <button class="lumina-lightbox-close" id="luminaLightboxClose" aria-label="بستن تصویر">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <img src="" alt="" class="lumina-lightbox-img" id="luminaLightboxImg" />
+    <div class="lumina-lightbox-caption" id="luminaLightboxCaption"></div>
+  </div>
+
+  <!-- Global Main JS Bundle -->
+  <script type="module" src="/src/js/main.js"></script>
+
+  <!-- Dedicated Lumina Carousel & Animations Engine -->
+  <script type="module" src="/src/js/lumina-animations.js"></script>
+
+  <!-- Explicit Hash Navigation Handler for Cross-Page Anchors -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a[href="/"], a[href*="/#"], a[href^="/index.html"]').forEach(link => {
+        link.addEventListener('click', () => {
+          const href = link.getAttribute('href');
+          if (href && href.includes('#')) {
+            const hash = href.split('#')[1];
+            if (hash && hash !== 'projects') {
+              sessionStorage.setItem('amin_return_hash', hash);
+              sessionStorage.removeItem('amin_project_origin');
+              sessionStorage.removeItem('amin_trigger_reverse_transition');
+            } else {
+              sessionStorage.setItem('amin_return_hash', 'projects');
+            }
+          } else if (href === '/' || href === '/index.html') {
+            sessionStorage.removeItem('amin_return_hash');
+            sessionStorage.removeItem('amin_project_origin');
+            sessionStorage.removeItem('amin_trigger_reverse_transition');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

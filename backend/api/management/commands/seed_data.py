@@ -89,11 +89,45 @@ class Command(BaseCommand):
                     {"value": "+۱۸۰٪", "label": "افزایش میانگین زمان حضور"},
                     {"value": "۶۰fps", "label": "پایداری انیمیشن سبد خرید"}
                 ],
-                "next_slug": "project-management",
-                "next_title": "NORTHWIND",
+                "next_slug": "fit-predict",
+                "next_title": "FITPREDICT",
                 "prev_slug": "lumina",
                 "prev_title": "LUMINA",
                 "order": 2
+            },
+            {
+                "slug": "fit-predict",
+                "title": "FITPREDICT",
+                "subtitle": "پلتفرم هوش مصنوعی پیش‌بینی بیومتریک و تناسب اندام",
+                "tagline": "تحلیل بلادرنگ داده‌های فیزیولوژیک و تجویز دقیق تغذیه و تمرین با شبکه‌های عصبی",
+                "category": "پلتفرم هوش مصنوعی / یادگیری ماشین و HealthTech",
+                "year": "۲۰۲۶",
+                "role": "Full-Stack & ML Developer",
+                "technologies": ["Python", "Machine Learning", "Deep Neural Networks", "ONNX Runtime", "JavaScript (ES6+)", "Tailwind CSS", "Vite"],
+                "live_url": "https://fitpredict.vercel.app/",
+                "github_url": "https://github.com/Amin-Ezz/Fit-Predict",
+                "hero_image": "/images/fitpredict-hero.png",
+                "detail_images": [
+                    "/images/fitpredict-hero.png",
+                    "/images/fitpredict-plan.webp",
+                    "/images/fitpredict-archetypes.webp",
+                    "/images/fitpredict-neural.webp"
+                ],
+                "accent_color": "#10B981",
+                "overview": "پروژه FitPredict یک پلتفرم هوشمند مبتنی بر هوش مصنوعی و شبکه‌های عصبی عمیق است که داده‌های بیومتریک و فیزیولوژیک کاربران را دریافت کرده و برنامه‌های کاملاً شخصی‌سازی‌شده و دقیق تغذیه، هیدراتاسیون و تمرینات ورزشی را در لحظه تولید می‌کند.",
+                "problem": "برنامه‌های سنتی ورزشی و تناسب اندام عموماً الگوهایی کلیشه‌ای و ثابت دارند که بدون توجه به شاخص‌های فردی فیزیولوژیک تجویز می‌شوند؛ عدم دسترسی به تحلیل‌های بلادرنگ و بالینی بر پایه هوش مصنوعی باعث سردرگمی و عدم دستیابی به حداکثر پتانسیل بدنی کاربران می‌گردد.",
+                "solution": "با پیگیری معماری شبکه عصبی عمیق چندوظیفه‌ای (Multi-Task MLP-ResNet)، سیستم داده‌های بیومتریک شامل وزن، قد، سن، ساعات خواب و شاخص فشار تمرین را دریافت کرده و از طریق موتور بهینه‌شده ONNX در کمتر از ۱۲ میلی‌ثانیه مستقیماً در مرورگر کلاینت پردازش می‌کند و اهداف تغذیه‌ای و تمرینی دقیق را ارائه می‌دهد.",
+                "metrics": [
+                    {"value": "< ۱۲ms", "label": "زمان استنتاج مدل عصبی در کلاینت"},
+                    {"value": "۱۰,۰۰۰+", "label": "داده کالیبراسیون برای تضمین دقت"},
+                    {"value": "۱۰۰٪", "label": "پردازش آنی بدون تاخیر شبکه"},
+                    {"value": "۳", "label": "الگوی اصلی اهداف تمرینی و متابولیک"}
+                ],
+                "next_slug": "project-management",
+                "next_title": "NORTHWIND",
+                "prev_slug": "mod-style",
+                "prev_title": "MODSTYLE",
+                "order": 3
             },
             {
                 "slug": "project-management",
@@ -104,8 +138,8 @@ class Command(BaseCommand):
                 "year": "۲۰۲۶",
                 "role": "معمار فرانت‌اند و طراح اینتراکشن",
                 "technologies": ["HTML5 Canvas", "Modern CSS", "Modular JavaScript", "Real-time State", "Vite"],
-                "live_url": "https://northwind-demo.amin.dev",
-                "github_url": "https://github.com/Amin-Ezz/ProjectManagement",
+                "live_url": "https://north-windd.vercel.app/",
+                "github_url": "https://github.com/Amin-Ezz/Project-management",
                 "hero_image": "/images/northwind-hero.png",
                 "detail_images": [
                     "/images/northwind-hero.png",
@@ -126,9 +160,9 @@ class Command(BaseCommand):
                 ],
                 "next_slug": "trip-os",
                 "next_title": "TRIP OS",
-                "prev_slug": "mod-style",
-                "prev_title": "MODSTYLE",
-                "order": 3
+                "prev_slug": "fit-predict",
+                "prev_title": "FITPREDICT",
+                "order": 4
             },
             {
                 "slug": "trip-os",
@@ -139,8 +173,8 @@ class Command(BaseCommand):
                 "year": "۲۰۲۶",
                 "role": "طراح سیستم و توسعه‌دهنده فول‌استک",
                 "technologies": ["Interactive Maps", "Modern Vanilla JS", "Tailored CSS", "GSAP Timeline", "Vite"],
-                "live_url": "https://tripos-demo.amin.dev",
-                "github_url": "https://github.com/Amin-Ezz/TripOS",
+                "live_url": "https://trip-os-fawn.vercel.app/",
+                "github_url": "https://github.com/Amin-Ezz/trip_os",
                 "hero_image": "/images/tripos-hero.png",
                 "detail_images": [
                     "/images/tripos-hero.png",
@@ -163,7 +197,7 @@ class Command(BaseCommand):
                 "next_title": "LUMINA",
                 "prev_slug": "project-management",
                 "prev_title": "NORTHWIND",
-                "order": 4
+                "order": 5
             }
         ]
 

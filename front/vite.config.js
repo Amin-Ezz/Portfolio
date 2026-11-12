@@ -23,6 +23,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         lumina: resolve(__dirname, 'projects/lumina.html'),
         modStyle: resolve(__dirname, 'projects/mod-style.html'),
+        fitPredict: resolve(__dirname, 'projects/fit-predict.html'),
         projectManagement: resolve(__dirname, 'projects/project-management.html'),
         tripOs: resolve(__dirname, 'projects/trip-os.html'),
         allProjects: resolve(__dirname, 'projects/all.html')
